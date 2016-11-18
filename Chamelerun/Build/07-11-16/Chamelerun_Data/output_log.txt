@@ -1,0 +1,28 @@
+Initialize engine version: 5.4.1f1 (649f48bbbf0f)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: NVIDIA GeForce GTX 460 (ID=0xe24)
+    Vendor:   NVIDIA
+    VRAM:     977 MB
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+- Completed reload, in  0.072 seconds
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\System.dll (this message is harmless)
+desktop: 1920x1080 59Hz; virtual: 3840x1080 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.739173 ms
+Platform assembly: C:\Users\Stella\Documents\Games\Chamelerun\Build\07-11-16\Chamelerun_Data\Managed\System.Xml.dll (this message is harmless)
+Setting up 2 worker threads for Enlighten.
+  Thread -> id: ff8 -> priority: 1 
+  Thread -> id: 7bc -> priority: 1 
