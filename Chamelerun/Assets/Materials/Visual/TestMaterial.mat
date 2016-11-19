@@ -1,0 +1,223 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: TestMaterial
+  m_Shader: {fileID: 4800000, guid: 9a3c1bbcc312a6b4b841c8dc31a4ba97, type: 3}
+  m_ShaderKeywords: _EMISSION
+  m_LightmapFlags: 1
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  m_SavedProperties:
+    serializedVersion: 2
+    m_TexEnvs:
+    - first:
+        name: _BumpMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailAlbedoMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMapA
+      second:
+        m_Texture: {fileID: 2800000, guid: 8258e4aab220fa145ad4487feaddba67, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMapB
+      second:
+        m_Texture: {fileID: 2800000, guid: 7a632f967e8ad42f5bd275898151ab6a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailMask
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _DetailNormalMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _EmissionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _LightMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 7331e420df27b704da617fb1d8d01bfb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _Lightmap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MainTex
+      second:
+        m_Texture: {fileID: 2800000, guid: 7331e420df27b704da617fb1d8d01bfb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _MetallicGlossMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _OcclusionMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _ParallaxMap
+      second:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _PrimaryDetailMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 8258e4aab220fa145ad4487feaddba67, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - first:
+        name: _SecondaryDetailMap
+      second:
+        m_Texture: {fileID: 2800000, guid: 36a87aa38ccc37a439b5c371a167ebae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - first:
+        name: _AmbientInfluence
+      second: 0.301
+    - first:
+        name: _BumpScale
+      second: 1
+    - first:
+        name: _Cutoff
+      second: 0.5
+    - first:
+        name: _DetailNormalMapScale
+      second: 1
+    - first:
+        name: _DstBlend
+      second: 0
+    - first:
+        name: _GlossMapScale
+      second: 1
+    - first:
+        name: _Glossiness
+      second: 0.5
+    - first:
+        name: _GlossyReflections
+      second: 1
+    - first:
+        name: _LightInfluence
+      second: 0.189
+    - first:
+        name: _Metallic
+      second: 0
+    - first:
+        name: _Mode
+      second: 0
+    - first:
+        name: _OcclusionStrength
+      second: 1
+    - first:
+        name: _Parallax
+      second: 0.02
+    - first:
+        name: _SmoothnessTextureChannel
+      second: 0
+    - first:
+        name: _SpecularHighlights
+      second: 1
+    - first:
+        name: _SrcBlend
+      second: 1
+    - first:
+        name: _UVSec
+      second: 0
+    - first:
+        name: _ZWrite
+      second: 1
+    m_Colors:
+    - first:
+        name: _Color
+      second: {r: 1, g: 1, b: 1, a: 1}
+    - first:
+        name: _DetailAHighlights
+      second: {r: 0.75735295, g: 0.68422925, b: 0.09466912, a: 1}
+    - first:
+        name: _DetailAMidtones
+      second: {r: 0.63235295, g: 0.2683331, b: 0.03254757, a: 1}
+    - first:
+        name: _DetailAShadows
+      second: {r: 0.25735295, g: 0.08515355, b: 0.08515355, a: 1}
+    - first:
+        name: _DetailBHilights
+      second: {r: 0.02459429, g: 0.71323526, b: 0, a: 1}
+    - first:
+        name: _DetailBMidtones
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _DetailBShadows
+      second: {r: 1, g: 0, b: 0, a: 1}
+    - first:
+        name: _EmissionColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _MainHighlightColor
+      second: {r: 0.014705896, g: 1, b: 0.14381352, a: 1}
+    - first:
+        name: _MainHighlights
+      second: {r: 0.72794116, g: 1, b: 0.98874235, a: 1}
+    - first:
+        name: _MainMidtoneColor
+      second: {r: 0.28043902, g: 0.41178566, b: 0.6691177, a: 1}
+    - first:
+        name: _MainMidtones
+      second: {r: 0.049362034, g: 0.42460614, b: 0.6102941, a: 1}
+    - first:
+        name: _MainShadowColor
+      second: {r: 0.25424692, g: 0.024816178, b: 0.375, a: 1}
+    - first:
+        name: _MainShadows
+      second: {r: 0.23582575, g: 0.050983988, b: 0.30147058, a: 1}
+    - first:
+        name: _PrimaryDetailHighlightColor
+      second: {r: 0.8014706, g: 0.28876513, b: 0.59638834, a: 1}
+    - first:
+        name: _PrimaryDetailMidtoneColor
+      second: {r: 1, g: 0.3931034, b: 0, a: 1}
+    - first:
+        name: _PrimaryDetailShadowColor
+      second: {r: 0, g: 0, b: 0, a: 1}
+    - first:
+        name: _SecondaryDetailHighlightColor
+      second: {r: 0.8235294, g: 0.60470146, b: 0.030276798, a: 1}
+    - first:
+        name: _SecondaryDetailMidtoneColor
+      second: {r: 0.066176474, g: 0.066176474, b: 0.066176474, a: 1}
+    - first:
+        name: _SecondaryDetailShadowColor
+      second: {r: 0, g: 0, b: 0, a: 1}
