@@ -11,14 +11,13 @@ public class EnemyMovement : MonoBehaviour
         public float ApproachSpeed;
     }
 
+    public Transform StartPoint;
     public Point[] Points;
     public float StoppingDistance = 0.1f;
-    public float KnockBackRecoverTime = 1f;
+    public float KnockBackRecoverTime = 0.5f;
 
     private Rigidbody2D rigidBody;
     private TriggerZone groundTrigger;
-
-    private Vector2 startPos;
 
     private int currentTargetPoint;
     private bool isResting;
@@ -26,14 +25,16 @@ public class EnemyMovement : MonoBehaviour
 
     public void Awake()
     {
-        startPos = transform.position;
         rigidBody = GetComponent<Rigidbody2D>();
         groundTrigger = GetComponentInChildren<TriggerZone>();
     }
 
-    public void Start()
+    public void OnEnable()
     {
-        transform.position = startPos;
+        if (StartPoint != null)
+        {
+            transform.position = StartPoint.position;
+        }
         currentTargetPoint = 0;
         isResting = false;
         isRecoveringFromKnockBack = false;

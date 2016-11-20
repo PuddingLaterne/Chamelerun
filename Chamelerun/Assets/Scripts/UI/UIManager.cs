@@ -24,10 +24,11 @@ public class UIManager : MonoBehaviour
         Colours = FindObjectOfType<UIColours>();
         PowerupDisplay = FindObjectOfType<UIPowerupDisplay>();
 
-        ChameleonPower.OnPowerChanged += () =>
+        Chameleon chameleon = GameManager.Instance.Chameleon;
+        chameleon.OnPowerChanged += () =>
             {
-                PowerupDisplay.UpdatePowerDisplay(GameManager.Instance.Chameleon.Power.GetPowerups());
+                PowerupDisplay.UpdatePowerDisplay(chameleon.CurrentPower);
             };
-        PowerupDisplay.UpdatePowerDisplay(GameManager.Instance.Chameleon.Power.GetPowerups());
+        PowerupDisplay.UpdatePowerDisplay(chameleon.CurrentPower);
     }
 }

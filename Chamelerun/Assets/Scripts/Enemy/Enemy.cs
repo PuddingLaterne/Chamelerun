@@ -33,7 +33,7 @@ public class Enemy : MonoBehaviour
         movement = GetComponentInChildren<EnemyMovement>();
     }
 
-    public void Start()
+    public void OnEnable()
     {
         currentHealth = MaxHealth;
         isInvincible = false;

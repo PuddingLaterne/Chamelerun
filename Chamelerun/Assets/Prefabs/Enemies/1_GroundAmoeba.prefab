@@ -310,14 +310,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 2
-  InvincibilityTime: 0.5
+  InvincibilityTime: 0.1
   KnockbackForce: 15
   DamagedByPunching: 1
-  UpperSideAngle: 45
-  Bounciness: 0
+  UpperSideAngle: 90
+  Bounciness: 400
   DamagedByBouncing: 1
   PowerupDroppedOnDamaged: 0
-  PowerupDroppedOnKilled: 0
+  PowerupDroppedOnKilled: 3
 --- !u!114 &114000012688462224
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -329,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de94c02e6c429d94e99b714f64cbde57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartPoint: {fileID: 0}
   Points:
   - Transform: {fileID: 4000010237802466}
     RestTime: 0

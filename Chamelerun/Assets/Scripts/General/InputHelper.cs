@@ -96,7 +96,7 @@ public static class InputHelper
     {
         jumpInput = Input.GetButtonDown("Jump");
         tongueInput = Input.GetButtonDown("Tongue");
-        runningInput = Input.GetButton("Run");
+        runningInput = !Input.GetButton("Run");
 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
@@ -146,7 +146,7 @@ public static class InputHelper
         {
             Ray cursorPositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 cursorPosition = cursorPositionRay.origin + cursorPositionRay.direction * -Camera.main.transform.position.z;
-            Vector2 relativeToPosition = (Vector2)GameManager.Instance.Chameleon.Movement.transform.position;
+            Vector2 relativeToPosition = (Vector2)GameManager.Instance.Chameleon.Position;
             aimingDirection = (cursorPosition - relativeToPosition).normalized;
         }
         float angle = Vector2.Angle(Vector2.up, aimingDirection);

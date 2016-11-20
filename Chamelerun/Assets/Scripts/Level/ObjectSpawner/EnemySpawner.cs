@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
         GameObject enemyObject = EnemyObjectPools[ID].GetObjectFromPool();
         Enemy enemy = enemyObject.GetComponentsInChildren<Enemy>(true)[0];
         enemy.OnDamaged = () => OnEnemyDamaged(enemy);
-        enemy.OnKilled = () => OnEnemyKilled(enemy);
+        enemy.OnKilled = () => OnEnemyKilled(enemyObject, enemy);
         CollisionEventSource eventSource = enemyObject.GetComponentsInChildren<CollisionEventSource>(true)[0];
         eventSource.OnCollisionStay = (collision) => OnEnemyTouched(enemy, collision);
 
@@ -38,9 +38,10 @@ public class EnemySpawner : MonoBehaviour
         PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnDamaged, enemy.transform.position);
     }
 
-    private void OnEnemyKilled(Enemy enemy)
+    private void OnEnemyKilled(GameObject enemyObject, Enemy enemy)
     {
-        enemy.gameObject.SetActive(false);
+        PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnKilled, enemy.transform.position);
+        enemyObject.SetActive(false);
     }
 
     private void OnEnemyTouched(Enemy enemy, Collision2D collision)
@@ -50,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
             float collisionAngle = (-collision.contacts[0].normal).GetAngle();
             if (collisionAngle < enemy.UpperSideAngle|| collisionAngle > 360 - enemy.UpperSideAngle)
             {
-                enemy.Bounce();
+                GameManager.Instance.Chameleon.Bounce(enemy.Bounce());
             }
             else
             {

@@ -24,31 +24,29 @@ public class GameManager : MonoBehaviour
         Chameleon = FindObjectOfType<Chameleon>();
         Chameleon.Init();
 
-        ChameleonPower.OnAllPowerLost += () =>
-            {
-                StartGame();
-            };
-
-        ScreenBoundaries.OnPlayerLeftScreen += () =>
-            {
-                StartGame();
-            };
+        Chameleon.OnAllPowerLost += OnGameOver;
+        ScreenBoundaries.OnPlayerLeftScreen += OnGameOver;
 
         CameraTargetTracking cameraFollow = Camera.main.GetComponent<CameraTargetTracking>();
-        cameraFollow.Target = Chameleon.Movement.transform;
-        Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
-        Camera.main.transform.position = new Vector3(screenBounds.extents.x, 0, Camera.main.transform.position.z);
+        cameraFollow.Target = Chameleon.Transform;
 
         ObjectPoolManager.Instance.Init();
         LevelSegmentManager.Instance.Init();
 
         UIManager.Instance.Init();
-        InputHelper.Reset();
+
+        StartGame();
+    }
+
+    private void OnGameOver()
+    {
+        StartGame();
     }
 
     public void StartGame()
     {
         Chameleon.Reset();
+        InputHelper.Reset();
         LevelSegmentManager.Instance.Reset();
         ObjectPoolManager.Instance.Reset();
 

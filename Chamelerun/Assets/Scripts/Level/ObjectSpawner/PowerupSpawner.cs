@@ -53,7 +53,7 @@ public class PowerupSpawner : MonoBehaviour
 
     private void OnPowerupTouched(GameObject powerup, PowerupType type)
     {
-        GameManager.Instance.Chameleon.Power.AddPowerup(type);
+        GameManager.Instance.Chameleon.AddPowerup(type);
         powerup.gameObject.SetActive(false);
     }
 }

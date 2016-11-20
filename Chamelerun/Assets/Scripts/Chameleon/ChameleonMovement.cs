@@ -137,6 +137,11 @@ public class ChameleonMovement : ChameleonBehaviour
         rigidBody.AddForce(direction * KnockBackForce, ForceMode2D.Impulse);
     }
 
+    public void Throw(Vector2 force)
+    {
+        rigidBody.AddForce(force);
+    }
+
     public void OnTongueAttached()
     {
         rigidBody.gravityScale = SwingingGravityScale;

@@ -15,6 +15,7 @@ public class CameraTargetTracking : MonoBehaviour
 
     public Transform Target;
     public float SmoothTime;
+    public float TargetDistanceThreshold;
 
     public float MaxPositionY;
     public float MinPositionY;
@@ -65,6 +66,6 @@ public class CameraTargetTracking : MonoBehaviour
             targetPos.y = MinPositionY + screenBounds.extents.y;
         }
 
-        transform.position = Vector3.SmoothDamp(transform.position, targetPos, ref velocity, SmoothTime);
+        transform.position = targetPos;
     }
 }

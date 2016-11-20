@@ -1,4 +1,8 @@
+/Chamelerun/[Ll]ibrary/
+/Chamelerun/[Ll]ibrary/metadata/
+/Chamelerun/[Ll]ibrary/ScriptAssemblies/
 /[Ll]ibrary/
+/Chamelerun/[Tt]emp/
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
@@ -28,3 +32,6 @@ sysinfo.txt
 # Builds
 *.apk
 *.unitypackage
+
+Chamelerun/Library/ScriptAssemblies/
+Chamelerun/Library/metadata/

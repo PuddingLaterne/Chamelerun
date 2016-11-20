@@ -260,6 +260,7 @@ GameObject:
   - 81: {fileID: 48653193}
   - 114: {fileID: 48653198}
   - 114: {fileID: 48653199}
+  - 114: {fileID: 48653201}
   m_Layer: 30
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -353,7 +354,8 @@ MonoBehaviour:
     Top: 0.5
     Bottom: 0
   Target: {fileID: 0}
-  SmoothTime: 0.1
+  SmoothTime: 0.2
+  TargetDistanceThreshold: 0
   MaxPositionY: 10
   MinPositionY: -5
 --- !u!114 &48653199
@@ -368,10 +370,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mode: 0
-  intensity: 1
+  intensity: 0.2
   chromaticAberration: 0
   axialAberration: 0.5
-  blur: 1
+  blur: 0
   blurSpread: 0.1
   luminanceDependency: 0.25
   blurDistance: 2.5
@@ -379,6 +381,23 @@ MonoBehaviour:
   separableBlurShader: {fileID: 4800000, guid: e97c14fbb5ea04c3a902cc533d7fc5d1, type: 3}
   chromAberrationShader: {fileID: 4800000, guid: 2b4f29398d9484ccfa9fd220449f5eee,
     type: 3}
+--- !u!114 &48653201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 48653192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4975a6e437fc3b149a8cd508ce5bdd69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  threshold: 0.3
+  intensity: 0.2
+  blurSize: 2
+  blurIterations: 1
+  blurType: 0
+  fastBloomShader: {fileID: 4800000, guid: 68a00c837b82e4c6d92e7da765dc5f1d, type: 3}
 --- !u!1 &167160003
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 
 public class Chameleon : MonoBehaviour 
 {
     public float InvincibilityTime  = 0.5f;
+
+    public UnityAction OnPowerChanged = delegate { };
+    public UnityAction OnAllPowerLost = delegate { };
 
     public ChameleonMovement Movement { get; private set; }
     public ChameleonTongue Tongue { get; private set; }
@@ -13,6 +17,11 @@ public class Chameleon : MonoBehaviour
 
     private List<ChameleonBehaviour> behaviours = new List<ChameleonBehaviour>();
     private bool isInvincible;
+
+    public Transform Transform { get { return Movement.transform; } }
+    public Vector2 Position { get { return Transform.position; } }
+
+    public PowerupType[] CurrentPower { get { return Power.GetPowerups(); } }
 
     public void Init()
     {
@@ -31,14 +40,11 @@ public class Chameleon : MonoBehaviour
             behaviour.Init(this);
         }
 
-        Tongue.OnAttached += () =>
-            {
-                Movement.OnTongueAttached();
-            };
-        Tongue.OnReleased += () =>
-            {
-                Movement.OnTongueReleased();
-            };
+        Tongue.OnAttached += () => { Movement.OnTongueAttached(); };
+        Tongue.OnReleased += () => { Movement.OnTongueReleased(); };
+
+        Power.OnAllPowerLost += () => { OnAllPowerLost(); };
+        Power.OnPowerChanged += () => { OnPowerChanged(); };
     }
 
     public void Reset()
@@ -61,6 +67,11 @@ public class Chameleon : MonoBehaviour
         }
     }
 
+    public void AddPowerup(PowerupType type)
+    {
+        Power.AddPowerup(type);
+    }
+
     public void ApplyDamage()
     {
         if (!isInvincible)
@@ -71,9 +82,9 @@ public class Chameleon : MonoBehaviour
         }
     }
 
-    public void Bounce()
+    public void Bounce(Vector2 force)
     {
-
+        Movement.Throw(force);
     }
 
     private IEnumerator WaitForInvincibilityTime()

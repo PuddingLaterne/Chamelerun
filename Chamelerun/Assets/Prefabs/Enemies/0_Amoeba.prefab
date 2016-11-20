@@ -242,13 +242,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 1
-  InvincibilityTime: 0.5
+  InvincibilityTime: 0.1
   KnockbackForce: 5
   DamagedByPunching: 1
   UpperSideAngle: 0
   Bounciness: 0
   DamagedByBouncing: 1
-  PowerupDroppedOnDamaged: 0
+  PowerupDroppedOnDamaged: 1
   PowerupDroppedOnKilled: 0
 --- !u!114 &114000012188747178
 MonoBehaviour:
@@ -272,6 +272,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de94c02e6c429d94e99b714f64cbde57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  StartPoint: {fileID: 0}
   Points:
   - Transform: {fileID: 4000010246391860}
     RestTime: 0

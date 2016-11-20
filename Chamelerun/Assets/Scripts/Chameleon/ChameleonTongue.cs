@@ -134,7 +134,7 @@ public class ChameleonTongue : ChameleonBehaviour
 
     public override void ChameleonUpdate()
     {
-        currentOrigin = (Vector2)chameleon.Movement.transform.position + OffsetOnBody;
+        currentOrigin = chameleon.Position + OffsetOnBody;
 
         if(InputHelper.TongueInput && !isExpanding && !isRetracting)
         {

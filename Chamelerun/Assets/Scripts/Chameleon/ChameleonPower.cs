@@ -11,8 +11,8 @@ public class ChameleonPower : ChameleonBehaviour
 
     public int FullPowerupMultiplier = 2;
 
-    public static UnityAction OnPowerChanged = delegate { };
-    public static UnityAction OnAllPowerLost = delegate { };
+    public UnityAction OnPowerChanged = delegate { };
+    public UnityAction OnAllPowerLost = delegate { };
 
     private const int maxNumPowerups = 3;
 
