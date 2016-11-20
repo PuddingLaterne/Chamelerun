@@ -17,18 +17,33 @@ public class UIManager : MonoBehaviour
     private static UIManager instance;
 
     public UIColours Colours { get; private set; }
-    public UIPowerupDisplay PowerupDisplay { get; private set; }
+    private UIPowerupDisplay powerupDisplay;
+    private UIScoreDisplay scoreDisplay;
+    private UITravelledDistanceDisplay distanceDisplay;
 
     public void Init()
     {
         Colours = FindObjectOfType<UIColours>();
-        PowerupDisplay = FindObjectOfType<UIPowerupDisplay>();
+
+        powerupDisplay = FindObjectOfType<UIPowerupDisplay>();
+        scoreDisplay = FindObjectOfType<UIScoreDisplay>();
+        distanceDisplay = FindObjectOfType<UITravelledDistanceDisplay>();
 
         Chameleon chameleon = GameManager.Instance.Chameleon;
         chameleon.OnPowerChanged += () =>
             {
-                PowerupDisplay.UpdatePowerDisplay(chameleon.CurrentPower);
+                powerupDisplay.UpdatePowerDisplay(chameleon.CurrentPowerups);
             };
-        PowerupDisplay.UpdatePowerDisplay(chameleon.CurrentPower);
+        powerupDisplay.UpdatePowerDisplay(chameleon.CurrentPowerups);
+
+        ScoreManager.Instance.OnScoreChanged += (newScore) =>
+            {
+                scoreDisplay.UpdateScore(newScore);
+            };
+
+        ScoreManager.Instance.OnTravelledDistanceChanged += (newDistance) =>
+            {
+                distanceDisplay.UpdateDistance(newDistance);
+            };
     }
 }

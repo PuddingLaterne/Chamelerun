@@ -19,6 +19,10 @@ public class GameManager : MonoBehaviour
     public Chameleon Chameleon { get; private set; }
     public PowerupSpawner PowerupManager { get; private set; }
 
+    private ObjectPoolManager objectPoolManager;
+    private LevelSegmentManager levelSegmentManager;
+    private ScoreManager scoreManager;
+
     public void Start()
     {
         Chameleon = FindObjectOfType<Chameleon>();
@@ -30,12 +34,21 @@ public class GameManager : MonoBehaviour
         CameraTargetTracking cameraFollow = Camera.main.GetComponent<CameraTargetTracking>();
         cameraFollow.Target = Chameleon.Transform;
 
-        ObjectPoolManager.Instance.Init();
-        LevelSegmentManager.Instance.Init();
+        scoreManager = ScoreManager.Instance;
+        objectPoolManager = ObjectPoolManager.Instance;
+        levelSegmentManager = LevelSegmentManager.Instance;
 
+        objectPoolManager.Init();
+        levelSegmentManager.Init();
+            
         UIManager.Instance.Init();
 
         StartGame();
+    }
+
+    public void Update()
+    {
+        scoreManager.Update(Chameleon);
     }
 
     private void OnGameOver()
@@ -43,17 +56,17 @@ public class GameManager : MonoBehaviour
         StartGame();
     }
 
-    public void StartGame()
+    private void StartGame()
     {
         Chameleon.Reset();
-        InputHelper.Reset();
-        LevelSegmentManager.Instance.Reset();
-        ObjectPoolManager.Instance.Reset();
+
+        objectPoolManager.Reset();
+        levelSegmentManager.Reset();
+        scoreManager.Reset();
 
         Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
         Camera.main.transform.position = new Vector3(screenBounds.extents.x, 0, Camera.main.transform.position.z);
 
         InputHelper.Reset();
     }
-
 }

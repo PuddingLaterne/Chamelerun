@@ -25,7 +25,7 @@ public class PowerupSpawner : MonoBehaviour
     public ObjectPool RedPowerupPool;
     public ObjectPool YellowPowerupPool;
     public ObjectPool BluePowerupPool;
-	
+
     public void SpawnPowerup(PowerupType type, Vector2 position)
     {
         GameObject powerup = null;
@@ -53,6 +53,7 @@ public class PowerupSpawner : MonoBehaviour
 
     private void OnPowerupTouched(GameObject powerup, PowerupType type)
     {
+        ScoreManager.Instance.AddPointsForPowerup();
         GameManager.Instance.Chameleon.AddPowerup(type);
         powerup.gameObject.SetActive(false);
     }

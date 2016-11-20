@@ -16,6 +16,10 @@ public class Enemy : MonoBehaviour
     public float Bounciness;
     public bool DamagedByBouncing = true;
 
+    [Header("Points")]
+    public int PointsForDamage;
+    public int PointsForKill;
+
     [Header("Powerups")]
     public PowerupType PowerupDroppedOnDamaged;
     public PowerupType PowerupDroppedOnKilled;

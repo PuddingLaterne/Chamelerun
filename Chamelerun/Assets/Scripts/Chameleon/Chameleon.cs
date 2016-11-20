@@ -21,7 +21,8 @@ public class Chameleon : MonoBehaviour
     public Transform Transform { get { return Movement.transform; } }
     public Vector2 Position { get { return Transform.position; } }
 
-    public PowerupType[] CurrentPower { get { return Power.GetPowerups(); } }
+    public PowerupType[] CurrentPowerups { get { return Power.Powerups; } }
+    public int CurrentPower { get { return Power.Power; } }
 
     public void Init()
     {

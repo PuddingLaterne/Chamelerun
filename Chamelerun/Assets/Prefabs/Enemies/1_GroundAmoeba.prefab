@@ -316,6 +316,8 @@ MonoBehaviour:
   UpperSideAngle: 90
   Bounciness: 400
   DamagedByBouncing: 1
+  PointsForDamage: 5
+  PointsForKill: 20
   PowerupDroppedOnDamaged: 0
   PowerupDroppedOnKilled: 3
 --- !u!114 &114000012688462224

@@ -94,8 +94,8 @@ public static class InputHelper
 
     private static void UpdateInput()
     {
-        jumpInput = Input.GetButtonDown("Jump");
-        tongueInput = Input.GetButtonDown("Tongue");
+        jumpInput = Input.GetButtonDown("Jump") || Input.GetAxis("Jump") != 0;
+        tongueInput = Input.GetButtonDown("Tongue") || Input.GetAxis("Tongue") != 0;
         runningInput = !Input.GetButton("Run");
 
         horizontalInput = Input.GetAxis("Horizontal");

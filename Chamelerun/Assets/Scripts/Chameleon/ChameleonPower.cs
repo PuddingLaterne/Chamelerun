@@ -16,7 +16,22 @@ public class ChameleonPower : ChameleonBehaviour
 
     private const int maxNumPowerups = 3;
 
+    public PowerupType[] Powerups
+    {
+        get
+        {
+            return (PowerupType[])powerups.Clone();
+        }
+    }
     private PowerupType[] powerups;
+
+    public int Power
+    {
+        get
+        {
+            return red + yellow + blue;
+        }
+    }
 
     private int red;
     private int yellow;
@@ -33,11 +48,6 @@ public class ChameleonPower : ChameleonBehaviour
         powerups = new PowerupType[maxNumPowerups];
         RecalculatePower();
         OnPowerChanged();
-    }
-
-    public PowerupType[] GetPowerups()
-    {
-        return (PowerupType[])powerups.Clone();
     }
 
     public float GetMaxTongueLength()

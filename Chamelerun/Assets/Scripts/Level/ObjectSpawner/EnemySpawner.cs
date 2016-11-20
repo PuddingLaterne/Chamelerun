@@ -35,11 +35,13 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnemyDamaged(Enemy enemy)
     {
+        ScoreManager.Instance.AddPoints(enemy.PointsForDamage);
         PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnDamaged, enemy.transform.position);
     }
 
     private void OnEnemyKilled(GameObject enemyObject, Enemy enemy)
     {
+        ScoreManager.Instance.AddPoints(enemy.PointsForKill);
         PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnKilled, enemy.transform.position);
         enemyObject.SetActive(false);
     }
