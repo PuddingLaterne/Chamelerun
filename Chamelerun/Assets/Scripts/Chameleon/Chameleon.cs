@@ -71,6 +71,11 @@ public class Chameleon : MonoBehaviour
         }
     }
 
+    public void Bounce()
+    {
+
+    }
+
     private IEnumerator WaitForInvincibilityTime()
     {
         isInvincible = true;

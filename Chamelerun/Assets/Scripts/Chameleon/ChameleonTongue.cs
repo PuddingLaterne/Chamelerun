@@ -21,6 +21,7 @@ public class ChameleonTongue : ChameleonBehaviour
     [Header("Interaction Layers")]
     public LayerMask AttachmentLayers;
     public LayerMask CollectableLayers;
+    public LayerMask PunchableLayers;
     public LayerMask DamagingLayers;
 
     [Header("Tongue")]
@@ -65,7 +66,7 @@ public class ChameleonTongue : ChameleonBehaviour
     {
         base.Init(chameleon);
 
-        tongueInteractionLayers = AttachmentLayers | CollectableLayers | DamagingLayers;
+        tongueInteractionLayers = AttachmentLayers | CollectableLayers | DamagingLayers | PunchableLayers;
 
         endPointRadius = End.GetComponent<CircleCollider2D>().radius;
         currentSegmentLength = (MinLength - endPointRadius * 2f) / NumSegments;
@@ -217,6 +218,10 @@ public class ChameleonTongue : ChameleonBehaviour
                         isExpanding = false;
                         isRetracting = true;
                         break;
+                    case AttachmentState.Failed:
+                        isExpanding = false;
+                        isRetracting = true;
+                        break;
                 }
             }
             AdjustAttachedObjectPosition();
@@ -270,6 +275,11 @@ public class ChameleonTongue : ChameleonBehaviour
             if (layer.IsPartOfBitmask(DamagingLayers))
             {
                 return AttachmentState.Damaged;
+            }
+            if (layer.IsPartOfBitmask(PunchableLayers))
+            {
+                Punch(hit, direction);
+                return AttachmentState.Failed;
             }
         }
 
@@ -348,4 +358,12 @@ public class ChameleonTongue : ChameleonBehaviour
         StaticTongue.transform.localScale = new Vector3(1, currentTongueLength, 1);
     }
 
+    private void Punch(RaycastHit2D hit, Vector2 direction)
+    {
+        Enemy hitEnemy = hit.transform.GetComponentInChildren<Enemy>();
+        if (hitEnemy != null)
+        {
+            hitEnemy.Punch(direction);
+        }
+    }
 }

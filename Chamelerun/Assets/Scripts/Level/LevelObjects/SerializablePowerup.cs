@@ -2,43 +2,29 @@
 using UnityEngine.Events;
 using System.Collections;
 
-public class SerializablePowerup : SerializableLevelObject, PooledObject
+namespace Chamelerun.Serialization
 {
-    public UnityAction OnActivation = delegate { };
-
-    public PowerupType Type
+    public class SerializablePowerup : SerializableLevelObject
     {
-        get
+        public override LevelObject GetSerializableObject()
         {
-            return (PowerupType)ID;
+            return new Powerup(ID, transform.localPosition);
         }
     }
 
-    public override LevelObject GetSerializableObject()
+    public class Powerup : LevelObject
     {
-        return new Powerup(ID, transform.localPosition);
-    }
+        public Powerup() { }
 
-    GameObject PooledObject.GetGameObject() { return gameObject; }
-    void PooledObject.Init()
-    {
-        GetComponent<TriggerZone>().OnTriggerEnter = (gameObject) => OnActivation();
-    }
-    void PooledObject.Reset() { }
-}
+        public Powerup(int ID, Vector2 position)
+        {
+            this.ID = ID;
+            Position = position;
+        }
 
-public class Powerup : LevelObject
-{
-    public Powerup() { }
-
-    public Powerup(int ID, Vector2 position)
-    {
-        this.ID = ID;
-        Position = position;
-    }
-
-    public override void Spawn(Vector2 positionOffset)
-    {
-        PowerupManager.Instance.SpawnPowerup((PowerupType)ID, Position + positionOffset);
+        public override void Spawn(Vector2 positionOffset)
+        {
+            PowerupSpawner.Instance.SpawnPowerup((PowerupType)ID, Position + positionOffset);
+        }
     }
 }

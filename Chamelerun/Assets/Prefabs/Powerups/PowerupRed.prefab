@@ -20,8 +20,8 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000012242667798}
   - 58: {fileID: 58000013373231830}
-  - 114: {fileID: 114000013856949328}
   - 114: {fileID: 114000013350394260}
+  - 114: {fileID: 114000013228213506}
   m_Layer: 12
   m_Name: PowerupRed
   m_TagString: Untagged
@@ -86,6 +86,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114000013228213506
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011002378914}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67aa485ed3e8e99488ac4e10e6a58a44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000013350394260
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -98,17 +109,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
---- !u!114 &114000013856949328
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011002378914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71516f5d5cb9f4459f8fa6284a25e9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!212 &212000014150262244
 SpriteRenderer:
   m_ObjectHideFlags: 1

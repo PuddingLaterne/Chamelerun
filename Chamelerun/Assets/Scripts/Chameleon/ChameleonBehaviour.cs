@@ -12,6 +12,4 @@ public class ChameleonBehaviour : MonoBehaviour
 
     public virtual void Reset() { }
     public virtual void ChameleonUpdate() { }
-    
-
 }

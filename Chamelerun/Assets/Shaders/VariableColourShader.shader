@@ -107,20 +107,26 @@ Shader "Chamelerun/VariableColourShader"
 				fixed lightness = luminance(lightmap);
 				fixed4 color = fixed4(gradientMap(lightness, _MainShadows, _MainMidtones, _MainHighlights), lightmap.a);
 
-				fixed4 detailA = tex2D(_DetailMapA, input.uv);
-				if (detailA.a != 0 && detailA.r != 1)
+				if(_DetailAMidtones.a != 0)
 				{
-					color = blend(color, 
-						fixed4(gradientMap(lightness, _DetailAShadows, _DetailAMidtones, _DetailAHighlights), 
-						1 - luminance(detailA)));
+					fixed4 detailA = tex2D(_DetailMapA, input.uv);
+					if (detailA.a != 0 && detailA.r != 1)
+					{
+						color = blend(color, 
+							fixed4(gradientMap(lightness, _DetailAShadows, _DetailAMidtones, _DetailAHighlights), 
+							1 - luminance(detailA)));
+					}
 				}
 
-				fixed4 detailB = tex2D(_DetailMapB, input.uv);
-				if (detailB.a != 0 && detailB.r != 1)
+				if(_DetailBMidtones.a != 0)
 				{
-					color = blend(color, 
-						fixed4(gradientMap(lightness, _DetailBShadows, _DetailBMidtones, _DetailBHilights),
-						1 - luminance(detailB)));
+					fixed4 detailB = tex2D(_DetailMapB, input.uv);
+					if (detailB.a != 0 && detailB.r != 1)
+					{
+						color = blend(color, 
+							fixed4(gradientMap(lightness, _DetailBShadows, _DetailBMidtones, _DetailBHilights),
+							1 - luminance(detailB)));
+					}
 				}
 
 				if (_AmbientInfluence != 0 && lightness != 1)

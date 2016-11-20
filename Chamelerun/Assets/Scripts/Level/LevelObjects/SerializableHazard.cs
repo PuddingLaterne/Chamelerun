@@ -1,38 +1,29 @@
 ﻿using UnityEngine;
-using System.Collections;
-using UnityEngine.Events;
 
-public class SerializableHazard : SerializableLevelObject, PooledObject
+namespace Chamelerun.Serialization
 {
-    public UnityAction OnActivation = delegate { };
 
-    public override LevelObject GetSerializableObject()
+    public class SerializableHazard : SerializableLevelObject
     {
-        return new Hazard(ID, transform.localPosition);
+        public override LevelObject GetSerializableObject()
+        {
+            return new Hazard(ID, transform.localPosition);
+        }
     }
 
-    GameObject PooledObject.GetGameObject() { return gameObject; }
-    void PooledObject.Init() { }
-    void PooledObject.Reset() { }
-
-    public void OnCollisionStay2D(Collision2D collision)
+    public class Hazard : LevelObject
     {
-        OnActivation();
-    }
-}
+        public Hazard() { }
 
-public class Hazard : LevelObject
-{
-    public Hazard() { }
+        public Hazard(int ID, Vector2 position)
+        {
+            this.ID = ID;
+            Position = position;
+        }
 
-    public Hazard(int ID, Vector2 position)
-    {
-        this.ID = ID;
-        Position = position;
-    }
-
-    public override void Spawn(Vector2 positionOffset)
-    {
-        HazardManager.Instance.SpawnHazard(ID, Position + positionOffset);
+        public override void Spawn(Vector2 positionOffset)
+        {
+            HazardSpawner.Instance.SpawnHazard(ID, Position + positionOffset);
+        }
     }
 }

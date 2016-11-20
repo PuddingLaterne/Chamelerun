@@ -1,42 +1,45 @@
 ﻿using UnityEngine;
 
-public class SerializableLevelSegment : MonoBehaviour 
+namespace Chamelerun.Serialization
 {
-    public int ID;
-    public float Width;
-
-    public LevelSegment GetSerializableObject()
+    public class SerializableLevelSegment : MonoBehaviour
     {
-        SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
-        LevelSegment levelSegment = new LevelSegment(ID, Width, levelObjects);
-        return levelSegment;
-    }
-}
+        public int ID;
+        public float Width;
 
-public class LevelSegment
-{
-    public int ID { get; private set; }
-    public float Width { get; private set; }
-    public LevelObject[] LevelObjects { get; private set; }
-
-    public LevelSegment() { }
-
-    public LevelSegment(int ID, float width, SerializableLevelObject[] levelObjects)
-    {
-        this.ID = ID;
-        Width = width;
-        LevelObjects = new LevelObject[levelObjects.Length];
-        for(int i = 0; i < levelObjects.Length; i++)
+        public LevelSegment GetSerializableObject()
         {
-            LevelObjects[i] = levelObjects[i].GetSerializableObject();
+            SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
+            LevelSegment levelSegment = new LevelSegment(ID, Width, levelObjects);
+            return levelSegment;
         }
     }
 
-    public void Spawn(Vector2 positionOffset)
+    public class LevelSegment
     {
-        for (int i = 0; i < LevelObjects.Length; i++)
+        public int ID { get; private set; }
+        public float Width { get; private set; }
+        public LevelObject[] LevelObjects { get; private set; }
+
+        public LevelSegment() { }
+
+        public LevelSegment(int ID, float width, SerializableLevelObject[] levelObjects)
         {
-            LevelObjects[i].Spawn(positionOffset);
+            this.ID = ID;
+            Width = width;
+            LevelObjects = new LevelObject[levelObjects.Length];
+            for (int i = 0; i < levelObjects.Length; i++)
+            {
+                LevelObjects[i] = levelObjects[i].GetSerializableObject();
+            }
+        }
+
+        public void Spawn(Vector2 positionOffset)
+        {
+            for (int i = 0; i < LevelObjects.Length; i++)
+            {
+                LevelObjects[i].Spawn(positionOffset);
+            }
         }
     }
 }

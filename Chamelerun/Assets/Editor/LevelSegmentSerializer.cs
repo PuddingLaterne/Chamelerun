@@ -7,45 +7,48 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-public class LevelSegmentSerializer : EditorWindow 
+namespace Chamelerun.Serialization
 {
-    private string pathName = "Assets/Resources/LevelSegments/";
-
-    [MenuItem("Window/LevelSegmentSerializer")]
-    public static void ShowWindow()
+    public class LevelSegmentSerializer : EditorWindow
     {
-        EditorWindow.GetWindow(typeof(LevelSegmentSerializer));
-    }
+        private string pathName = "Assets/Resources/LevelSegments/";
 
-    public void OnGUI()
-    {
-        pathName = EditorGUILayout.TextField("Path", pathName); 
-
-        if(GUILayout.Button("Serialize"))
+        [MenuItem("Window/LevelSegmentSerializer")]
+        public static void ShowWindow()
         {
-            if (Selection.activeGameObject != null)
+            EditorWindow.GetWindow(typeof(LevelSegmentSerializer));
+        }
+
+        public void OnGUI()
+        {
+            pathName = EditorGUILayout.TextField("Path", pathName);
+
+            if (GUILayout.Button("Serialize"))
             {
-                SerializableLevelSegment levelSegment = Selection.activeGameObject.GetComponent<SerializableLevelSegment>();
-                if (levelSegment != null)
+                if (Selection.activeGameObject != null)
                 {
-                    string fileName = pathName + levelSegment.name + ".xml";
-                    SerializeLevelSegment(fileName, levelSegment);
-                }
-                else
-                {
-                    Debug.LogWarning("selected object is not a level segment");
+                    SerializableLevelSegment levelSegment = Selection.activeGameObject.GetComponent<SerializableLevelSegment>();
+                    if (levelSegment != null)
+                    {
+                        string fileName = pathName + levelSegment.name + ".xml";
+                        SerializeLevelSegment(fileName, levelSegment);
+                    }
+                    else
+                    {
+                        Debug.LogWarning("selected object is not a level segment");
+                    }
                 }
             }
         }
-    }
 
-    public void SerializeLevelSegment(string fileName, SerializableLevelSegment levelSegment)
-    {
-        Type[] extraTypes = {typeof(Powerup), typeof(Hazard)};
-        XmlSerializer serializer = new XmlSerializer(typeof(LevelSegment), extraTypes);
-        Stream fs = new FileStream(fileName, FileMode.Create);
-        XmlWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
-        serializer.Serialize(writer, levelSegment.GetSerializableObject());
-        writer.Close();
+        public void SerializeLevelSegment(string fileName, SerializableLevelSegment levelSegment)
+        {
+            Type[] extraTypes = { typeof(Powerup), typeof(Hazard), typeof(Enemy) };
+            XmlSerializer serializer = new XmlSerializer(typeof(LevelSegment), extraTypes);
+            Stream fs = new FileStream(fileName, FileMode.Create);
+            XmlWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
+            serializer.Serialize(writer, levelSegment.GetSerializableObject());
+            writer.Close();
+        }
     }
 }
