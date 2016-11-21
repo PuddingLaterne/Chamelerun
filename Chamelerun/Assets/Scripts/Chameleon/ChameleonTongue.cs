@@ -28,6 +28,8 @@ public class ChameleonTongue : ChameleonBehaviour
     public int NumSegments;
     public Vector2 OffsetOnBody;
     public float MinLength;
+    public float TongueWidth = 0.5f;
+    public int NumRaycasts = 3;
 
     [Header("Speed")]
     public float ManualLengthVariantSpeed;
@@ -256,31 +258,40 @@ public class ChameleonTongue : ChameleonBehaviour
     private AttachmentState TryAttaching()
     {
         Vector2 direction = Vector2.up.Rotate(currentAngle);
+        Vector2 offsetDirection = direction.Rotate(90);
 
+        bool numRaycastsIsEven = NumRaycasts % 2 == 0;
+        float rayCastOffset = TongueWidth / (numRaycastsIsEven ? NumRaycasts : NumRaycasts - 1);
         RaycastHit2D hit;
-        hit = Physics2D.Raycast(currentOrigin, direction, currentTongueLength, tongueInteractionLayers);
-        if (hit)
+        int i = numRaycastsIsEven ? 1 : 0;
+        while(i <= (numRaycastsIsEven ? (NumRaycasts / 2) : ((NumRaycasts - 1) / 2)))
         {
-            int layer = hit.transform.gameObject.layer.ToBitmask();
-            if (layer.IsPartOfBitmask(AttachmentLayers))
+            hit = Physics2D.Raycast(currentOrigin, direction + offsetDirection * rayCastOffset * i, currentTongueLength, tongueInteractionLayers);
+            if (hit)
             {
-                Attach(hit, direction);
-                return AttachmentState.Attached;
+                int layer = hit.transform.gameObject.layer.ToBitmask();
+                if (layer.IsPartOfBitmask(AttachmentLayers))
+                {
+                    Attach(hit, direction);
+                    return AttachmentState.Attached;
+                }
+                if (layer.IsPartOfBitmask(CollectableLayers))
+                {
+                    attachedObject = hit.transform.gameObject;
+                    return AttachmentState.Collecting;
+                }
+                if (layer.IsPartOfBitmask(DamagingLayers))
+                {
+                    return AttachmentState.Damaged;
+                }
+                if (layer.IsPartOfBitmask(PunchableLayers))
+                {
+                    Punch(hit, direction);
+                    return AttachmentState.Failed;
+                }
             }
-            if (layer.IsPartOfBitmask(CollectableLayers))
-            {
-                attachedObject = hit.transform.gameObject;
-                return AttachmentState.Collecting;
-            }
-            if (layer.IsPartOfBitmask(DamagingLayers))
-            {
-                return AttachmentState.Damaged;
-            }
-            if (layer.IsPartOfBitmask(PunchableLayers))
-            {
-                Punch(hit, direction);
-                return AttachmentState.Failed;
-            }
+            if (rayCastOffset < 0 || i == 0) i++;
+            if (i != 0) rayCastOffset *= -1;
         }
 
         return AttachmentState.None;

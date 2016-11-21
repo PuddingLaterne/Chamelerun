@@ -14,17 +14,17 @@ public static class InputHelper
     private static Vector2 currentTargetPosition;
 
     private static float aimingAngle;
-    private static float horizontalInput;
-    private static float verticalInput;
-    private static bool jumpInput;
-    private static bool tongueInput;
-    private static bool runningInput;
+    private static float horizontalInput, verticalInput;
+    private static bool jumpInput, tongueInput;
 
     private static int lastUpdatedFrameCount;
+
+    private static bool tongueTriggerWasReleased;
 
     public static void Reset()
     {
         lastUpdatedFrameCount = -1;
+        tongueTriggerWasReleased = true;
         timeSinceLastTargetMovement = float.NegativeInfinity;
         currentTargetPosition = defaultTargetPosition;
     }
@@ -74,15 +74,6 @@ public static class InputHelper
         }
     }
 
-    public static bool RunningInput
-    {
-        get
-        {
-            EnsureInputIsUpdated();
-            return runningInput;
-        }
-    }
-
     private static void EnsureInputIsUpdated()
     {
         if (lastUpdatedFrameCount != Time.frameCount)
@@ -95,13 +86,27 @@ public static class InputHelper
     private static void UpdateInput()
     {
         jumpInput = Input.GetButtonDown("Jump") || Input.GetAxis("Jump") != 0;
-        tongueInput = Input.GetButtonDown("Tongue") || Input.GetAxis("Tongue") != 0;
-        runningInput = !Input.GetButton("Run");
+        tongueInput = Input.GetButtonDown("Tongue") || TongueTriggerPushed();
 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
 
         aimingAngle = CalculateAimingAngle();
+    }
+
+    private static bool TongueTriggerPushed()
+    {
+        if (Input.GetAxis("Tongue") == 0f)
+        {
+            tongueTriggerWasReleased = true;
+            return false;
+        }
+        if (tongueTriggerWasReleased && Input.GetAxis("Tongue") == 1f)
+        {
+            tongueTriggerWasReleased = false;
+            return true;
+        }
+        return false;
     }
 
     private static float CalculateAimingAngle()

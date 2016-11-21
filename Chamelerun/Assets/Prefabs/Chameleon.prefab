@@ -379,7 +379,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010860116190}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &4000010860116190
 Transform:
   m_ObjectHideFlags: 1
@@ -391,9 +391,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 4000014255412908}
   - {fileID: 4000010572641910}
   - {fileID: 4000012762978114}
-  - {fileID: 4000014255412908}
   m_Father: {fileID: 4000012726421262}
   m_RootOrder: 0
 --- !u!4 &4000011179715376
@@ -507,7 +507,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010860116190}
-  m_RootOrder: 1
+  m_RootOrder: 2
 --- !u!4 &4000012992020990
 Transform:
   m_ObjectHideFlags: 1
@@ -528,7 +528,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010928646052}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: -1, z: 0}
+  m_LocalPosition: {x: 0, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -644,7 +644,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010860116190}
-  m_RootOrder: 2
+  m_RootOrder: 0
 --- !u!50 &50000010394270282
 Rigidbody2D:
   serializedVersion: 2
@@ -751,7 +751,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Size: {x: 1.2, y: 0.2}
+  m_Size: {x: 0.8, y: 0.2}
 --- !u!114 &114000010858874234
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -830,24 +830,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 251.05206
-      inSlope: 50
-      outSlope: 50
+      value: 5
+      inSlope: 2
+      outSlope: 2
       tangentMode: 10
     - time: 1
-      value: 301.05206
-      inSlope: 50
-      outSlope: 50
+      value: 7
+      inSlope: 2
+      outSlope: 3
       tangentMode: 21
     - time: 2
-      value: 351.05206
-      inSlope: 50
-      outSlope: 100
+      value: 10
+      inSlope: 3
+      outSlope: 5
       tangentMode: 21
     - time: 3
-      value: 451.05206
-      inSlope: 100
-      outSlope: 100
+      value: 15
+      inSlope: 5
+      outSlope: 5
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -870,6 +870,9 @@ MonoBehaviour:
   CollectableLayers:
     serializedVersion: 2
     m_Bits: 4096
+  PunchableLayers:
+    serializedVersion: 2
+    m_Bits: 16384
   DamagingLayers:
     serializedVersion: 2
     m_Bits: 8192
@@ -910,14 +913,30 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartingPosition: {x: 2, y: -1}
   JumpCooldown: 0.1
+  AirJumpTolerance: 0.5
+  GroundTrigger: {fileID: 114000010858874234}
   AirSpeedFraction: 0.8
-  RunningSpeedMultiplier: 1.5
+  Acceleration:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+    - time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
   SwingForce: 2500
   NormalGravitiyScale: 5
   SwingingGravityScale: 10
   KnockBackForce: 15
   KnockBackAngle: 20
-  GroundTrigger: {fileID: 114000010858874234}
 --- !u!114 &114000014208087142
 MonoBehaviour:
   m_ObjectHideFlags: 1

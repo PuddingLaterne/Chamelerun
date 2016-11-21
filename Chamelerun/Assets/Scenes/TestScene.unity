@@ -217,31 +217,15 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 4000013018596916, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000014255412908, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012762978114, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000010572641910, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 61000013503271988, guid: 94f9c0b45216f8646b915e510922cba5,
+    - target: {fileID: 114000011618490064, guid: 94f9c0b45216f8646b915e510922cba5,
         type: 2}
-      propertyPath: m_Size.x
-      value: 0.8
+      propertyPath: TongueWidth
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 114000011618490064, guid: 94f9c0b45216f8646b915e510922cba5,
         type: 2}
-      propertyPath: PunchableLayers.m_Bits
-      value: 16384
+      propertyPath: NumRaycasts
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}

@@ -10,11 +10,15 @@ public class ChameleonMovement : ChameleonBehaviour
     }
 
     public Vector2 StartingPosition;
+
+    [Header("Jumping")]
     public float JumpCooldown = 0.1f;
+    public float AirJumpTolerance = 0.5f;
+    public TriggerZone GroundTrigger;
 
     [Header("Speed")]
     public float AirSpeedFraction = 0.8f;
-    public float RunningSpeedMultiplier = 1.5f;
+    public AnimationCurve Acceleration;
 
     [Header("Swinging")]
     public float SwingForce = 2500;
@@ -25,18 +29,16 @@ public class ChameleonMovement : ChameleonBehaviour
     public float KnockBackForce = 15;
     public float KnockBackAngle = 20;
 
-    public TriggerZone GroundTrigger;
-
     public Direction CurrentDirection { get; private set; }
     public bool TongueIsAttached { get; private set; }
     public bool IsDangling { get; private set; }
 
     private Rigidbody2D rigidBody;
 
-    private bool jumpTriggered;
-    private bool jumpingEnabled;
+    private bool jumpTriggered, jumpingEnabled, isJumping;
 
     private Vector2 lastPosition;
+    private float accelerationTime, lastHorizontalInput;
 
     public override void Init(Chameleon chameleon)
     {
@@ -56,6 +58,7 @@ public class ChameleonMovement : ChameleonBehaviour
 
         jumpingEnabled = true;
         jumpTriggered = false;
+        isJumping = false;
         IsDangling = false;
         TongueIsAttached = false;
 
@@ -64,16 +67,20 @@ public class ChameleonMovement : ChameleonBehaviour
         rigidBody.velocity = Vector2.zero;
         transform.localEulerAngles = Vector3.zero;
 
+        accelerationTime = 0f;
+        lastHorizontalInput = 0f;
+
         GroundTrigger.Reset();
     }
 
     public override void ChameleonUpdate()
     {
         IsDangling = TongueIsAttached && !GroundTrigger.IsActive;
+        isJumping = isJumping && rigidBody.velocity.y > 0;
 
-        if (InputHelper.JumpInput)
+        if (InputHelper.JumpInput && jumpingEnabled)
         {
-            if ((GroundTrigger.IsActive || IsDangling) && jumpingEnabled)
+            if ((GroundTrigger.IsActive || GroundTrigger.InactiveTime < AirJumpTolerance || IsDangling))
             {
                 jumpTriggered = true;
                 StartCoroutine(WaitForJumpCooldown());
@@ -94,41 +101,59 @@ public class ChameleonMovement : ChameleonBehaviour
 	
     public void FixedUpdate()
     {
-        float velocityX = InputHelper.HorizontalInput * Time.fixedDeltaTime;
+        float horizontalInput = InputHelper.HorizontalInput;
         if (!IsDangling)
         {
-            float speed = chameleon.Power.GetGroundSpeed();
-            if (InputHelper.RunningInput)
-            {
-                speed *= RunningSpeedMultiplier;
-            }
-
-            if (GroundTrigger.IsActive)
-            {
-                velocityX *= speed;
-
-                rigidBody.velocity = new Vector2(velocityX, rigidBody.velocity.y);
-            }
-            else
-            {
-                velocityX *= speed * AirSpeedFraction;
-                if (velocityX != 0f)
-                {
-                    rigidBody.velocity = new Vector2(velocityX, rigidBody.velocity.y);
-                }
-            }
+            Move(horizontalInput);
         }
         else
         {
-            rigidBody.AddRelativeForce(new Vector2(velocityX * SwingForce, 0));
+            rigidBody.AddRelativeForce(new Vector2(horizontalInput * SwingForce * Time.fixedDeltaTime, 0));
         }
+        lastHorizontalInput = horizontalInput;
 
         if (jumpTriggered)
         {
-            float jumpStrength = chameleon.Power.GetJumpStrength();
-            rigidBody.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
-            jumpTriggered = false;
+            Jump();
         }
+        else
+        {
+            if (isJumping && !InputHelper.JumpInput && !IsDangling)
+            {
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y / 2f);
+            }
+        }
+    }
+
+    private void Move(float horizontalInput)
+    {
+        float speed;
+        if ((lastHorizontalInput * horizontalInput) < 0 || horizontalInput == 0)
+        {
+            accelerationTime = 0;
+            speed = 0;
+        }
+        else
+        {
+            accelerationTime += Time.fixedDeltaTime;
+            if (!GroundTrigger.IsActive)
+            {
+                horizontalInput *= AirSpeedFraction;
+            }
+            float maxSpeed = chameleon.Power.GetGroundSpeed();
+            float acceleration = Acceleration.Evaluate(accelerationTime);
+            speed = maxSpeed * acceleration * horizontalInput;
+        }
+
+        rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
+    }
+
+    private void Jump()
+    {
+        float jumpStrength = chameleon.Power.GetJumpStrength();
+        rigidBody.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
+        jumpTriggered = false;
+        isJumping = true;
     }
 
     public void KnockBack()
@@ -161,6 +186,7 @@ public class ChameleonMovement : ChameleonBehaviour
     {
         jumpingEnabled = false;
         yield return new WaitForSeconds(JumpCooldown);
+        yield return new WaitUntil(() => GroundTrigger.IsActive);
         jumpingEnabled = true;
     }
 }
