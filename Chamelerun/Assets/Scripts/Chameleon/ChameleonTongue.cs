@@ -155,12 +155,13 @@ public class ChameleonTongue : ChameleonBehaviour
         {
             float lengthChange = InputHelper.VerticalInput * ManualLengthVariantSpeed * Time.deltaTime;
             float targetTongueLength = Mathf.Clamp(currentTongueLength - lengthChange, MinLength, chameleon.Power.GetMaxTongueLength());
-            if(targetTongueLength != currentTongueLength)
+               
+            if (targetTongueLength != currentTongueLength)
             {
-                AdjustTongueLength(targetTongueLength, lengthChange < 0);
+                AdjustTongueLength(targetTongueLength);
             }
             
-            if(InputHelper.JumpInput)
+            if(InputHelper.JumpPressed)
             {
                 Release();
                 StartCoroutine(Retract());  
@@ -336,7 +337,7 @@ public class ChameleonTongue : ChameleonBehaviour
         OnReleased();
     }
 
-    private void AdjustTongueLength(float newLength, bool towardsBody = true)
+    private void AdjustTongueLength(float newLength)
     {
         currentTongueLength = newLength;
         currentSegmentLength = (newLength - endPointRadius * 2f) / NumSegments;
@@ -356,14 +357,6 @@ public class ChameleonTongue : ChameleonBehaviour
             }
 
             Vector2 direction = (End.transform.position - Beginning.transform.position).normalized;
-            if (towardsBody)
-            {
-                tongueSegments[i].Transform.position = currentOrigin + (endPointRadius + currentSegmentLength * (i + 0.5f)) * direction;
-            }
-            else
-            {
-                tongueSegments[i].Transform.position = (Vector2)End.transform.position - (endPointRadius + currentSegmentLength * (NumSegments - i - 0.5f)) * direction;
-            }
         }
 
         StaticTongue.transform.localScale = new Vector3(1, currentTongueLength, 1);

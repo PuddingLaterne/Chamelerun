@@ -24,6 +24,8 @@ public class ChameleonMovement : ChameleonBehaviour
     public float SwingForce = 2500;
     public float NormalGravitiyScale = 5;
     public float SwingingGravityScale = 10;
+    public float SwingReleaseJumpAngle = 70;
+    public float SwingReleaseJumpMultiplier = 5;
 
     [Header("Knockback")]
     public float KnockBackForce = 15;
@@ -78,7 +80,7 @@ public class ChameleonMovement : ChameleonBehaviour
         IsDangling = TongueIsAttached && !GroundTrigger.IsActive;
         isJumping = isJumping && rigidBody.velocity.y > 0;
 
-        if (InputHelper.JumpInput && jumpingEnabled)
+        if (InputHelper.JumpPressed && jumpingEnabled)
         {
             if ((GroundTrigger.IsActive || GroundTrigger.InactiveTime < AirJumpTolerance || IsDangling))
             {
@@ -118,7 +120,7 @@ public class ChameleonMovement : ChameleonBehaviour
         }
         else
         {
-            if (isJumping && !InputHelper.JumpInput && !IsDangling)
+            if (isJumping && !InputHelper.JumpHeld && !IsDangling)
             {
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y / 2f);
             }
@@ -136,13 +138,20 @@ public class ChameleonMovement : ChameleonBehaviour
         else
         {
             accelerationTime += Time.fixedDeltaTime;
-            if (!GroundTrigger.IsActive)
-            {
-                horizontalInput *= AirSpeedFraction;
-            }
             float maxSpeed = chameleon.Power.GetGroundSpeed();
             float acceleration = Acceleration.Evaluate(accelerationTime);
             speed = maxSpeed * acceleration * horizontalInput;
+            if (!GroundTrigger.IsActive)
+            {
+                if (speed * rigidBody.velocity.x > 0 && Mathf.Abs(speed) < Mathf.Abs(rigidBody.velocity.x))
+                {
+                    speed = rigidBody.velocity.x;
+                }
+                else
+                {
+                    speed *= AirSpeedFraction;
+                }
+            }
         }
 
         rigidBody.velocity = new Vector2(speed, rigidBody.velocity.y);
@@ -151,7 +160,12 @@ public class ChameleonMovement : ChameleonBehaviour
     private void Jump()
     {
         float jumpStrength = chameleon.Power.GetJumpStrength();
-        rigidBody.AddForce(Vector2.up * jumpStrength, ForceMode2D.Impulse);
+        Vector2 direction = Vector2.up;
+        if (IsDangling)
+        {
+            direction = direction.Rotate(-SwingReleaseJumpAngle * InputHelper.HorizontalInput) * SwingReleaseJumpMultiplier;
+        }
+        rigidBody.AddForce(direction * jumpStrength, ForceMode2D.Impulse);
         jumpTriggered = false;
         isJumping = true;
     }
@@ -186,7 +200,7 @@ public class ChameleonMovement : ChameleonBehaviour
     {
         jumpingEnabled = false;
         yield return new WaitForSeconds(JumpCooldown);
-        yield return new WaitUntil(() => GroundTrigger.IsActive);
+        yield return new WaitUntil(() => GroundTrigger.IsActive || IsDangling);
         jumpingEnabled = true;
     }
 }

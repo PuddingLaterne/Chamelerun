@@ -879,6 +879,8 @@ MonoBehaviour:
   NumSegments: 3
   OffsetOnBody: {x: 0, y: 0.72}
   MinLength: 0.05
+  TongueWidth: 0.3
+  NumRaycasts: 3
   ManualLengthVariantSpeed: 5
   RetractionSpeed: 20
   ExpansionSpeed: 30
@@ -915,7 +917,7 @@ MonoBehaviour:
   JumpCooldown: 0.1
   AirJumpTolerance: 0.5
   GroundTrigger: {fileID: 114000010858874234}
-  AirSpeedFraction: 0.8
+  AirSpeedFraction: 0.9
   Acceleration:
     serializedVersion: 2
     m_Curve:

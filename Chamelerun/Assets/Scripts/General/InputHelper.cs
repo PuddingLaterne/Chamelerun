@@ -15,16 +15,18 @@ public static class InputHelper
 
     private static float aimingAngle;
     private static float horizontalInput, verticalInput;
-    private static bool jumpInput, tongueInput;
+    private static bool jumpPressed, jumpHeld, tongueInput;
 
     private static int lastUpdatedFrameCount;
 
     private static bool tongueTriggerWasReleased;
+    private static bool jumpTriggerWasReleased;
 
     public static void Reset()
     {
         lastUpdatedFrameCount = -1;
         tongueTriggerWasReleased = true;
+        jumpTriggerWasReleased = true;
         timeSinceLastTargetMovement = float.NegativeInfinity;
         currentTargetPosition = defaultTargetPosition;
     }
@@ -35,6 +37,15 @@ public static class InputHelper
         {
             EnsureInputIsUpdated();
             return aimingAngle;
+        }
+    }
+
+    public static Vector2 Direction
+    {
+        get
+        {
+            EnsureInputIsUpdated();
+            return new Vector2(horizontalInput, verticalInput);
         }
     }
 
@@ -56,12 +67,21 @@ public static class InputHelper
         }
     }
 
-    public static bool JumpInput
+    public static bool JumpPressed
     {
         get
         {
             EnsureInputIsUpdated();
-            return jumpInput;
+            return jumpPressed;
+        }
+    }
+
+    public static bool JumpHeld
+    {
+        get
+        {
+            EnsureInputIsUpdated();
+            return jumpHeld;
         }
     }
 
@@ -85,7 +105,8 @@ public static class InputHelper
 
     private static void UpdateInput()
     {
-        jumpInput = Input.GetButtonDown("Jump") || Input.GetAxis("Jump") != 0;
+        jumpPressed = Input.GetButtonDown("Jump") || JumpTriggerPushed();
+        jumpHeld = Input.GetButton("Jump") || Input.GetAxis("Jump") == 1f;
         tongueInput = Input.GetButtonDown("Tongue") || TongueTriggerPushed();
 
         horizontalInput = Input.GetAxis("Horizontal");
@@ -104,6 +125,21 @@ public static class InputHelper
         if (tongueTriggerWasReleased && Input.GetAxis("Tongue") == 1f)
         {
             tongueTriggerWasReleased = false;
+            return true;
+        }
+        return false;
+    }
+
+    private static bool JumpTriggerPushed()
+    {
+        if (Input.GetAxis("Jump") == 0f)
+        {
+            jumpTriggerWasReleased = true;
+            return false;
+        }
+        if (jumpTriggerWasReleased && Input.GetAxis("Jump") == 1f)
+        {
+            jumpTriggerWasReleased = false;
             return true;
         }
         return false;
