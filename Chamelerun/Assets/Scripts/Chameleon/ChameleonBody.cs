@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChameleonMovement : ChameleonBehaviour 
+public class ChameleonBody : ChameleonBehaviour 
 {
     public enum Direction
     {
+        None = 0,
         Left = -1, 
         Right = 1
     }
@@ -15,19 +16,20 @@ public class ChameleonMovement : ChameleonBehaviour
     public TriggerZone GroundTrigger;
 
     [Header("Speed")]
-    public float AirSpeedFraction = 0.8f;
+    public float AirSpeedFraction = 0.9f;
     public AnimationCurve Acceleration;
 
     [Header("Swinging")]
     public float SwingForce = 2500;
     public float NormalGravitiyScale = 5;
     public float SwingingGravityScale = 10;
-    public float SwingReleaseJumpAngle = 70;
-    public float SwingReleaseJumpMultiplier = 5;
+    public float SwingReleaseJumpAngle = 45;
+    public float SwingReleaseJumpMultiplier = 1;
 
     [Header("Knockback")]
     public float KnockBackForce = 15;
     public float KnockBackAngle = 20;
+    public float KnockBackRecoveryTime = 0.3f;
 
     public Direction CurrentDirection { get; private set; }
     public bool IsDangling { get; private set; }
@@ -35,6 +37,7 @@ public class ChameleonMovement : ChameleonBehaviour
     private Rigidbody2D rigidBody;
 
     private bool jumpTriggered, jumpingEnabled, isJumping;
+    private bool isRecoveringFromKnockBack;
 
     private Vector2 lastPosition;
     private float accelerationTime, lastHorizontalInput;
@@ -55,6 +58,7 @@ public class ChameleonMovement : ChameleonBehaviour
         jumpingEnabled = true;
         jumpTriggered = false;
         isJumping = false;
+        isRecoveringFromKnockBack = false;
 
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
@@ -121,6 +125,8 @@ public class ChameleonMovement : ChameleonBehaviour
 
     private void Move(float horizontalInput)
     {
+        if (isRecoveringFromKnockBack) return;
+
         float speed;
         if ((lastHorizontalInput * horizontalInput) < 0 || horizontalInput == 0)
         {
@@ -162,15 +168,24 @@ public class ChameleonMovement : ChameleonBehaviour
         isJumping = true;
     }
 
-    public void KnockBack()
+    public void KnockBack(Direction direction)
     {
-        Vector2 direction = Vector2.up.Rotate(KnockBackAngle * (int)CurrentDirection);
-        rigidBody.AddForce(direction * KnockBackForce, ForceMode2D.Impulse);
+        Vector2 forceDirection;
+        if (direction != Direction.None)
+        {
+            forceDirection = Vector2.up.Rotate(KnockBackAngle * (int)direction);
+        }
+        else
+        {
+            forceDirection = Vector2.up.Rotate(KnockBackAngle * (int)CurrentDirection);
+        }
+        rigidBody.AddForce(forceDirection * KnockBackForce, ForceMode2D.Impulse);
+        StartCoroutine(WaitForKnockBackRecovery());
     }
 
-    public void Throw(Vector2 force)
+    public void AddImpulse(Vector2 force)
     {
-        rigidBody.AddForce(force);
+        rigidBody.AddForce(force, ForceMode2D.Impulse);
     }
 
     public void OnTongueAttached()
@@ -192,5 +207,12 @@ public class ChameleonMovement : ChameleonBehaviour
         yield return new WaitForSeconds(JumpCooldown);
         yield return new WaitUntil(() => GroundTrigger.IsActive || IsDangling);
         jumpingEnabled = true;
+    }
+
+    private IEnumerator WaitForKnockBackRecovery()
+    {
+        isRecoveringFromKnockBack = true;
+        yield return new WaitForSeconds(KnockBackRecoveryTime);
+        isRecoveringFromKnockBack = false;
     }
 }

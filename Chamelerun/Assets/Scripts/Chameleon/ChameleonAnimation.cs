@@ -57,12 +57,12 @@ public class ChameleonAnimation : ChameleonBehaviour
         }
         Head.transform.localEulerAngles = new Vector3(0, 0, angle);
 
-        if (chameleon.Movement.CurrentDirection == ChameleonMovement.Direction.Left)
+        if (chameleon.Movement.CurrentDirection == ChameleonBody.Direction.Left)
         {
             BodyLeft.SetActive(true);
             BodyRight.SetActive(false);
         }
-        if (chameleon.Movement.CurrentDirection == ChameleonMovement.Direction.Right)
+        if (chameleon.Movement.CurrentDirection == ChameleonBody.Direction.Right)
         {
             BodyLeft.SetActive(false);
             BodyRight.SetActive(true);

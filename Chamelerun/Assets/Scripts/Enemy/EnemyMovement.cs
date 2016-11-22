@@ -10,7 +10,6 @@ public class EnemyMovement : MonoBehaviour
         public float RestTime;
         public float ApproachSpeed;
     }
-
     public Point[] Points;
     public float StoppingDistance = 0.1f;
     public float KnockBackRecoverTime = 0.5f;

@@ -24,15 +24,15 @@ public class HazardSpawner : MonoBehaviour
 
         GameObject hazard = HazardObjectPools[ID].GetObjectFromPool();
         CollisionEventSource eventSource = hazard.GetComponent<CollisionEventSource>();
-        eventSource.OnCollisionStay = (collision) => OnHazardTouched();
+        eventSource.OnCollisionStay = (collision) => OnHazardTouched(hazard);
 
         hazard.transform.position = position;
         hazard.transform.localScale = scale;
         hazard.SetActive(true);
     }
 
-    private void OnHazardTouched()
+    private void OnHazardTouched(GameObject hazard)
     {
-        GameManager.Instance.Chameleon.ApplyDamage();
+        GameManager.Instance.Chameleon.ApplyDamage(hazard);
     }
 }

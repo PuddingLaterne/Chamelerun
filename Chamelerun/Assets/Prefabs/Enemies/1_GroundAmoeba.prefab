@@ -194,13 +194,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Points:
-  - Target: {x: -5, y: 0}
+  - Target: {x: 6, y: 0}
     RestTime: 0
-    ApproachSpeed: 20
-  - Target: {x: 5, y: 0}
+    ApproachSpeed: 50
+  - Target: {x: 1, y: 0}
     RestTime: 0
-    ApproachSpeed: 20
-  StoppingDistance: 0.5
+    ApproachSpeed: 50
+  StoppingDistance: 1
   KnockBackRecoverTime: 0.3
 --- !u!114 &114000013252895658
 MonoBehaviour:
@@ -218,7 +218,7 @@ MonoBehaviour:
   KnockbackForce: 15
   DamagedByPunching: 1
   UpperSideAngle: 90
-  Bounciness: 400
+  Bounciness: 10
   DamagedByBouncing: 1
   PointsForDamage: 5
   PointsForKill: 20
