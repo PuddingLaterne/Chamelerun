@@ -9,8 +9,6 @@ public class ChameleonMovement : ChameleonBehaviour
         Right = 1
     }
 
-    public Vector2 StartingPosition;
-
     [Header("Jumping")]
     public float JumpCooldown = 0.1f;
     public float AirJumpTolerance = 0.5f;
@@ -32,7 +30,6 @@ public class ChameleonMovement : ChameleonBehaviour
     public float KnockBackAngle = 20;
 
     public Direction CurrentDirection { get; private set; }
-    public bool TongueIsAttached { get; private set; }
     public bool IsDangling { get; private set; }
 
     private Rigidbody2D rigidBody;
@@ -45,24 +42,19 @@ public class ChameleonMovement : ChameleonBehaviour
     public override void Init(Chameleon chameleon)
     {
         base.Init(chameleon);
-
         rigidBody = GetComponent<Rigidbody2D>();
-        Reset();
     }
 
     public override void Reset()
     {
         StopAllCoroutines();
 
-        transform.position = StartingPosition;
         lastPosition = transform.position;
         CurrentDirection = Direction.Right;
 
         jumpingEnabled = true;
         jumpTriggered = false;
         isJumping = false;
-        IsDangling = false;
-        TongueIsAttached = false;
 
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
@@ -77,7 +69,7 @@ public class ChameleonMovement : ChameleonBehaviour
 
     public override void ChameleonUpdate()
     {
-        IsDangling = TongueIsAttached && !GroundTrigger.IsActive;
+        IsDangling = chameleon.Tongue.IsAttached && !GroundTrigger.IsActive;
         isJumping = isJumping && rigidBody.velocity.y > 0;
 
         if (InputHelper.JumpPressed && jumpingEnabled)
@@ -185,12 +177,10 @@ public class ChameleonMovement : ChameleonBehaviour
     {
         rigidBody.gravityScale = SwingingGravityScale;
         rigidBody.freezeRotation = false;
-        TongueIsAttached = true;
     }
 
     public void OnTongueReleased()
     {
-        TongueIsAttached = false;
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
         transform.localEulerAngles = Vector3.zero;

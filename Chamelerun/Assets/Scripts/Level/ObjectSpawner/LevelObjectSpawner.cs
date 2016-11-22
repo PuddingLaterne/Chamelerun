@@ -18,12 +18,13 @@ public class LevelObjectSpawner : MonoBehaviour
 
     public ObjectPool[] ObjectPools = new ObjectPool[0];
 
-    public void SpawnLevelObject(int ID, Vector2 position)
+    public void SpawnLevelObject(int ID, Vector2 position, Vector2 scale)
     {
         if (ID >= ObjectPools.Length || ID < 0) return;
 
         GameObject levelObject = ObjectPools[ID].GetObjectFromPool();
         levelObject.transform.position = position;
+        levelObject.transform.localScale = scale;
         levelObject.SetActive(true);
     }
 }

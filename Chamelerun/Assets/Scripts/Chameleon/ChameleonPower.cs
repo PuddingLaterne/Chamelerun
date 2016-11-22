@@ -37,12 +37,6 @@ public class ChameleonPower : ChameleonBehaviour
     private int yellow;
     private int blue;
 
-    public override void Init(Chameleon chameleon)
-    {
-        base.Init(chameleon);
-        Reset();
-    }
-
     public override void Reset()
     {
         powerups = new PowerupType[maxNumPowerups];

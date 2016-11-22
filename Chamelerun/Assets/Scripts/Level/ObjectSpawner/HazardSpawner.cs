@@ -18,7 +18,7 @@ public class HazardSpawner : MonoBehaviour
 
     public ObjectPool[] HazardObjectPools;
 
-    public void SpawnHazard(int ID, Vector2 position)
+    public void SpawnHazard(int ID, Vector2 position, Vector2 scale)
     {
         if (ID >= HazardObjectPools.Length || ID < 0) return;
 
@@ -27,6 +27,7 @@ public class HazardSpawner : MonoBehaviour
         eventSource.OnCollisionStay = (collision) => OnHazardTouched();
 
         hazard.transform.position = position;
+        hazard.transform.localScale = scale;
         hazard.SetActive(true);
     }
 

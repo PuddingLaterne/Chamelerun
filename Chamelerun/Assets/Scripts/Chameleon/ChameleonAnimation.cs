@@ -20,16 +20,6 @@ public class ChameleonAnimation : ChameleonBehaviour
     public GameObject BodyLeft;
     public GameObject BodyRight;
 
-    public override void Init(Chameleon chameleon)
-    {
-        base.Init(chameleon);
-
-        HeadLeft.SetActive(false);
-        HeadCenter.SetActive(false);
-
-        BodyLeft.SetActive(false);
-    }
-
     public override void Reset()
     {
         StopAllCoroutines();
@@ -40,10 +30,6 @@ public class ChameleonAnimation : ChameleonBehaviour
     public override void ChameleonUpdate()
     {
         float angle = InputHelper.AimingAngle;
-        if(chameleon.Movement.TongueIsAttached)
-        {
-            angle = chameleon.Tongue.Beginning.transform.localEulerAngles.z;
-        }
 
         DirectionIndicator.transform.eulerAngles = new Vector3(0, 0, angle);
 

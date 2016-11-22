@@ -38,14 +38,15 @@ public class LevelSegmentManager : MonoBehaviour
 
     public void Reset()
     {
+        BacktrackingTriggerZone.transform.position = Vector3.zero;
         CurrentMaxBacktrackingPositionX = 0;
         currentOuterBound = 0;
     }
 
     public void Update()
     {
-        Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
-        if(Camera.main.transform.position.x + bounds.extents.x + MinCameraDistanceToOuterBound > currentOuterBound)
+        Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
+        while(Camera.main.transform.position.x + bounds.extents.x + MinCameraDistanceToOuterBound > currentOuterBound)
         {
             int segmentID = UnityEngine.Random.Range(0, levelSegments.Count);
             CreateSegment(levelSegments[segmentID]);

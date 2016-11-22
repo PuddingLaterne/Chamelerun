@@ -16,17 +16,28 @@ public class GameManager : MonoBehaviour
     }
     private static GameManager instance;
 
+    public enum State
+    {
+        Start, Game, Pause, End
+    }
+
+    public Vector2 StartingPosition;
+
     public Chameleon Chameleon { get; private set; }
     public PowerupSpawner PowerupManager { get; private set; }
 
     private ObjectPoolManager objectPoolManager;
     private LevelSegmentManager levelSegmentManager;
     private ScoreManager scoreManager;
+    private UIManager UIManager;
+
+    private State gameState;
 
     public void Start()
     {
         Chameleon = FindObjectOfType<Chameleon>();
         Chameleon.Init();
+        Chameleon.gameObject.SetActive(false);
 
         Chameleon.OnAllPowerLost += OnGameOver;
         ScreenBoundaries.OnPlayerLeftScreen += OnGameOver;
@@ -35,38 +46,86 @@ public class GameManager : MonoBehaviour
         cameraFollow.Target = Chameleon.Transform;
 
         scoreManager = ScoreManager.Instance;
+
         objectPoolManager = ObjectPoolManager.Instance;
-        levelSegmentManager = LevelSegmentManager.Instance;
-
         objectPoolManager.Init();
-        levelSegmentManager.Init();
-            
-        UIManager.Instance.Init();
 
-        StartGame();
+        levelSegmentManager = LevelSegmentManager.Instance;
+        levelSegmentManager.Init();
+        levelSegmentManager.enabled = false;
+        
+        UIManager = UIManager.Instance;
+        UIManager.Init();
+        UIManager.OnNavigationAction += OnUINavigationAction;
+
+        SetGameState(State.Start);
     }
 
     public void Update()
     {
-        scoreManager.Update(Chameleon);
+        if (gameState == State.Game)
+        {
+            Chameleon.ChameleonUpdate();
+            scoreManager.Update(Chameleon, StartingPosition.x);
+        }
+
+        if (InputHelper.PausePressed)
+        {
+            SetGameState(gameState == State.Game ? State.Pause : State.Game);
+        }
+    }
+
+    private void OnUINavigationAction(UIManager.NavigationAction action)
+    {
+        switch (action)
+        {
+            case UIManager.NavigationAction.Play:
+                ResetGame();
+                StartGame();
+                break;
+            case UIManager.NavigationAction.Menu:
+                SetGameState(State.Start);
+                break;
+            case UIManager.NavigationAction.Quit:
+                Application.Quit();
+                break;
+        }
     }
 
     private void OnGameOver()
     {
-        StartGame();
+        Chameleon.EnableControl(false);
+        SetGameState(State.End);
+    }
+
+    private void ResetGame()
+    {
+        Chameleon.Reset();
+        objectPoolManager.Reset();
+        levelSegmentManager.Reset();
+        scoreManager.Reset();
+        InputHelper.Reset();
     }
 
     private void StartGame()
     {
-        Chameleon.Reset();
+        Chameleon.Transform.position = StartingPosition;
+        Chameleon.gameObject.SetActive(true);
+        Chameleon.EnableControl(true);
 
-        objectPoolManager.Reset();
-        levelSegmentManager.Reset();
-        scoreManager.Reset();
+        levelSegmentManager.enabled = true;
 
         Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
         Camera.main.transform.position = new Vector3(screenBounds.extents.x, 0, Camera.main.transform.position.z);
 
-        InputHelper.Reset();
+        SetGameState(State.Game);
+    }
+
+    private void SetGameState(State newState)
+    {
+        gameState = newState;
+
+        Time.timeScale = newState == State.Pause ? 0f : 1f;
+        UIManager.SetState(gameState);
     }
 }

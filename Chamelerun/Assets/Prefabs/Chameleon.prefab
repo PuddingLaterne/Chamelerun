@@ -913,7 +913,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 690fdf24af402764d827c207221301b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartingPosition: {x: 2, y: -1}
   JumpCooldown: 0.1
   AirJumpTolerance: 0.5
   GroundTrigger: {fileID: 114000010858874234}
@@ -937,6 +936,8 @@ MonoBehaviour:
   SwingForce: 2500
   NormalGravitiyScale: 5
   SwingingGravityScale: 10
+  SwingReleaseJumpAngle: 45
+  SwingReleaseJumpMultiplier: 1
   KnockBackForce: 15
   KnockBackAngle: 20
 --- !u!114 &114000014208087142

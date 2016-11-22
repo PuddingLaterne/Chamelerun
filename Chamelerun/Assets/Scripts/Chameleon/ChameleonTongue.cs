@@ -58,7 +58,7 @@ public class ChameleonTongue : ChameleonBehaviour
     private float currentAngle;
     private Vector2 currentOrigin;
 
-    private bool isAttached;
+    public bool IsAttached { get; private set; }
     private bool isExpanding;
     private bool isRetracting;
 
@@ -124,7 +124,7 @@ public class ChameleonTongue : ChameleonBehaviour
 
         AdjustTongueLength(MinLength);
 
-        isAttached = false;
+        IsAttached = false;
         isExpanding = false;
         isRetracting = false;
 
@@ -140,7 +140,7 @@ public class ChameleonTongue : ChameleonBehaviour
 
         if(InputHelper.TongueInput && !isExpanding && !isRetracting)
         {
-            if(isAttached)
+            if(IsAttached)
             {
                 Release();
                 StartCoroutine(Retract());  
@@ -151,7 +151,7 @@ public class ChameleonTongue : ChameleonBehaviour
             }
         }
 
-        if(isAttached)
+        if(IsAttached)
         {
             float lengthChange = InputHelper.VerticalInput * ManualLengthVariantSpeed * Time.deltaTime;
             float targetTongueLength = Mathf.Clamp(currentTongueLength - lengthChange, MinLength, chameleon.Power.GetMaxTongueLength());
@@ -316,7 +316,7 @@ public class ChameleonTongue : ChameleonBehaviour
         End.connectedAnchor = hit.rigidbody.transform.InverseTransformPoint(hit.point);
         End.enabled = true;
         
-        isAttached = true;
+        IsAttached = true;
         OnAttached();
     }
 
@@ -333,7 +333,7 @@ public class ChameleonTongue : ChameleonBehaviour
         End.enabled = false;
         End.connectedBody = null;
         
-        isAttached = false;
+        IsAttached = false;
         OnReleased();
     }
 
@@ -355,8 +355,6 @@ public class ChameleonTongue : ChameleonBehaviour
             {
                 tongueSegments[i].Joint.connectedAnchor = new Vector2(0, -currentSegmentLength / 2f);
             }
-
-            Vector2 direction = (End.transform.position - Beginning.transform.position).normalized;
         }
 
         StaticTongue.transform.localScale = new Vector3(1, currentTongueLength, 1);

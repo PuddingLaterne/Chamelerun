@@ -1,4 +1,5 @@
-﻿using UnityEngine.Events;
+﻿using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 
 public class ScoreManager 
@@ -54,19 +55,24 @@ public class ScoreManager
     }
     private float currentTravelledDistance;
 
+    public float CurrentTime { get; private set; }
+    private float startTime;
+
     public void Reset()
     {
         CurrentScore = 0;
         CurrentTravelledDistance = 0;
+        startTime = Time.time;
     }
 
-    public void Update(Chameleon chameleon)
+    public void Update(Chameleon chameleon, float baseOffset)
     {
-        float currentDistanceToStart = chameleon.Position.x;
+        float currentDistanceToStart = chameleon.Position.x - baseOffset;
         if (currentDistanceToStart > CurrentTravelledDistance)
         {
             CurrentTravelledDistance = currentDistanceToStart;
         }
+        CurrentTime = Time.time - startTime;
     }
 
     public void AddPointsForPowerup()

@@ -60,7 +60,15 @@ public class Chameleon : MonoBehaviour
         }
     }
 
-    public void Update()
+    public void EnableControl(bool enabled)
+    {
+        foreach (ChameleonBehaviour behaviour in behaviours)
+        {
+            behaviour.enabled = enabled;
+        }
+    }
+
+    public void ChameleonUpdate()
     {
         foreach (ChameleonBehaviour behaviour in behaviours)
         {

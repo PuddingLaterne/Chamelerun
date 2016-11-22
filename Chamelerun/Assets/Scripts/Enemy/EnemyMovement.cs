@@ -6,12 +6,11 @@ public class EnemyMovement : MonoBehaviour
     [System.Serializable]
     public struct Point
     {
-        public Transform Transform;
+        public Vector2 Target;
         public float RestTime;
         public float ApproachSpeed;
     }
 
-    public Transform StartPoint;
     public Point[] Points;
     public float StoppingDistance = 0.1f;
     public float KnockBackRecoverTime = 0.5f;
@@ -31,9 +30,9 @@ public class EnemyMovement : MonoBehaviour
 
     public void OnEnable()
     {
-        if (StartPoint != null)
+        for (int i = 0; i < Points.Length; i++)
         {
-            transform.position = StartPoint.position;
+            Points[i].Target = (Vector2)transform.position + Points[i].Target;
         }
         currentTargetPoint = 0;
         isResting = false;
@@ -51,7 +50,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
 
-        Vector2 direction = (Points[currentTargetPoint].Transform.position - transform.position).normalized;
+        Vector2 direction = (Points[currentTargetPoint].Target - (Vector2)transform.position).normalized;
         rigidBody.velocity = direction * Points[currentTargetPoint].ApproachSpeed * Time.deltaTime;
 
         CheckTargetReached();
@@ -65,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckTargetReached()
     {
-        if (Vector2.Distance(transform.position, Points[currentTargetPoint].Transform.position) <= StoppingDistance)
+        if (Vector2.Distance(transform.position, Points[currentTargetPoint].Target) <= StoppingDistance)
         {
             StartCoroutine(RestForSeconds(Points[currentTargetPoint].RestTime));
             currentTargetPoint = currentTargetPoint < Points.Length - 1 ? currentTargetPoint + 1 : 0;

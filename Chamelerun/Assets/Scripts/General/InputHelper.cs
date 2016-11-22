@@ -16,6 +16,7 @@ public static class InputHelper
     private static float aimingAngle;
     private static float horizontalInput, verticalInput;
     private static bool jumpPressed, jumpHeld, tongueInput;
+    private static bool pausePressed, confirmPressed;
 
     private static int lastUpdatedFrameCount;
 
@@ -94,6 +95,24 @@ public static class InputHelper
         }
     }
 
+    public static bool PausePressed
+    {
+        get
+        {
+            EnsureInputIsUpdated();
+            return pausePressed;
+        }
+    }
+
+    public static bool ConfirmPressed
+    {
+        get
+        {
+            EnsureInputIsUpdated();
+            return confirmPressed;
+        }
+    }
+
     private static void EnsureInputIsUpdated()
     {
         if (lastUpdatedFrameCount != Time.frameCount)
@@ -108,6 +127,9 @@ public static class InputHelper
         jumpPressed = Input.GetButtonDown("Jump") || JumpTriggerPushed();
         jumpHeld = Input.GetButton("Jump") || Input.GetAxis("Jump") == 1f;
         tongueInput = Input.GetButtonDown("Tongue") || TongueTriggerPushed();
+
+        pausePressed = Input.GetButtonDown("Pause");
+        confirmPressed = Input.GetButtonDown("Confirm");
 
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");

@@ -17,9 +17,6 @@ public class CameraTargetTracking : MonoBehaviour
     public float SmoothTime;
     public float TargetDistanceThreshold;
 
-    public float MaxPositionY;
-    public float MinPositionY;
-
     private Vector3 velocity;
 
     public void LateUpdate()
@@ -57,13 +54,9 @@ public class CameraTargetTracking : MonoBehaviour
             targetPos.x = LevelSegmentManager.Instance.CurrentMaxBacktrackingPositionX + screenBounds.extents.x;
         }
 
-        if (targetPos.y + screenBounds.extents.y > MaxPositionY)
+        if (targetPos.y - screenBounds.extents.y < 0)
         {
-            targetPos.y = MaxPositionY - screenBounds.extents.y;
-        }
-        else if (targetPos.y - screenBounds.extents.y < MinPositionY)
-        {
-            targetPos.y = MinPositionY + screenBounds.extents.y;
+            targetPos.y = screenBounds.extents.y;
         }
 
         transform.position = targetPos;
