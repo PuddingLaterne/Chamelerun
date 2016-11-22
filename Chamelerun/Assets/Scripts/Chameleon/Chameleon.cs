@@ -10,7 +10,7 @@ public class Chameleon : MonoBehaviour
     public UnityAction OnPowerChanged = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
-    public ChameleonMovement Movement { get; private set; }
+    public ChameleonBody Movement { get; private set; }
     public ChameleonTongue Tongue { get; private set; }
     public ChameleonAnimation Animation { get; private set; }
     public ChameleonPower Power { get; private set; }
@@ -26,7 +26,7 @@ public class Chameleon : MonoBehaviour
 
     public void Init()
     {
-        Movement = GetComponentInChildren<ChameleonMovement>();
+        Movement = GetComponentInChildren<ChameleonBody>();
         Tongue = GetComponentInChildren<ChameleonTongue>();
         Animation = GetComponentInChildren<ChameleonAnimation>();
         Power = GetComponentInChildren<ChameleonPower>();
@@ -81,19 +81,26 @@ public class Chameleon : MonoBehaviour
         Power.AddPowerup(type);
     }
 
-    public void ApplyDamage()
+    public void ApplyDamage(GameObject source = null)
     {
         if (!isInvincible)
         {
             StartCoroutine(WaitForInvincibilityTime());
-            Movement.KnockBack();
+
+            ChameleonBody.Direction direction = ChameleonBody.Direction.None;
+            if (source != null)
+            {
+                direction = source.transform.position.x < Position.x ? ChameleonBody.Direction.Left : ChameleonBody.Direction.Right;
+            }
+            Movement.KnockBack(direction);
+
             Power.RemovePowerup();
         }
     }
 
     public void Bounce(Vector2 force)
     {
-        Movement.Throw(force);
+        Movement.AddImpulse(force);
     }
 
     private IEnumerator WaitForInvincibilityTime()
