@@ -28,14 +28,14 @@ public class ChameleonTongue : ChameleonBehaviour
     public int NumSegments;
     public Vector2 OffsetOnBody;
     public float MinLength;
-    public float TongueWidth = 0.5f;
-    public int NumRaycasts = 3;
+    public float TongueWidthFraction = 0.04f;
+    public int NumRaycasts = 5;
 
     [Header("Speed")]
-    public float ManualLengthVariantSpeed;
-    public float RetractionSpeed;
-    public float ExpansionSpeed;
-
+    public float ManualLengthVariantSpeed = 5;
+    public float RetractionSpeedMultiplier = 4;
+    public float ExpansionSpeedMultiplier = 8;
+    
     [Header("References")]
     public GameObject DynamicTongue;
     public GameObject StaticTongue;
@@ -138,8 +138,9 @@ public class ChameleonTongue : ChameleonBehaviour
     {
         currentOrigin = chameleon.Position + OffsetOnBody;
 
-        if(InputHelper.TongueInput && !isExpanding && !isRetracting)
+        if(InputHelper.TongueInput && !isExpanding)// && !isRetracting)
         {
+            StopAllCoroutines();
             if(IsAttached)
             {
                 Release();
@@ -172,11 +173,18 @@ public class ChameleonTongue : ChameleonBehaviour
     private IEnumerator Expand()
     {
         isExpanding = true;
+        isRetracting = false;
+
         DynamicTongue.SetActive(false);
         StaticTongue.SetActive(true);
 
         float lengthDifference, newLength, maxLength;      
         AttachmentState attachmentState = AttachmentState.None;
+
+        maxLength = chameleon.Power.GetMaxTongueLength();
+        float expansionSpeed = maxLength * ExpansionSpeedMultiplier;
+        float retractionSpeed = maxLength * RetractionSpeedMultiplier;
+        float tongueWidth = maxLength * TongueWidthFraction;
 
         while(isExpanding || isRetracting)
         {
@@ -184,8 +192,7 @@ public class ChameleonTongue : ChameleonBehaviour
             StaticTongue.transform.eulerAngles = new Vector3(0, 0, currentAngle);
             StaticTongue.transform.position = currentOrigin;
 
-            maxLength = chameleon.Power.GetMaxTongueLength();
-            lengthDifference = (isExpanding ? ExpansionSpeed : -RetractionSpeed) * Time.fixedDeltaTime;
+            lengthDifference = (isExpanding ? expansionSpeed : -retractionSpeed) * Time.fixedDeltaTime;
             newLength = Mathf.Clamp(currentTongueLength + lengthDifference, MinLength, maxLength);
 
             AdjustTongueLength(newLength);
@@ -205,7 +212,7 @@ public class ChameleonTongue : ChameleonBehaviour
 
             if (attachmentState == AttachmentState.None)
             {
-                attachmentState = TryAttaching();
+                attachmentState = TryAttaching(tongueWidth);
                 switch (attachmentState)
                 {
                     case AttachmentState.Attached:
@@ -240,9 +247,10 @@ public class ChameleonTongue : ChameleonBehaviour
     {
         isRetracting = true;
         bool targetLengthReached = false;
+        float retractionSpeed = chameleon.Power.GetMaxTongueLength() * RetractionSpeedMultiplier;
         while (!targetLengthReached)
         {
-            float newLength = currentTongueLength - RetractionSpeed * Time.fixedDeltaTime;
+            float newLength = currentTongueLength - retractionSpeed * Time.fixedDeltaTime;
             if (newLength <= MinLength)
             {
                 newLength = MinLength;
@@ -256,13 +264,13 @@ public class ChameleonTongue : ChameleonBehaviour
         StaticTongue.SetActive(false);
     }
 
-    private AttachmentState TryAttaching()
+    private AttachmentState TryAttaching(float tongueWidth)
     {
         Vector2 direction = Vector2.up.Rotate(currentAngle);
         Vector2 offsetDirection = direction.Rotate(90);
 
         bool numRaycastsIsEven = NumRaycasts % 2 == 0;
-        float rayCastOffset = TongueWidth / (numRaycastsIsEven ? NumRaycasts : NumRaycasts - 1);
+        float rayCastOffset = (tongueWidth) / (numRaycastsIsEven ? NumRaycasts : NumRaycasts - 1);
         RaycastHit2D hit;
         int i = numRaycastsIsEven ? 1 : 0;
         while(i <= (numRaycastsIsEven ? (NumRaycasts / 2) : ((NumRaycasts - 1) / 2)))
@@ -345,10 +353,12 @@ public class ChameleonTongue : ChameleonBehaviour
         distanceJoint.distance = newLength;
         firstJoint.connectedAnchor = new Vector2(0, -currentSegmentLength / 2f);
 
+        float tongueWidth = chameleon.Power.GetMaxTongueLength() * TongueWidthFraction;
+
         for (int i = 0; i < NumSegments; i++)
         {
             tongueSegments[i].Collider.size = new Vector2(tongueSegments[i].Collider.size.x, currentSegmentLength);
-            tongueSegments[i].Sprite.localScale = new Vector3(tongueSegments[i].Sprite.localScale.x, currentSegmentLength, 1);
+            tongueSegments[i].Sprite.localScale = new Vector3(tongueWidth, currentSegmentLength, 1);
 
             tongueSegments[i].Joint.anchor = new Vector2(0, currentSegmentLength / 2f);
             if (i != NumSegments - 1)
@@ -357,7 +367,7 @@ public class ChameleonTongue : ChameleonBehaviour
             }
         }
 
-        StaticTongue.transform.localScale = new Vector3(1, currentTongueLength, 1);
+        StaticTongue.transform.localScale = new Vector3(tongueWidth, currentTongueLength, 1);
     }
 
     private void Punch(RaycastHit2D hit, Vector2 direction)

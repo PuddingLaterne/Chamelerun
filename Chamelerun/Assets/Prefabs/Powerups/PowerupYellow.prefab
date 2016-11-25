@@ -38,6 +38,7 @@ GameObject:
   - 58: {fileID: 58000012988028340}
   - 114: {fileID: 114000013581789314}
   - 114: {fileID: 114000013213627018}
+  - 114: {fileID: 114000011899253540}
   m_Layer: 12
   m_Name: PowerupYellow
   m_TagString: Untagged
@@ -86,6 +87,17 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &114000011899253540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013129695782}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a976bf2def15e49b25cb58f9dc6e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000013213627018
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -17,8 +17,6 @@ public class LevelSegmentManager : MonoBehaviour
     }
     private static LevelSegmentManager instance;
 
-    public TriggerEventSource BacktrackingTriggerZone; 
-
     public string ResourceDirectory = "LevelSegments";
     public float MinCameraDistanceToOuterBound;
     public float MaxBacktrackingScreenFraction;
@@ -31,14 +29,12 @@ public class LevelSegmentManager : MonoBehaviour
 
     public void Init()
     {
-        BacktrackingTriggerZone.OnTriggerExit += OnBacktrackingTriggerZoneExit;
         LevelSegmentLoader segmentLoader = new LevelSegmentLoader();
         levelSegments = segmentLoader.LoadLevelSegments(ResourceDirectory);        
     }
 
     public void Reset()
     {
-        BacktrackingTriggerZone.transform.position = Vector3.zero;
         CurrentMaxBacktrackingPositionX = 0;
         currentOuterBound = 0;
     }
@@ -56,15 +52,6 @@ public class LevelSegmentManager : MonoBehaviour
         if(maxBacktrackingPositionX > CurrentMaxBacktrackingPositionX)
         {
             CurrentMaxBacktrackingPositionX = maxBacktrackingPositionX;
-            BacktrackingTriggerZone.transform.position = new Vector3(CurrentMaxBacktrackingPositionX, 0, 0);
-        }
-    }
-
-    private void OnBacktrackingTriggerZoneExit(GameObject gameObject)
-    {
-        if (gameObject.transform.position.x < CurrentMaxBacktrackingPositionX)
-        {
-            gameObject.SetActive(false);
         }
     }
 

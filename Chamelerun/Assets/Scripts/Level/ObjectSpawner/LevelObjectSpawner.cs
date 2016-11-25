@@ -23,6 +23,10 @@ public class LevelObjectSpawner : MonoBehaviour
         if (ID >= ObjectPools.Length || ID < 0) return;
 
         GameObject levelObject = ObjectPools[ID].GetObjectFromPool();
+
+        TriggerEventForwarder eventForwarder = levelObject.GetComponentInChildren<TriggerEventForwarder>();
+        eventForwarder.OnLeftBacktrackingArea = () => levelObject.SetActive(false);
+        
         levelObject.transform.position = position;
         levelObject.transform.localScale = scale;
         levelObject.SetActive(true);

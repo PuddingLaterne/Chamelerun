@@ -44,6 +44,7 @@ GameObject:
   - 61: {fileID: 61000011073163966}
   - 114: {fileID: 114000010506207668}
   - 114: {fileID: 114000012455380894}
+  - 114: {fileID: 114000013510937786}
   m_Layer: 14
   m_Name: 1_GroundAmoeba
   m_TagString: Untagged
@@ -224,6 +225,17 @@ MonoBehaviour:
   PointsForKill: 20
   PowerupDroppedOnDamaged: 0
   PowerupDroppedOnKilled: 3
+--- !u!114 &114000013510937786
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012441119878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a976bf2def15e49b25cb58f9dc6e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000013912800854
 MonoBehaviour:
   m_ObjectHideFlags: 1

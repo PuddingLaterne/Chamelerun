@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         Chameleon.gameObject.SetActive(false);
 
         Chameleon.OnAllPowerLost += OnGameOver;
-        ScreenBoundaries.OnPlayerLeftScreen += OnGameOver;
+        Chameleon.GetComponentInChildren<TriggerEventForwarder>().OnLeftScreen += OnGameOver;
 
         CameraTargetTracking cameraFollow = Camera.main.GetComponent<CameraTargetTracking>();
         cameraFollow.Target = Chameleon.Transform;

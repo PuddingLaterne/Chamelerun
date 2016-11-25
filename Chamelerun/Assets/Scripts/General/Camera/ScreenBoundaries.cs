@@ -4,14 +4,11 @@ using UnityEngine.Events;
 
 public class ScreenBoundaries : MonoBehaviour 
 {
-    public EdgeCollider2D Boundaries;
-    public EdgeCollider2D Bottom;
-
-    public static UnityAction OnPlayerLeftScreen = delegate { };
+    private EdgeCollider2D boundary;
 
     public void Start()
     {
-        Bottom.GetComponent<TriggerEventSource>().OnTriggerEnter += (gameObject) => OnPlayerLeftScreen();
+        boundary = GetComponent<EdgeCollider2D>();
     }
 
     public void Update()
@@ -23,7 +20,6 @@ public class ScreenBoundaries : MonoBehaviour
         boundaryPoints[1] = new Vector2(-bounds.extents.x, bounds.extents.y);
         boundaryPoints[2] = new Vector2(bounds.extents.x, bounds.extents.y);
         boundaryPoints[3] = new Vector2(bounds.extents.x, -bounds.extents.y);
-        Boundaries.points = boundaryPoints;
-        Bottom.points = new Vector2[] { boundaryPoints[0], boundaryPoints[3] };
+        boundary.points = boundaryPoints;
     }
 }

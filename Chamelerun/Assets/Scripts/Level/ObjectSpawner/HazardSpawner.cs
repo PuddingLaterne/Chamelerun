@@ -23,8 +23,12 @@ public class HazardSpawner : MonoBehaviour
         if (ID >= HazardObjectPools.Length || ID < 0) return;
 
         GameObject hazard = HazardObjectPools[ID].GetObjectFromPool();
-        CollisionEventSource eventSource = hazard.GetComponent<CollisionEventSource>();
+
+        CollisionEventSource eventSource = hazard.GetComponentInChildren<CollisionEventSource>();
         eventSource.OnCollisionStay = (collision) => OnHazardTouched(hazard);
+
+        TriggerEventForwarder eventForwarder = hazard.GetComponentInChildren<TriggerEventForwarder>();
+        eventForwarder.OnLeftBacktrackingArea = () => hazard.SetActive(false);
 
         hazard.transform.position = position;
         hazard.transform.localScale = scale;

@@ -47,6 +47,9 @@ public class PowerupSpawner : MonoBehaviour
         TriggerEventSource eventSource = powerup.GetComponent<TriggerEventSource>();
         eventSource.OnTriggerEnter = (_) => OnPowerupTouched(powerup, type);
 
+        TriggerEventForwarder eventForwarder = powerup.GetComponentInChildren<TriggerEventForwarder>();
+        eventForwarder.OnLeftBacktrackingArea = () => powerup.SetActive(false);
+
         powerup.transform.position = position;
         powerup.SetActive(true);
     }

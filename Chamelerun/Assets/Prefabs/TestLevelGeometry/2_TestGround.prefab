@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000011545368022}
   - 61: {fileID: 61000010280215586}
   - 50: {fileID: 50000011551842474}
+  - 114: {fileID: 114000013229782006}
   m_Layer: 9
   m_Name: Geometry
   m_TagString: Untagged
@@ -103,6 +104,17 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
+--- !u!114 &114000013229782006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012303138876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a976bf2def15e49b25cb58f9dc6e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000014170858332
 MonoBehaviour:
   m_ObjectHideFlags: 1

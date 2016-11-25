@@ -27,6 +27,7 @@ GameObject:
   - 50: {fileID: 50000012162226504}
   - 114: {fileID: 114000012482151660}
   - 114: {fileID: 114000011600817574}
+  - 114: {fileID: 114000010852983490}
   m_Layer: 14
   m_Name: 0_Amoeba
   m_TagString: Untagged
@@ -136,6 +137,17 @@ MonoBehaviour:
   PointsForKill: 10
   PowerupDroppedOnDamaged: 1
   PowerupDroppedOnKilled: 0
+--- !u!114 &114000010852983490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012096806026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1a976bf2def15e49b25cb58f9dc6e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000011600817574
 MonoBehaviour:
   m_ObjectHideFlags: 1
