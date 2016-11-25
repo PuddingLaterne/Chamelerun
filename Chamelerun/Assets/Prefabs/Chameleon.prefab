@@ -465,7 +465,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013018596916}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &4000012612380142
 Transform:
   m_ObjectHideFlags: 1
@@ -495,7 +495,7 @@ Transform:
   - {fileID: 4000013814292000}
   - {fileID: 4000011800676870}
   m_Father: {fileID: 4000013018596916}
-  m_RootOrder: 0
+  m_RootOrder: 1
 --- !u!4 &4000012762978114
 Transform:
   m_ObjectHideFlags: 1
@@ -533,8 +533,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4000012726421262}
   - {fileID: 4000012241430182}
+  - {fileID: 4000012726421262}
   m_Father: {fileID: 4000011179715376}
   m_RootOrder: 0
 --- !u!4 &4000013091438534
@@ -933,9 +933,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
+      value: 0.5
+      inSlope: 1.5060663
+      outSlope: 1.5060663
       tangentMode: 0
     - time: 1
       value: 1
