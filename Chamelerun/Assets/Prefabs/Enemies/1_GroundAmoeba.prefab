@@ -197,12 +197,11 @@ MonoBehaviour:
   Points:
   - Target: {x: 6, y: 0}
     RestTime: 0
-    ApproachSpeed: 50
   - Target: {x: 1, y: 0}
     RestTime: 0
-    ApproachSpeed: 50
   StoppingDistance: 1
   KnockBackRecoverTime: 0.3
+  MoveSpeed: 40
 --- !u!114 &114000013252895658
 MonoBehaviour:
   m_ObjectHideFlags: 1

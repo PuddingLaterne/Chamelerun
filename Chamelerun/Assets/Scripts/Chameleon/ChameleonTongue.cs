@@ -138,7 +138,7 @@ public class ChameleonTongue : ChameleonBehaviour
     {
         currentOrigin = chameleon.Position + OffsetOnBody;
 
-        if(InputHelper.TongueInput && !isExpanding)// && !isRetracting)
+        if(InputHelper.TongueInput && !isExpanding)
         {
             StopAllCoroutines();
             if(IsAttached)

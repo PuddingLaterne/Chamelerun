@@ -10,7 +10,7 @@ public class Chameleon : MonoBehaviour
     public UnityAction OnPowerChanged = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
-    public ChameleonBody Movement { get; private set; }
+    public ChameleonBody Body { get; private set; }
     public ChameleonTongue Tongue { get; private set; }
     public ChameleonAnimation Animation { get; private set; }
     public ChameleonPower Power { get; private set; }
@@ -18,7 +18,7 @@ public class Chameleon : MonoBehaviour
     private List<ChameleonBehaviour> behaviours = new List<ChameleonBehaviour>();
     private bool isInvincible;
 
-    public Transform Transform { get { return Movement.transform; } }
+    public Transform Transform { get { return Body.transform; } }
     public Vector2 Position { get { return Transform.position; } }
 
     public PowerupType[] CurrentPowerups { get { return Power.Powerups; } }
@@ -26,12 +26,12 @@ public class Chameleon : MonoBehaviour
 
     public void Init()
     {
-        Movement = GetComponentInChildren<ChameleonBody>();
+        Body = GetComponentInChildren<ChameleonBody>();
         Tongue = GetComponentInChildren<ChameleonTongue>();
         Animation = GetComponentInChildren<ChameleonAnimation>();
         Power = GetComponentInChildren<ChameleonPower>();
 
-        behaviours.Add(Movement);
+        behaviours.Add(Body);
         behaviours.Add(Tongue);
         behaviours.Add(Power);
         behaviours.Add(Animation);
@@ -41,8 +41,8 @@ public class Chameleon : MonoBehaviour
             behaviour.Init(this);
         }
 
-        Tongue.OnAttached += () => { Movement.OnTongueAttached(); };
-        Tongue.OnReleased += () => { Movement.OnTongueReleased(); };
+        Tongue.OnAttached += () => { Body.OnTongueAttached(); };
+        Tongue.OnReleased += () => { Body.OnTongueReleased(); };
 
         Power.OnAllPowerLost += () => { OnAllPowerLost(); };
         Power.OnPowerChanged += () => { OnPowerChanged(); };
@@ -92,7 +92,7 @@ public class Chameleon : MonoBehaviour
             {
                 direction = source.transform.position.x < Position.x ? ChameleonBody.Direction.Left : ChameleonBody.Direction.Right;
             }
-            Movement.KnockBack(direction);
+            Body.KnockBack(direction);
 
             Power.RemovePowerup();
         }
@@ -100,7 +100,7 @@ public class Chameleon : MonoBehaviour
 
     public void Bounce(Vector2 force)
     {
-        Movement.AddImpulse(force);
+        Body.AddImpulse(force);
     }
 
     private IEnumerator WaitForInvincibilityTime()

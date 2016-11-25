@@ -8,11 +8,20 @@ public class EnemyMovement : MonoBehaviour
     {
         public Vector2 Target;
         public float RestTime;
-        public float ApproachSpeed;
     }
+
+    [System.Serializable]
+    public enum Speed
+    {
+        Slow = 10,
+        Normal = 40,
+        Fast = 100
+    }
+
     public Point[] Points;
     public float StoppingDistance = 0.1f;
     public float KnockBackRecoverTime = 0.5f;
+    public Speed MoveSpeed = Speed.Normal;
 
     private Rigidbody2D rigidBody;
     private TriggerZone groundTrigger;
@@ -50,7 +59,7 @@ public class EnemyMovement : MonoBehaviour
         }
 
         Vector2 direction = (Points[currentTargetPoint].Target - (Vector2)transform.position).normalized;
-        rigidBody.velocity = direction * Points[currentTargetPoint].ApproachSpeed * Time.deltaTime;
+        rigidBody.velocity = direction * (int)MoveSpeed * Time.deltaTime;
 
         CheckTargetReached();
     }

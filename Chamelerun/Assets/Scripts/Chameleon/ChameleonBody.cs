@@ -37,6 +37,7 @@ public class ChameleonBody : ChameleonBehaviour
     private Rigidbody2D rigidBody;
 
     private bool jumpTriggered, jumpingEnabled, isJumping;
+    private bool isFlying;
     private bool isRecoveringFromKnockBack;
 
     private Vector2 lastPosition;
@@ -59,6 +60,7 @@ public class ChameleonBody : ChameleonBehaviour
         jumpTriggered = false;
         isJumping = false;
         isRecoveringFromKnockBack = false;
+        isFlying = false;
 
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
@@ -75,6 +77,7 @@ public class ChameleonBody : ChameleonBehaviour
     {
         IsDangling = chameleon.Tongue.IsAttached && !GroundTrigger.IsActive;
         isJumping = isJumping && rigidBody.velocity.y > 0;
+        isFlying = isFlying && !GroundTrigger.IsActive;
 
         if (InputHelper.JumpPressed && jumpingEnabled)
         {
@@ -127,28 +130,28 @@ public class ChameleonBody : ChameleonBehaviour
     {
         if (isRecoveringFromKnockBack) return;
 
-        float speed;
-        if ((lastHorizontalInput * horizontalInput) < 0 || horizontalInput == 0)
+        accelerationTime += Time.fixedDeltaTime;
+        float maxSpeed = chameleon.Power.GetGroundSpeed();
+        float acceleration = Acceleration.Evaluate(accelerationTime);
+        float speed = maxSpeed * acceleration * horizontalInput;
+
+        if (!GroundTrigger.IsActive)
         {
-            accelerationTime = 0;
-            speed = 0;
+            if (Mathf.Abs(speed) < Mathf.Abs(rigidBody.velocity.x) && isFlying)
+            {
+                speed = rigidBody.velocity.x;
+            }
+            else
+            {
+                speed *= AirSpeedFraction;
+            }
         }
         else
         {
-            accelerationTime += Time.fixedDeltaTime;
-            float maxSpeed = chameleon.Power.GetGroundSpeed();
-            float acceleration = Acceleration.Evaluate(accelerationTime);
-            speed = maxSpeed * acceleration * horizontalInput;
-            if (!GroundTrigger.IsActive)
+            if ((lastHorizontalInput * horizontalInput) < 0 || horizontalInput == 0)
             {
-                if (speed * rigidBody.velocity.x > 0 && Mathf.Abs(speed) < Mathf.Abs(rigidBody.velocity.x))
-                {
-                    speed = rigidBody.velocity.x;
-                }
-                else
-                {
-                    speed *= AirSpeedFraction;
-                }
+                accelerationTime = 0;
+                speed = 0;
             }
         }
 
@@ -170,6 +173,7 @@ public class ChameleonBody : ChameleonBehaviour
 
     public void KnockBack(Direction direction)
     {
+        isFlying = false;
         Vector2 forceDirection;
         if (direction != Direction.None)
         {
@@ -185,17 +189,20 @@ public class ChameleonBody : ChameleonBehaviour
 
     public void AddImpulse(Vector2 force)
     {
+        isFlying = false;
         rigidBody.AddForce(force, ForceMode2D.Impulse);
     }
 
     public void OnTongueAttached()
     {
+        isFlying = false;
         rigidBody.gravityScale = SwingingGravityScale;
         rigidBody.freezeRotation = false;
     }
 
     public void OnTongueReleased()
     {
+        isFlying = !GroundTrigger.IsActive;
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
         transform.localEulerAngles = Vector3.zero;
