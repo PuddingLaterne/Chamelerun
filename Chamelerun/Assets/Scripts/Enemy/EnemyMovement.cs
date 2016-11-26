@@ -23,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
     public float KnockBackRecoverTime = 0.5f;
     public Speed MoveSpeed = Speed.Normal;
 
+    private Point[] currentPoints;
     private Rigidbody2D rigidBody;
     private TriggerZone groundTrigger;
 
@@ -38,9 +39,10 @@ public class EnemyMovement : MonoBehaviour
 
     public void OnEnable()
     {
+        currentPoints = new Point[Points.Length];
         for (int i = 0; i < Points.Length; i++)
         {
-            Points[i].Target = (Vector2)transform.position + Points[i].Target;
+            currentPoints[i].Target = (Vector2)transform.position + Points[i].Target;
         }
         currentTargetPoint = 0;
         isResting = false;
@@ -57,8 +59,7 @@ public class EnemyMovement : MonoBehaviour
             rigidBody.velocity = Vector2.zero;
             return;
         }
-
-        Vector2 direction = (Points[currentTargetPoint].Target - (Vector2)transform.position).normalized;
+        Vector2 direction = (currentPoints[currentTargetPoint].Target - (Vector2)transform.position).normalized;
         rigidBody.velocity = direction * (int)MoveSpeed * Time.deltaTime;
 
         CheckTargetReached();
@@ -72,10 +73,10 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckTargetReached()
     {
-        if (Vector2.Distance(transform.position, Points[currentTargetPoint].Target) <= StoppingDistance)
+        if (Vector2.Distance(transform.position, currentPoints[currentTargetPoint].Target) <= StoppingDistance)
         {
-            StartCoroutine(RestForSeconds(Points[currentTargetPoint].RestTime));
-            currentTargetPoint = currentTargetPoint < Points.Length - 1 ? currentTargetPoint + 1 : 0;
+            StartCoroutine(RestForSeconds(currentPoints[currentTargetPoint].RestTime));
+            currentTargetPoint = currentTargetPoint < currentPoints.Length - 1 ? currentTargetPoint + 1 : 0;
         }
     }
 
