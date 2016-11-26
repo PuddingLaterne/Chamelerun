@@ -6,6 +6,8 @@
 /[Tt]emp/
 /[Oo]bj/
 /[Bb]uild/
+/Chamelerun/[Bb]uild/
+
 /[Bb]uilds/
 /Assets/AssetStoreTools*
 

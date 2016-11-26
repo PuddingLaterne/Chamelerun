@@ -91,8 +91,17 @@ Shader "Chamelerun/VariableColourShader"
 				output.pos = UnityObjectToClipPos(input.vertex);
 				output.uv = TRANSFORM_TEX(input.uv, _LightMap);
 
-				float3 vertexToLightSource = float3(unity_4LightPosX0[0], unity_4LightPosY0[0], unity_4LightPosZ0[0]) - mul(unity_ObjectToWorld, input.vertex);
-				output.vertexLighting = 1.0 / (1.0 + unity_4LightAtten0[0] * dot(vertexToLightSource, vertexToLightSource)) * unity_LightColor[0];
+				float3 vertexLighting;
+
+				for (int index = 0; index < 4; index++)
+				{	   
+					float3 vertexToLightSource = float3(unity_4LightPosX0[index], unity_4LightPosY0[index], unity_4LightPosZ0[index]) - 
+						mul(unity_ObjectToWorld, input.vertex);
+					vertexLighting += 1.0 / (1.0 + unity_4LightAtten0[0] * dot(vertexToLightSource, vertexToLightSource)) * 
+						unity_LightColor[index];
+				}
+
+				output.vertexLighting = vertexLighting;
 
 				if(_UseFog == 1)
 				{

@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: TestCloud
+  m_Name: Background
   m_Shader: {fileID: 4800000, guid: 9a3c1bbcc312a6b4b841c8dc31a4ba97, type: 3}
   m_ShaderKeywords: _EMISSION
   m_LightmapFlags: 1
@@ -60,7 +60,7 @@ Material:
     - first:
         name: _LightMap
       second:
-        m_Texture: {fileID: 2800000, guid: 4d0e7932564aad24c93e214a950a91da, type: 3}
+        m_Texture: {fileID: 2800000, guid: 059d6ac28cb47d644b684bf76d6ecbe9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -114,7 +114,7 @@ Material:
       second: 1
     - first:
         name: _LightInfluence
-      second: 0
+      second: 1
     - first:
         name: _Metallic
       second: 0
@@ -172,10 +172,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 0.85294116, g: 1, b: 0.95740366, a: 1}
+      second: {r: 0.79692906, g: 0.9852941, b: 0.8917611, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.41782007, g: 0.5836535, b: 0.61764705, a: 1}
+      second: {r: 0.3464533, g: 0.499129, b: 0.5294118, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0.15686275, g: 0.16862746, b: 0.19215688, a: 1}
+      second: {r: 0.09488538, g: 0.19852942, b: 0.1727971, a: 1}
