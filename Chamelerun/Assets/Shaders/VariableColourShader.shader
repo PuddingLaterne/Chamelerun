@@ -4,6 +4,7 @@ Shader "Chamelerun/VariableColourShader"
 {
 	Properties
 	{
+		[MaterialToggle] _UseFog("Use Fog", Float) = 1
 		_AmbientInfluence("Ambient Influence", Range(0, 1)) = 0.5
 		_LightInfluence("Light Influence", Range(0, 1)) = 0.5
 		_LightMap ("LightMap", 2D) = "white" {}
@@ -59,6 +60,7 @@ Shader "Chamelerun/VariableColourShader"
 				UNITY_FOG_COORDS(2)
 			};
 
+			float _UseFog;
 			float _AmbientInfluence;
 			float _LightInfluence;
 
@@ -92,7 +94,10 @@ Shader "Chamelerun/VariableColourShader"
 				float3 vertexToLightSource = float3(unity_4LightPosX0[0], unity_4LightPosY0[0], unity_4LightPosZ0[0]) - mul(unity_ObjectToWorld, input.vertex);
 				output.vertexLighting = 1.0 / (1.0 + unity_4LightAtten0[0] * dot(vertexToLightSource, vertexToLightSource)) * unity_LightColor[0];
 
-				UNITY_TRANSFER_FOG(output, output.pos);
+				if(_UseFog == 1)
+				{
+					UNITY_TRANSFER_FOG(output, output.pos);
+				}
 
 				return output;
 			}
@@ -143,7 +148,10 @@ Shader "Chamelerun/VariableColourShader"
 					}
 				}
 
-				UNITY_APPLY_FOG(input.fogCoord, color);
+				if(_UseFog == 1)
+				{
+					UNITY_APPLY_FOG(input.fogCoord, color);
+				}
 				return color;
 			}
 

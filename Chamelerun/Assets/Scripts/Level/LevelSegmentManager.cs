@@ -27,16 +27,43 @@ public class LevelSegmentManager : MonoBehaviour
     private float maxBacktrackingDistance;
     private float currentOuterBound;
 
+    private BackgroundLayer[] backgroundLayers;
+
+    public void OnEnable()
+    {
+        foreach (BackgroundLayer layer in backgroundLayers)
+        {
+            layer.gameObject.SetActive(true);
+        }
+    }
+
+    public void OnDisable()
+    {
+        foreach (BackgroundLayer layer in backgroundLayers)
+        {
+            layer.gameObject.SetActive(false);
+        }
+    }
+
     public void Init()
     {
         LevelSegmentLoader segmentLoader = new LevelSegmentLoader();
-        levelSegments = segmentLoader.LoadLevelSegments(ResourceDirectory);        
+        levelSegments = segmentLoader.LoadLevelSegments(ResourceDirectory);
+        backgroundLayers = FindObjectsOfType<BackgroundLayer>();
+        foreach (BackgroundLayer layer in backgroundLayers)
+        {
+            layer.Init();
+        }
     }
 
     public void Reset()
     {
         CurrentMaxBacktrackingPositionX = 0;
         currentOuterBound = 0;
+        foreach (BackgroundLayer layer in backgroundLayers)
+        {
+            layer.Reset();
+        }
     }
 
     public void Update()

@@ -178,7 +178,7 @@ MonoBehaviour:
     RestTime: 0
   StoppingDistance: 0.1
   KnockBackRecoverTime: 0.2
-  MoveSpeed: 10
+  MoveSpeed: 40
 --- !u!114 &114000012482151660
 MonoBehaviour:
   m_ObjectHideFlags: 1
