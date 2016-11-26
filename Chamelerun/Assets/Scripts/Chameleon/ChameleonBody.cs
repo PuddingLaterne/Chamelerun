@@ -31,6 +31,14 @@ public class ChameleonBody : ChameleonBehaviour
     public float KnockBackAngle = 20;
     public float KnockBackRecoveryTime = 0.3f;
 
+    [Header("Walljumping")]
+    public LayerMask WallJumpLayers;
+    public float WallAngleTolerance = 30;
+    public float WallJumpGravityScale = 0.5f;
+    public float WallStickDuration = 0.5f;
+    public float WallJumpAngle = 30;
+    public float WallJumpMultiplier = 1.2f;
+
     public Direction CurrentDirection { get; private set; }
     public bool IsDangling { get; private set; }
 
@@ -40,6 +48,10 @@ public class ChameleonBody : ChameleonBehaviour
     private bool isFlying;
     private bool isRecoveringFromKnockBack;
 
+    private bool isStickingToWall, isJumpingFromWall;
+    private Vector2 wallJumpDirection;
+    private GameObject stickedToWall;
+
     private Vector2 lastPosition;
     private float accelerationTime, lastHorizontalInput;
 
@@ -47,6 +59,10 @@ public class ChameleonBody : ChameleonBehaviour
     {
         base.Init(chameleon);
         rigidBody = GetComponent<Rigidbody2D>();
+
+        CollisionEventSource collisionEventSource = GetComponent<CollisionEventSource>();
+        collisionEventSource.OnCollisionEnter += CollisionEnter;
+        collisionEventSource.OnCollisionExit += CollisionExit;
     }
 
     public override void Reset()
@@ -61,6 +77,8 @@ public class ChameleonBody : ChameleonBehaviour
         isJumping = false;
         isRecoveringFromKnockBack = false;
         isFlying = false;
+        isStickingToWall = false;
+        isJumpingFromWall = false;
 
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
@@ -76,8 +94,11 @@ public class ChameleonBody : ChameleonBehaviour
     public override void ChameleonUpdate()
     {
         IsDangling = chameleon.Tongue.IsAttached && !GroundTrigger.IsActive;
+
         isJumping = isJumping && rigidBody.velocity.y > 0;
         isFlying = isFlying && !GroundTrigger.IsActive;
+
+        isJumpingFromWall = isJumpingFromWall && !(GroundTrigger.IsActive);
 
         if (InputHelper.JumpPressed && jumpingEnabled)
         {
@@ -86,33 +107,31 @@ public class ChameleonBody : ChameleonBehaviour
                 jumpTriggered = true;
                 StartCoroutine(WaitForJumpCooldown());
             }
+            if (isStickingToWall)
+            {
+                jumpTriggered = true;
+                StartCoroutine(WaitForJumpCooldown());
+            }
         }
 
         Vector2 positionDifference = ((Vector2)transform.position - lastPosition);
-        if (positionDifference.x < 0)
+        if(positionDifference.x < 0)
         {
             CurrentDirection = Direction.Left;
         }
-        if (positionDifference.x > 0)
+        else if(positionDifference.x > 0)
         {
             CurrentDirection = Direction.Right;
+        }
+        else
+        {
+            CurrentDirection = Direction.None;
         }
         lastPosition = transform.position;
     }
 	
     public void FixedUpdate()
     {
-        float horizontalInput = InputHelper.HorizontalInput;
-        if (!IsDangling)
-        {
-            Move(horizontalInput);
-        }
-        else
-        {
-            rigidBody.AddRelativeForce(new Vector2(horizontalInput * SwingForce * Time.fixedDeltaTime, 0));
-        }
-        lastHorizontalInput = horizontalInput;
-
         if (jumpTriggered)
         {
             Jump();
@@ -124,11 +143,22 @@ public class ChameleonBody : ChameleonBehaviour
                 rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y / 2f);
             }
         }
+
+        float horizontalInput = InputHelper.HorizontalInput;
+        if (!IsDangling)
+        {
+            Move(horizontalInput);
+        }
+        else
+        {
+            rigidBody.AddRelativeForce(new Vector2(horizontalInput * SwingForce * Time.fixedDeltaTime, 0));
+        }
+        lastHorizontalInput = horizontalInput;
     }
 
     private void Move(float horizontalInput)
     {
-        if (isRecoveringFromKnockBack) return;
+        if (isRecoveringFromKnockBack || isJumpingFromWall) return;
 
         accelerationTime += Time.fixedDeltaTime;
         float maxSpeed = chameleon.Power.GetGroundSpeed();
@@ -164,7 +194,13 @@ public class ChameleonBody : ChameleonBehaviour
         Vector2 direction = Vector2.up;
         if (IsDangling)
         {
-            direction = direction.Rotate(-SwingReleaseJumpAngle * InputHelper.HorizontalInput) * SwingReleaseJumpMultiplier;
+            direction = direction.Rotate(-SwingReleaseJumpAngle * Mathf.Sign(InputHelper.HorizontalInput)) * SwingReleaseJumpMultiplier;
+        }
+        else if (isStickingToWall)
+        {
+            direction = wallJumpDirection;
+            ReleaseWall();
+            isJumpingFromWall = true;
         }
         rigidBody.AddForce(direction * jumpStrength, ForceMode2D.Impulse);
         jumpTriggered = false;
@@ -195,6 +231,8 @@ public class ChameleonBody : ChameleonBehaviour
 
     public void OnTongueAttached()
     {
+        ReleaseWall();
+        isJumpingFromWall = false;
         isFlying = false;
         rigidBody.gravityScale = SwingingGravityScale;
         rigidBody.freezeRotation = false;
@@ -212,7 +250,7 @@ public class ChameleonBody : ChameleonBehaviour
     {
         jumpingEnabled = false;
         yield return new WaitForSeconds(JumpCooldown);
-        yield return new WaitUntil(() => GroundTrigger.IsActive || IsDangling);
+        yield return new WaitUntil(() => GroundTrigger.IsActive || IsDangling || isStickingToWall);
         jumpingEnabled = true;
     }
 
@@ -221,5 +259,54 @@ public class ChameleonBody : ChameleonBehaviour
         isRecoveringFromKnockBack = true;
         yield return new WaitForSeconds(KnockBackRecoveryTime);
         isRecoveringFromKnockBack = false;
+    }
+
+    private void CollisionEnter(Collision2D collision)
+    {
+        if (!chameleon.Tongue.IsAttached && !GroundTrigger.IsActive && 
+            collision.gameObject.layer.ToBitmask().IsPartOfBitmask(WallJumpLayers))
+        {            
+            float collisionAngle = (-collision.contacts[0].normal).GetAngle();
+            if (collisionAngle.Approximately(90, WallAngleTolerance))
+            {
+                StickToWall(collision.gameObject, Direction.Right);
+            }
+            if (collisionAngle.Approximately(270, WallAngleTolerance))
+            {
+                StickToWall(collision.gameObject, Direction.Left);
+            }
+        }
+    }
+
+    private void CollisionExit(Collision2D collision)
+    {
+        if (stickedToWall != null && collision.gameObject == stickedToWall)
+        {
+            ReleaseWall();
+        }
+    }
+
+    private void StickToWall(GameObject wallObject, Direction jumpDirection)
+    {
+        stickedToWall = wallObject;
+        wallJumpDirection = Vector2.up.Rotate(-WallJumpAngle * (int)jumpDirection) * WallJumpMultiplier;
+        StopCoroutine(WaitForReleaseWall());
+        StartCoroutine(WaitForReleaseWall());
+    }
+
+    private void ReleaseWall()
+    {
+        StopCoroutine(WaitForReleaseWall());
+        isStickingToWall = false;
+        rigidBody.gravityScale = IsDangling ? SwingingGravityScale : NormalGravitiyScale;
+    }
+
+    private IEnumerator WaitForReleaseWall()
+    {
+        isStickingToWall = true;
+        rigidBody.gravityScale = WallJumpGravityScale;
+        yield return new WaitForSeconds(WallStickDuration);
+        isStickingToWall = false;
+        rigidBody.gravityScale = IsDangling ? SwingingGravityScale : NormalGravitiyScale;
     }
 }

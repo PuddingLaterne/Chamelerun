@@ -54,6 +54,7 @@ GameObject:
   - 50: {fileID: 50000014264343050}
   - 61: {fileID: 61000011042537752}
   - 114: {fileID: 114000010157448424}
+  - 114: {fileID: 114000012965391220}
   m_Layer: 8
   m_Name: Body
   m_TagString: Untagged
@@ -914,6 +915,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InvincibilityTime: 0.5
+--- !u!114 &114000012965391220
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010928646052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36f89b391674a5247aa2ec6db606e404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114000013868322942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -953,6 +965,14 @@ MonoBehaviour:
   KnockBackForce: 15
   KnockBackAngle: 20
   KnockBackRecoveryTime: 0.3
+  WallJumpLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  WallJumpGravityScale: 1
+  WallJumpAngleTolerance: 30
+  WallJumpTolerance: 1
+  WallJumpAngle: 30
+  WallJumpMultiplier: 1.2
 --- !u!114 &114000014208087142
 MonoBehaviour:
   m_ObjectHideFlags: 1

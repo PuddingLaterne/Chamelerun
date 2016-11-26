@@ -3342,24 +3342,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000011618490064, guid: 94f9c0b45216f8646b915e510922cba5,
-        type: 2}
-      propertyPath: PowerSlurpRecoveryTime
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000011618490064, guid: 94f9c0b45216f8646b915e510922cba5,
-        type: 2}
-      propertyPath: PowerSlurpImpulse
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012241430182, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4000012726421262, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
-      propertyPath: m_RootOrder
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
   m_IsPrefabParent: 0

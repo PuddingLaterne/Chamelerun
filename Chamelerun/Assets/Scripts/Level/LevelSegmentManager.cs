@@ -41,6 +41,8 @@ public class LevelSegmentManager : MonoBehaviour
 
     public void Update()
     {
+        if (levelSegments.Count == 0) return;
+
         Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
         while(Camera.main.transform.position.x + bounds.extents.x + MinCameraDistanceToOuterBound > currentOuterBound)
         {
