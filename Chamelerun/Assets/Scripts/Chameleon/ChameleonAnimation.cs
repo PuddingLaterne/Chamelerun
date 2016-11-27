@@ -2,7 +2,7 @@
 using System.Collections;
 using DG.Tweening;
 
-public class ChameleonAnimation : ChameleonBehaviour 
+public class ChameleonAnimation : MonoBehaviour 
 {
     public float ScaleVariationSpeed = 0.1f;
     public float ScaleVariation = 1.1f; 
@@ -20,14 +20,21 @@ public class ChameleonAnimation : ChameleonBehaviour
     public GameObject BodyLeft;
     public GameObject BodyRight;
 
-    public override void Reset()
+    private ChameleonBody body;
+
+    public void Init(ChameleonBody body)
+    {
+        this.body = body;
+    }
+
+    public void Reset()
     {
         StopAllCoroutines();
         transform.DOKill();
         transform.localScale = Vector3.one;
     }
 
-    public override void ChameleonUpdate()
+    public void ChameleonUpdate()
     {
         float angle = InputHelper.AimingAngle;
 
@@ -57,12 +64,12 @@ public class ChameleonAnimation : ChameleonBehaviour
         }
         Head.transform.localEulerAngles = new Vector3(0, 0, angle);
 
-        if (chameleon.Body.CurrentDirection == ChameleonBody.Direction.Left)
+        if (body.CurrentDirection == ChameleonBody.Direction.Left)
         {
             BodyLeft.SetActive(true);
             BodyRight.SetActive(false);
         }
-        if (chameleon.Body.CurrentDirection == ChameleonBody.Direction.Right)
+        if (body.CurrentDirection == ChameleonBody.Direction.Right)
         {
             BodyLeft.SetActive(false);
             BodyRight.SetActive(true);

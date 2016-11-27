@@ -59,7 +59,7 @@ public class LevelSegmentPicker
         int segmentID = -1;
         if (!currentSegment.HasValue)
         {
-            segmentID = 0;
+            segmentID = 3;
         }
         else
         {

@@ -2719,7 +2719,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 1262700977}
   - 114: {fileID: 1262700976}
-  - 114: {fileID: 1262700978}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2756,20 +2755,6 @@ Transform:
   - {fileID: 524387960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1262700978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1262700975}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee59166e846aacf46bd34d6c020b8745, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ResourceDirectory: LevelSegments
-  MinCameraDistanceToOuterBound: 0
-  MaxBacktrackingScreenFraction: 1
 --- !u!1 &1272300855
 GameObject:
   m_ObjectHideFlags: 0
@@ -3773,6 +3758,11 @@ Prefab:
         type: 2}
       propertyPath: WallJumpGravityScale
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000013868322942, guid: 94f9c0b45216f8646b915e510922cba5,
+        type: 2}
+      propertyPath: WallJumpStrength
+      value: 32.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}

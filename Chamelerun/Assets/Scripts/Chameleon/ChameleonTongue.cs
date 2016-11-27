@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using System.Collections;
 
-public class ChameleonTongue : ChameleonBehaviour 
+public class ChameleonTongue : MonoBehaviour
 {
     private struct TongueSegment
     {
@@ -45,6 +45,7 @@ public class ChameleonTongue : ChameleonBehaviour
 
     public UnityAction OnAttached = delegate { };
     public UnityAction OnReleased = delegate { };
+    public UnityAction OnHurt = delegate { };
 
     private LayerMask tongueInteractionLayers;
 
@@ -64,9 +65,13 @@ public class ChameleonTongue : ChameleonBehaviour
 
     private GameObject attachedObject;
 
-    public override void Init(Chameleon chameleon)
+    private ChameleonPower power;
+    private ChameleonBody body;
+
+    public void Init(ChameleonBody body, ChameleonPower power)
     {
-        base.Init(chameleon);
+        this.body = body;
+        this.power = power;
 
         tongueInteractionLayers = AttachmentLayers | CollectableLayers | DamagingLayers | PunchableLayers;
 
@@ -118,7 +123,7 @@ public class ChameleonTongue : ChameleonBehaviour
         tongueSegments[NumSegments - 1].Joint.anchor = new Vector2(0, currentSegmentLength / 2f);
     }
 
-    public override void Reset()
+    public void Reset()
     {
         StopAllCoroutines();
 
@@ -134,9 +139,9 @@ public class ChameleonTongue : ChameleonBehaviour
         attachedObject = null;
     }
 
-    public override void ChameleonUpdate()
+    public void ChameleonUpdate()
     {
-        currentOrigin = chameleon.Position + OffsetOnBody;
+        currentOrigin = body.Position + OffsetOnBody;
 
         if(InputHelper.TongueInput && !isExpanding)
         {
@@ -155,7 +160,7 @@ public class ChameleonTongue : ChameleonBehaviour
         if(IsAttached)
         {
             float lengthChange = InputHelper.VerticalInput * ManualLengthVariantSpeed * Time.deltaTime;
-            float targetTongueLength = Mathf.Clamp(currentTongueLength - lengthChange, MinLength, chameleon.Power.GetMaxTongueLength());
+            float targetTongueLength = Mathf.Clamp(currentTongueLength - lengthChange, MinLength, power.GetMaxTongueLength());
                
             if (targetTongueLength != currentTongueLength)
             {
@@ -181,7 +186,7 @@ public class ChameleonTongue : ChameleonBehaviour
         float lengthDifference, newLength, maxLength;      
         AttachmentState attachmentState = AttachmentState.None;
 
-        maxLength = chameleon.Power.GetMaxTongueLength();
+        maxLength = power.GetMaxTongueLength();
         float expansionSpeed = maxLength * ExpansionSpeedMultiplier;
         float retractionSpeed = maxLength * RetractionSpeedMultiplier;
         float tongueWidth = maxLength * TongueWidthFraction;
@@ -222,7 +227,7 @@ public class ChameleonTongue : ChameleonBehaviour
                     case AttachmentState.Damaged:
                         isExpanding = false;
                         isRetracting = true;
-                        chameleon.ApplyDamage();
+                        OnHurt();
                         break;
                     case AttachmentState.Collecting:
                         isExpanding = false;
@@ -247,7 +252,7 @@ public class ChameleonTongue : ChameleonBehaviour
     {
         isRetracting = true;
         bool targetLengthReached = false;
-        float retractionSpeed = chameleon.Power.GetMaxTongueLength() * RetractionSpeedMultiplier;
+        float retractionSpeed = power.GetMaxTongueLength() * RetractionSpeedMultiplier;
         while (!targetLengthReached)
         {
             float newLength = currentTongueLength - retractionSpeed * Time.fixedDeltaTime;
@@ -353,7 +358,7 @@ public class ChameleonTongue : ChameleonBehaviour
         distanceJoint.distance = newLength;
         firstJoint.connectedAnchor = new Vector2(0, -currentSegmentLength / 2f);
 
-        float tongueWidth = chameleon.Power.GetMaxTongueLength() * TongueWidthFraction;
+        float tongueWidth = power.GetMaxTongueLength() * TongueWidthFraction;
 
         for (int i = 0; i < NumSegments; i++)
         {

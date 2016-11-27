@@ -10,76 +10,69 @@ public class Chameleon : MonoBehaviour
     public UnityAction OnPowerChanged = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
-    public ChameleonBody Body { get; private set; }
-    public ChameleonTongue Tongue { get; private set; }
-    public ChameleonAnimation Animation { get; private set; }
-    public ChameleonPower Power { get; private set; }
+    public Transform Transform { get { return body.transform; } }
+    public Vector2 Position { get { return body.Position; } }
 
-    private List<ChameleonBehaviour> behaviours = new List<ChameleonBehaviour>();
+    public PowerupType[] CurrentPowerups { get { return power.Powerups; } }
+    public int CurrentPower { get { return power.Power; } }
+    public PowerLevel CurrentPowerLevel { get{ return power.PowerLevel; } }
+
+    private ChameleonBody body;
+    private ChameleonTongue tongue;
+    private ChameleonAnimation anim;
+    private ChameleonPower power;
+
     private bool isInvincible;
-
-    public Transform Transform { get { return Body.transform; } }
-    public Vector2 Position { get { return Transform.position; } }
-
-    public PowerupType[] CurrentPowerups { get { return Power.Powerups; } }
-    public int CurrentPower { get { return Power.Power; } }
-    public PowerLevel CurrentPowerLevel { get{ return Power.PowerLevel; } }
 
     public void Init()
     {
-        Body = GetComponentInChildren<ChameleonBody>();
-        Tongue = GetComponentInChildren<ChameleonTongue>();
-        Animation = GetComponentInChildren<ChameleonAnimation>();
-        Power = GetComponentInChildren<ChameleonPower>();
+        body = GetComponentInChildren<ChameleonBody>();
+        tongue = GetComponentInChildren<ChameleonTongue>();
+        anim = GetComponentInChildren<ChameleonAnimation>();
+        power = GetComponentInChildren<ChameleonPower>();
 
-        behaviours.Add(Body);
-        behaviours.Add(Tongue);
-        behaviours.Add(Power);
-        behaviours.Add(Animation);
+        body.Init(tongue, power);
+        tongue.Init(body, power);
+        anim.Init(body);
 
-        foreach (ChameleonBehaviour behaviour in behaviours)
-        {
-            behaviour.Init(this);
-        }
+        tongue.OnAttached += () => body.OnTongueAttached();
+        tongue.OnReleased += () => body.OnTongueReleased();
+        tongue.OnHurt += () => ApplyDamage();
 
-        Tongue.OnAttached += () => { Body.OnTongueAttached(); };
-        Tongue.OnReleased += () => { Body.OnTongueReleased(); };
-
-        Power.OnAllPowerLost += () => { OnAllPowerLost(); };
-        Power.OnPowerChanged += () => { OnPowerChanged(); };
+        power.OnAllPowerLost += () => OnAllPowerLost();
+        power.OnPowerChanged += () => OnPowerChanged();
     }
 
     public void Reset()
     {
         StopAllCoroutines();
 
-        isInvincible = false;
+        body.Reset();
+        tongue.Reset();
+        power.Reset();
+        anim.Reset();
 
-        foreach (ChameleonBehaviour behaviour in behaviours)
-        {
-            behaviour.Reset();
-        }
+        isInvincible = false;
     }
 
     public void EnableControl(bool enabled)
     {
-        foreach (ChameleonBehaviour behaviour in behaviours)
-        {
-            behaviour.enabled = enabled;
-        }
+        body.enabled = enabled;
+        tongue.enabled = enabled;
+        power.enabled = enabled;
+        anim.enabled = enabled;
     }
 
     public void ChameleonUpdate()
     {
-        foreach (ChameleonBehaviour behaviour in behaviours)
-        {
-            behaviour.ChameleonUpdate();
-        }
+        body.ChameleonUpdate();
+        tongue.ChameleonUpdate();
+        anim.ChameleonUpdate();
     }
 
     public void AddPowerup(PowerupType type)
     {
-        Power.AddPowerup(type);
+        power.AddPowerup(type);
     }
 
     public void ApplyDamage(GameObject source = null)
@@ -93,23 +86,23 @@ public class Chameleon : MonoBehaviour
             {
                 direction = source.transform.position.x < Position.x ? ChameleonBody.Direction.Left : ChameleonBody.Direction.Right;
             }
-            Body.KnockBack(direction);
+            body.KnockBack(direction);
 
-            Power.RemovePowerup();
+            power.RemovePowerup();
         }
     }
 
     public void Bounce(Vector2 force)
     {
-        Body.AddImpulse(force);
+        body.AddImpulse(force);
     }
 
     private IEnumerator WaitForInvincibilityTime()
     {
         isInvincible = true;
-        Animation.IndicateInvinbility(true);
+        anim.IndicateInvinbility(true);
         yield return new WaitForSeconds(InvincibilityTime);
         isInvincible = false;
-        Animation.IndicateInvinbility(false);
+        anim.IndicateInvinbility(false);
     }
 }

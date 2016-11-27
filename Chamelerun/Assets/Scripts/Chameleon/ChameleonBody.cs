@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ChameleonBody : ChameleonBehaviour 
+public class ChameleonBody : MonoBehaviour 
 {
     public enum Direction
     {
         None = 0,
         Left = -1, 
         Right = 1
+    }
+
+    private enum JumpType
+    {
+        None,
+        Normal, Wall, Swinging
     }
 
     [Header("Jumping")]
@@ -37,14 +43,16 @@ public class ChameleonBody : ChameleonBehaviour
     public float WallJumpGravityScale = 0.5f;
     public float WallStickDuration = 0.5f;
     public float WallJumpAngle = 30;
-    public float WallJumpMultiplier = 1.2f;
+    public float WallJumpStrength = 32.5f;
 
+    public Vector2 Position { get { return transform.position; } }
     public Direction CurrentDirection { get; private set; }
     public bool IsDangling { get; private set; }
 
     private Rigidbody2D rigidBody;
 
-    private bool jumpTriggered, jumpingEnabled, isJumping;
+    private bool jumpingEnabled, isJumping;
+    private JumpType jumpType;
     private bool isFlying;
     private bool isRecoveringFromKnockBack;
 
@@ -56,9 +64,14 @@ public class ChameleonBody : ChameleonBehaviour
     private Vector2 lastPosition;
     private float accelerationTime, lastHorizontalInput;
 
-    public override void Init(Chameleon chameleon)
+    private ChameleonTongue tongue;
+    private ChameleonPower power;
+
+    public void Init(ChameleonTongue tongue, ChameleonPower power)
     {
-        base.Init(chameleon);
+        this.tongue = tongue;
+        this.power = power;
+
         rigidBody = GetComponent<Rigidbody2D>();
 
         CollisionEventSource collisionEventSource = GetComponent<CollisionEventSource>();
@@ -66,7 +79,7 @@ public class ChameleonBody : ChameleonBehaviour
         collisionEventSource.OnCollisionExit += CollisionExit;
     }
 
-    public override void Reset()
+    public void Reset()
     {
         StopAllCoroutines();
 
@@ -74,7 +87,7 @@ public class ChameleonBody : ChameleonBehaviour
         CurrentDirection = Direction.Right;
 
         jumpingEnabled = true;
-        jumpTriggered = false;
+        jumpType = JumpType.None;
         isJumping = false;
         isRecoveringFromKnockBack = false;
         isFlying = false;
@@ -92,9 +105,9 @@ public class ChameleonBody : ChameleonBehaviour
         GroundTrigger.Reset();
     }
 
-    public override void ChameleonUpdate()
+    public void ChameleonUpdate()
     {
-        IsDangling = chameleon.Tongue.IsAttached && !GroundTrigger.IsActive;
+        IsDangling = tongue.IsAttached && !GroundTrigger.IsActive;
 
         isJumping = isJumping && rigidBody.velocity.y > 0;
         isFlying = isFlying && !GroundTrigger.IsActive;
@@ -103,15 +116,21 @@ public class ChameleonBody : ChameleonBehaviour
 
         if (InputHelper.JumpPressed && jumpingEnabled)
         {
-            if ((GroundTrigger.IsActive || GroundTrigger.InactiveTime < AirJumpTolerance || IsDangling))
-            {
-                jumpTriggered = true;
-                StartCoroutine(WaitForJumpCooldown());
+            if (GroundTrigger.IsActive)
+            {                
+                jumpType = JumpType.Normal;
             }
-            if (isStickingToWall)
+            else if (isStickingToWall)
             {
-                jumpTriggered = true;
-                StartCoroutine(WaitForJumpCooldown());
+                jumpType = JumpType.Wall;
+            }
+            else if (IsDangling)
+            {
+                jumpType = JumpType.Swinging;
+            }
+            else if (GroundTrigger.InactiveTime < AirJumpTolerance)
+            {
+                jumpType = JumpType.Normal;
             }
         }
 
@@ -133,7 +152,7 @@ public class ChameleonBody : ChameleonBehaviour
 	
     public void FixedUpdate()
     {
-        if (jumpTriggered)
+        if (jumpType != JumpType.None)
         {
             Jump();
         }
@@ -154,6 +173,7 @@ public class ChameleonBody : ChameleonBehaviour
         {
             rigidBody.AddRelativeForce(new Vector2(horizontalInput * SwingForce * Time.fixedDeltaTime, 0));
         }
+
         lastHorizontalInput = horizontalInput;
     }
 
@@ -162,7 +182,7 @@ public class ChameleonBody : ChameleonBehaviour
         if (isRecoveringFromKnockBack || isJumpingFromWall) return;
 
         accelerationTime += Time.fixedDeltaTime;
-        float maxSpeed = chameleon.Power.GetGroundSpeed();
+        float maxSpeed = power.GetGroundSpeed();
         float acceleration = Acceleration.Evaluate(accelerationTime);
         float speed = maxSpeed * acceleration * horizontalInput;
 
@@ -191,21 +211,29 @@ public class ChameleonBody : ChameleonBehaviour
 
     private void Jump()
     {
-        float jumpStrength = chameleon.Power.GetJumpStrength();
-        Vector2 direction = Vector2.up;
-        if (IsDangling)
+        float jumpStrength = power.GetJumpStrength();
+        Vector2 force = Vector2.zero;
+        switch(jumpType)
         {
-            direction = direction.Rotate(-SwingReleaseJumpAngle * Mathf.Sign(InputHelper.HorizontalInput)) * SwingReleaseJumpMultiplier;
+            case JumpType.Normal:
+                rigidBody.gravityScale = NormalGravitiyScale;
+                force = Vector2.up * jumpStrength;
+                break;
+            case JumpType.Swinging:
+                Vector2 direction = Vector2.up.Rotate(-SwingReleaseJumpAngle * Mathf.Sign(InputHelper.HorizontalInput));
+                force = direction * jumpStrength * SwingReleaseJumpMultiplier;
+                break;
+            case JumpType.Wall:
+                force = wallJumpDirection * WallJumpStrength;
+                ReleaseWall();
+                isJumpingFromWall = true;
+                break;
         }
-        else if (isStickingToWall)
-        {
-            direction = wallJumpDirection;
-            ReleaseWall();
-            isJumpingFromWall = true;
-        }
-        rigidBody.AddForce(direction * jumpStrength, ForceMode2D.Impulse);
-        jumpTriggered = false;
+        rigidBody.AddForce(force, ForceMode2D.Impulse);
+
         isJumping = true;
+        StartCoroutine(WaitForJumpCooldown());
+        jumpType = JumpType.None;
     }
 
     public void KnockBack(Direction direction)
@@ -264,8 +292,7 @@ public class ChameleonBody : ChameleonBehaviour
 
     private void CollisionEnter(Collision2D collision)
     {
-        if (!chameleon.Tongue.IsAttached && !GroundTrigger.IsActive && 
-            collision.gameObject.layer.ToBitmask().IsPartOfBitmask(WallJumpLayers))
+        if (!tongue.IsAttached && collision.gameObject.layer.ToBitmask().IsPartOfBitmask(WallJumpLayers))
         {            
             float collisionAngle = (-collision.contacts[0].normal).GetAngle();
             if (collisionAngle.Approximately(90, WallAngleTolerance))
@@ -290,7 +317,7 @@ public class ChameleonBody : ChameleonBehaviour
     private void StickToWall(GameObject wallObject, Direction jumpDirection)
     {
         stickedToWall = wallObject;
-        wallJumpDirection = Vector2.up.Rotate(-WallJumpAngle * (int)jumpDirection) * WallJumpMultiplier;
+        wallJumpDirection = Vector2.up.Rotate(-WallJumpAngle * (int)jumpDirection);
         if (wallReleasingCoroutine != null)
         {
             StopCoroutine(wallReleasingCoroutine);

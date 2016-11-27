@@ -17,7 +17,7 @@ public struct PowerLevel
     }
 }
 
-public class ChameleonPower : ChameleonBehaviour 
+public class ChameleonPower : MonoBehaviour 
 {
     public AnimationCurve TongueLength;
     public AnimationCurve JumpStrength;
@@ -59,7 +59,7 @@ public class ChameleonPower : ChameleonBehaviour
     private int yellow;
     private int blue;
 
-    public override void Reset()
+    public void Reset()
     {
         powerups = new PowerupType[maxNumPowerups];
         RecalculatePower();
