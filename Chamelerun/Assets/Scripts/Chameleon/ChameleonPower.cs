@@ -3,6 +3,20 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.Events;
 
+public struct PowerLevel
+{
+    public int Red;
+    public int Yellow;
+    public int Blue;
+
+    public PowerLevel(int red, int yellow, int blue)
+    {
+        Red = red;
+        Yellow = yellow;
+        Blue = blue;
+    }
+}
+
 public class ChameleonPower : ChameleonBehaviour 
 {
     public AnimationCurve TongueLength;
@@ -30,6 +44,14 @@ public class ChameleonPower : ChameleonBehaviour
         get
         {
             return red + yellow + blue;
+        }
+    }
+
+    public PowerLevel PowerLevel
+    {
+        get
+        {
+            return new PowerLevel(red, yellow, blue);
         }
     }
 

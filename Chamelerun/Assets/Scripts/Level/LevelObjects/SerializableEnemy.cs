@@ -22,7 +22,7 @@ namespace Chamelerun.Serialization
 
         public override void Spawn(Vector2 positionOffset)
         {
-            EnemySpawner.Instance.SpawnEnemy(ID, Position + positionOffset);
+            GameManager.Instance.EnemySpawner.SpawnEnemy(ID, Position + positionOffset);
         }
     }
 

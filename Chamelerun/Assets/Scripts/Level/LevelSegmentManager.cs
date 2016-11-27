@@ -2,81 +2,46 @@
 using System.Collections.Generic;
 using Chamelerun.Serialization;
 
-public class LevelSegmentManager : MonoBehaviour 
+public class LevelSegmentManager 
 {
-    public static LevelSegmentManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<LevelSegmentManager>();
-            }
-            return instance;
-        }
-    }
-    private static LevelSegmentManager instance;
-
-    public string ResourceDirectory = "LevelSegments";
-    public float MinCameraDistanceToOuterBound;
-    public float MaxBacktrackingScreenFraction;
+    private const string resourceDirectory = "LevelSegments";
+    private const float minCameraDistanceToOuterBoundScreenFraction = 0.1f;
+    private const float maxBacktrackingScreenFraction = 1;
 
     public float CurrentMaxBacktrackingPositionX { get; private set; }
 
-    private List<LevelSegment> levelSegments;
+    private LevelSegmentPicker levelSegmentPicker;
+    private Dictionary<int, LevelSegment> levelSegments;
+    
     private float maxBacktrackingDistance;
     private float currentOuterBound;
 
-    private BackgroundLayer[] backgroundLayers;
-
-    public void OnEnable()
-    {
-        foreach (BackgroundLayer layer in backgroundLayers)
-        {
-            layer.gameObject.SetActive(true);
-        }
-    }
-
-    public void OnDisable()
-    {
-        foreach (BackgroundLayer layer in backgroundLayers)
-        {
-            layer.gameObject.SetActive(false);
-        }
-    }
-
-    public void Init()
+    public LevelSegmentManager()
     {
         LevelSegmentLoader segmentLoader = new LevelSegmentLoader();
-        levelSegments = segmentLoader.LoadLevelSegments(ResourceDirectory);
-        backgroundLayers = FindObjectsOfType<BackgroundLayer>();
-        foreach (BackgroundLayer layer in backgroundLayers)
-        {
-            layer.Init();
-        }
+        levelSegments = segmentLoader.LoadLevelSegments(resourceDirectory);
+
+        levelSegmentPicker = new LevelSegmentPicker();
     }
 
     public void Reset()
     {
+        levelSegmentPicker.Reset();
         CurrentMaxBacktrackingPositionX = 0;
         currentOuterBound = 0;
-        foreach (BackgroundLayer layer in backgroundLayers)
-        {
-            layer.Reset();
-        }
     }
 
-    public void Update()
+    public void Update(PowerLevel powerLevel)
     {
         if (levelSegments.Count == 0) return;
 
         Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
-        while(Camera.main.transform.position.x + bounds.extents.x + MinCameraDistanceToOuterBound > currentOuterBound)
+        while(Camera.main.transform.position.x + bounds.extents.x + (bounds.size.x * minCameraDistanceToOuterBoundScreenFraction) > currentOuterBound)
         {
-            int segmentID = UnityEngine.Random.Range(0, levelSegments.Count);
-            CreateSegment(levelSegments[segmentID]);
+            int segmentID = levelSegmentPicker.PickNextLevelSegment(powerLevel);
+            CreateSegment(segmentID);
         }
-        maxBacktrackingDistance = bounds.size.x * MaxBacktrackingScreenFraction;
+        maxBacktrackingDistance = bounds.size.x * maxBacktrackingScreenFraction;
         float maxBacktrackingPositionX = Camera.main.transform.position.x - bounds.extents.x - maxBacktrackingDistance;
         if(maxBacktrackingPositionX > CurrentMaxBacktrackingPositionX)
         {
@@ -84,9 +49,9 @@ public class LevelSegmentManager : MonoBehaviour
         }
     }
 
-    private void CreateSegment(LevelSegment segment)
+    private void CreateSegment(int ID)
     {
-        segment.Spawn(new Vector2(currentOuterBound, 0));
-        currentOuterBound += segment.Width;
+        levelSegments[ID].Spawn(new Vector2(currentOuterBound, 0));
+        currentOuterBound += levelSegments[ID].Width;
     } 
 }

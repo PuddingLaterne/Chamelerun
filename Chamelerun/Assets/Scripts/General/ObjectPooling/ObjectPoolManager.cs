@@ -3,19 +3,6 @@ using System.Collections;
 
 public class ObjectPoolManager : MonoBehaviour 
 {
-    public static ObjectPoolManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<ObjectPoolManager>();
-            }
-            return instance;
-        }
-    }
-    private static ObjectPoolManager instance;
-
     private ObjectPool[] objectPools;
 
     public void Init()

@@ -23,6 +23,13 @@ public static class InputHelper
     private static bool tongueTriggerWasReleased;
     private static bool jumpTriggerWasReleased;
 
+    private static Chameleon chameleon;
+
+    public static void Init(Chameleon chameleonReference)
+    {
+        chameleon = chameleonReference;
+    }
+
     public static void Reset()
     {
         lastUpdatedFrameCount = -1;
@@ -209,7 +216,7 @@ public static class InputHelper
         {
             Ray cursorPositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 cursorPosition = cursorPositionRay.origin + cursorPositionRay.direction * -Camera.main.transform.position.z;
-            Vector2 relativeToPosition = (Vector2)GameManager.Instance.Chameleon.Position;
+            Vector2 relativeToPosition = (Vector2)chameleon.Position;
             aimingDirection = (cursorPosition - relativeToPosition).normalized;
         }
         float angle = Vector2.Angle(Vector2.up, aimingDirection);

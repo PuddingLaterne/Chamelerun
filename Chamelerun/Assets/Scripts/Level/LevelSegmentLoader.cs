@@ -10,9 +10,9 @@ namespace Chamelerun.Serialization
 {
     public class LevelSegmentLoader
     {
-        public List<LevelSegment> LoadLevelSegments(string resourceDirectory)
+        public Dictionary<int, LevelSegment> LoadLevelSegments(string resourceDirectory)
         {
-            List<LevelSegment> levelSegments = new List<LevelSegment>();
+            Dictionary<int, LevelSegment> levelSegments = new Dictionary<int, LevelSegment>();
 
             Type[] extraTypes = { typeof(Powerup), typeof(Hazard), typeof(Enemy) };
             XmlSerializer serializer = new XmlSerializer(typeof(LevelSegment), extraTypes);
@@ -74,7 +74,7 @@ namespace Chamelerun.Serialization
                         xmlReader = null;
                     }
                 }
-                levelSegments.Add(levelSegment);
+                levelSegments.Add(levelSegment.ID, levelSegment);
             }
             return levelSegments;
         }

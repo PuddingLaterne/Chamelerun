@@ -3,20 +3,14 @@ using System.Collections;
 
 public class HazardSpawner : MonoBehaviour 
 {
-    public static HazardSpawner Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<HazardSpawner>();
-            }
-            return instance;
-        }
-    }
-    private static HazardSpawner instance;
-
     public ObjectPool[] HazardObjectPools;
+
+    private Chameleon chameleon;
+
+    public void Init(Chameleon chameleon)
+    {
+        this.chameleon = chameleon;
+    }
 
     public void SpawnHazard(int ID, Vector2 position, Vector2 scale)
     {
@@ -37,6 +31,6 @@ public class HazardSpawner : MonoBehaviour
 
     private void OnHazardTouched(GameObject hazard)
     {
-        GameManager.Instance.Chameleon.ApplyDamage(hazard);
+        chameleon.ApplyDamage(hazard);
     }
 }

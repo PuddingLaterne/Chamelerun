@@ -18,6 +18,12 @@ public class CameraTargetTracking : MonoBehaviour
     public float TargetDistanceThreshold;
 
     private Vector3 velocity;
+    private LevelSegmentManager levelSegmentManager;
+
+    public void Init(LevelSegmentManager levelSegmentManager)
+    {
+        this.levelSegmentManager = levelSegmentManager;
+    }
 
     public void LateUpdate()
     {
@@ -49,9 +55,9 @@ public class CameraTargetTracking : MonoBehaviour
         }
 
 
-        if (targetPos.x - screenBounds.extents.x < LevelSegmentManager.Instance.CurrentMaxBacktrackingPositionX)
+        if (targetPos.x - screenBounds.extents.x < levelSegmentManager.CurrentMaxBacktrackingPositionX)
         {
-            targetPos.x = LevelSegmentManager.Instance.CurrentMaxBacktrackingPositionX + screenBounds.extents.x;
+            targetPos.x = levelSegmentManager.CurrentMaxBacktrackingPositionX + screenBounds.extents.x;
         }
 
         if (targetPos.y - screenBounds.extents.y < 0)

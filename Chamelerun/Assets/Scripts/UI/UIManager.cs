@@ -5,19 +5,6 @@ using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour 
 {
-    public static UIManager Instance
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = FindObjectOfType<UIManager>();
-            }
-            return instance;
-        }
-    }
-    private static UIManager instance;
-
     [Header("UIStates")]
     public GameObject Game;
     public GameObject Start;
@@ -36,24 +23,26 @@ public class UIManager : MonoBehaviour
     }
     public UnityAction<NavigationAction> OnNavigationAction = delegate { };
 
-    public UIColours Colours { get; private set; }
+    private UIColours colours;
     private UIPowerupDisplay[] powerupDisplays;
     private UIScoreDisplay[] scoreDisplays;
     private UITravelledDistanceDisplay[] distanceDisplays;
     private UITimeDisplay[] timeDisplays;
 
     private BlurOptimized blur;
+    private ScoreManager scoreManager;
 
-    public void Init()
+    public void Init(Chameleon chameleon, ScoreManager scoreManager)
     {
+        this.scoreManager = scoreManager;
         InitReferences();
-        InitEvents();
+        InitEvents(chameleon);
         InitButtons();
     }
 
     private void InitReferences()
     {
-        Colours = FindObjectOfType<UIColours>();
+        colours = FindObjectOfType<UIColours>();
 
         powerupDisplays = FindObjectsOfType<UIPowerupDisplay>();
         scoreDisplays = FindObjectsOfType<UIScoreDisplay>();
@@ -61,11 +50,15 @@ public class UIManager : MonoBehaviour
         timeDisplays = FindObjectsOfType<UITimeDisplay>();
 
         blur = FindObjectOfType<BlurOptimized>();
+
+        foreach (var powerupDisplay in powerupDisplays)
+        {
+            powerupDisplay.Init(colours);
+        }
     }
 
-    private void InitEvents()
+    private void InitEvents(Chameleon chameleon)
     {
-        Chameleon chameleon = GameManager.Instance.Chameleon;
         chameleon.OnPowerChanged += () =>
         {
             foreach (var powerupDisplay in powerupDisplays)
@@ -74,14 +67,14 @@ public class UIManager : MonoBehaviour
             }
         };
 
-        ScoreManager.Instance.OnScoreChanged += (newScore) =>
+        scoreManager.OnScoreChanged += (newScore) =>
         {
             foreach (var scoreDisplay in scoreDisplays)
             {
                 scoreDisplay.UpdateScore(newScore);
             }
         };
-        ScoreManager.Instance.OnTravelledDistanceChanged += (newDistance) =>
+        scoreManager.OnTravelledDistanceChanged += (newDistance) =>
         {
             foreach (var distanceDisplay in distanceDisplays)
             {
@@ -102,7 +95,7 @@ public class UIManager : MonoBehaviour
     {
         foreach (var timeDisplay in timeDisplays)
         {
-            timeDisplay.UpdateTimer(ScoreManager.Instance.CurrentTime);
+            timeDisplay.UpdateTimer(scoreManager.CurrentTime);
         }
     }
 

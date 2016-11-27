@@ -14,9 +14,9 @@ public class BackgroundLayer : MonoBehaviour
     private int lastChosenIndex;
     private int numRepetitions;
 
-    public void Init()
+    public void Init(LevelSegmentManager levelSegmentManager)
     {
-        levelSegmentManager = LevelSegmentManager.Instance;
+        this.levelSegmentManager = levelSegmentManager;
         backgroundObjects = new List<BackgroundObject>();
     }
 

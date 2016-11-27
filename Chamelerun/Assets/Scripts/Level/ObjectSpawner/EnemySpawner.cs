@@ -3,20 +3,18 @@ using System.Collections;
 
 public class EnemySpawner : MonoBehaviour 
 {
-    public static EnemySpawner Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<EnemySpawner>();
-            }
-            return instance;
-        }
-    }
-    private static EnemySpawner instance;
-
     public ObjectPool[] EnemyObjectPools;
+
+    private PowerupSpawner powerupSpawner;
+    private ScoreManager scoreManager;
+    private Chameleon chameleon;
+
+    public void Init(Chameleon chameleon, PowerupSpawner powerupSpawner, ScoreManager scoreManager)
+    {
+        this.chameleon = chameleon;
+        this.powerupSpawner = powerupSpawner;
+        this.scoreManager = scoreManager;
+    }
 
     public void SpawnEnemy(int ID, Vector2 position)
     {
@@ -41,14 +39,14 @@ public class EnemySpawner : MonoBehaviour
 
     private void OnEnemyDamaged(Enemy enemy)
     {
-        ScoreManager.Instance.AddPoints(enemy.PointsForDamage);
-        PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnDamaged, enemy.transform.position);
+        scoreManager.AddPoints(enemy.PointsForDamage);
+        powerupSpawner.SpawnPowerup(enemy.PowerupDroppedOnDamaged, enemy.transform.position);
     }
 
     private void OnEnemyKilled(GameObject enemyObject, Enemy enemy)
     {
-        ScoreManager.Instance.AddPoints(enemy.PointsForKill);
-        PowerupSpawner.Instance.SpawnPowerup(enemy.PowerupDroppedOnKilled, enemy.transform.position);
+        scoreManager.AddPoints(enemy.PointsForKill);
+        powerupSpawner.SpawnPowerup(enemy.PowerupDroppedOnKilled, enemy.transform.position);
         enemyObject.SetActive(false);
     }
 
@@ -59,11 +57,11 @@ public class EnemySpawner : MonoBehaviour
             float collisionAngle = (-collision.contacts[0].normal).GetAngle();
             if (collisionAngle < enemy.UpperSideAngle|| collisionAngle > 360 - enemy.UpperSideAngle)
             {
-                GameManager.Instance.Chameleon.Bounce(enemy.Bounce());
+                chameleon.Bounce(enemy.Bounce());
             }
             else
             {
-                GameManager.Instance.Chameleon.ApplyDamage(enemy.gameObject);
+                chameleon.ApplyDamage(enemy.gameObject);
             }
         }
     }

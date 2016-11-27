@@ -24,7 +24,7 @@ namespace Chamelerun.Serialization
 
         public override void Spawn(Vector2 positionOffset)
         {
-            HazardSpawner.Instance.SpawnHazard(ID, Position + positionOffset, Scale);
+            GameManager.Instance.HazardSpawner.SpawnHazard(ID, Position + positionOffset, Scale);
         }
     }
 }

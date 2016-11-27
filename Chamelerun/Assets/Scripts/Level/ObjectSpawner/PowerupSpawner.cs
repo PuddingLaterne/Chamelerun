@@ -9,22 +9,18 @@ public enum PowerupType
 
 public class PowerupSpawner : MonoBehaviour 
 {
-    public static PowerupSpawner Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<PowerupSpawner>();
-            }
-            return instance;
-        }
-    }
-    private static PowerupSpawner instance;
-
     public ObjectPool RedPowerupPool;
     public ObjectPool YellowPowerupPool;
     public ObjectPool BluePowerupPool;
+
+    private ScoreManager scoreManager;
+    private Chameleon chameleon;
+
+    public void Init(Chameleon chameleon, ScoreManager scoreManager)
+    {
+        this.chameleon = chameleon;
+        this.scoreManager = scoreManager;
+    }
 
     public void SpawnPowerup(PowerupType type, Vector2 position)
     {
@@ -56,8 +52,8 @@ public class PowerupSpawner : MonoBehaviour
 
     private void OnPowerupTouched(GameObject powerup, PowerupType type)
     {
-        ScoreManager.Instance.AddPointsForPowerup();
-        GameManager.Instance.Chameleon.AddPowerup(type);
+        scoreManager.AddPointsForPowerup();
+        chameleon.AddPowerup(type);
         powerup.gameObject.SetActive(false);
     }
 }

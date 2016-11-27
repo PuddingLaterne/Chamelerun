@@ -16,19 +16,6 @@ public class ScoreManager
         }
     }
 
-    public static ScoreManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new ScoreManager();
-            }
-            return instance;
-        }
-    }
-    private static ScoreManager instance;
-
     public UnityAction<int> OnScoreChanged = delegate { };
     public UnityAction<float> OnTravelledDistanceChanged = delegate { };
 
@@ -43,7 +30,6 @@ public class ScoreManager
     }
     private int currentScore;
 
-
     public float CurrentTravelledDistance
     {
         get { return currentTravelledDistance; }
@@ -57,6 +43,13 @@ public class ScoreManager
 
     public float CurrentTime { get; private set; }
     private float startTime;
+
+    private Chameleon chameleon;
+
+    public ScoreManager(Chameleon chameleon)
+    {
+        this.chameleon = chameleon;
+    }
 
     public void Reset()
     {
@@ -77,7 +70,7 @@ public class ScoreManager
 
     public void AddPointsForPowerup()
     {
-        CurrentScore += PowerupValue.GetPoints(GameManager.Instance.Chameleon.CurrentPower);
+        CurrentScore += PowerupValue.GetPoints(chameleon.CurrentPower);
     }
 
     public void AddPoints(int points)

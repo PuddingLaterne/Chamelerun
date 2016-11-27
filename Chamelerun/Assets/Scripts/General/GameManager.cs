@@ -23,50 +23,90 @@ public class GameManager : MonoBehaviour
 
     public Vector2 StartingPosition;
 
-    public Chameleon Chameleon { get; private set; }
-    public PowerupSpawner PowerupManager { get; private set; }
+    public LevelObjectSpawner LevelObjectSpawner { get; private set; }
+    public HazardSpawner HazardSpawner { get; private set; }
+    public EnemySpawner EnemySpawner { get; private set; }
+    public PowerupSpawner PowerupSpawner { get; private set; }
 
     private ObjectPoolManager objectPoolManager;
     private LevelSegmentManager levelSegmentManager;
+    private BackgroundLayer[] backgroundLayers;
+
+    private Chameleon chameleon;
     private ScoreManager scoreManager;
     private UIManager UIManager;
 
     private State gameState;
 
+    #region Initialization
     public void Start()
     {
-        Chameleon = FindObjectOfType<Chameleon>();
-        Chameleon.Init();
-        Chameleon.gameObject.SetActive(false);
-
-        Chameleon.OnAllPowerLost += OnGameOver;
-        Chameleon.GetComponentInChildren<TriggerEventForwarder>().OnLeftScreen += OnGameOver;
-
-        CameraTargetTracking cameraFollow = Camera.main.GetComponent<CameraTargetTracking>();
-        cameraFollow.Target = Chameleon.Transform;
-
-        scoreManager = ScoreManager.Instance;
-
-        objectPoolManager = ObjectPoolManager.Instance;
-        objectPoolManager.Init();
-
-        levelSegmentManager = LevelSegmentManager.Instance;
-        levelSegmentManager.Init();
-        levelSegmentManager.enabled = false;
-        
-        UIManager = UIManager.Instance;
-        UIManager.Init();
-        UIManager.OnNavigationAction += OnUINavigationAction;
-
+        InitChameleon();
+        scoreManager = new ScoreManager(chameleon);
+        InitObjectSpawners();
+        InitLevelSegmentManager();
+        InitCamera();
+        InitUI();
         SetGameState(State.Start);
     }
+
+    private void InitChameleon()
+    {
+        chameleon = FindObjectOfType<Chameleon>();
+        chameleon.Init();
+        chameleon.OnAllPowerLost += OnGameOver;
+        chameleon.GetComponentInChildren<TriggerEventForwarder>().OnLeftScreen += OnGameOver;
+        chameleon.gameObject.SetActive(false);
+    }
+
+    private void InitObjectSpawners()
+    {
+        objectPoolManager = FindObjectOfType<ObjectPoolManager>();
+        objectPoolManager.Init();
+
+        LevelObjectSpawner = FindObjectOfType<LevelObjectSpawner>();
+        HazardSpawner = FindObjectOfType<HazardSpawner>();
+        EnemySpawner = FindObjectOfType<EnemySpawner>();
+        PowerupSpawner = FindObjectOfType<PowerupSpawner>();
+
+        HazardSpawner.Init(chameleon);
+        EnemySpawner.Init(chameleon, PowerupSpawner, scoreManager);
+        PowerupSpawner.Init(chameleon, scoreManager);
+    }
+
+    private void InitLevelSegmentManager()
+    {
+        levelSegmentManager = new LevelSegmentManager();
+
+        backgroundLayers = FindObjectsOfType<BackgroundLayer>();
+        foreach (BackgroundLayer layer in backgroundLayers) { layer.Init(levelSegmentManager); }
+
+        FindObjectOfType<BottomArea>().Init(levelSegmentManager);
+        FindObjectOfType<BacktrackingArea>().Init(levelSegmentManager);
+    }
+
+    private void InitCamera()
+    {
+        CameraTargetTracking cameraFollow = Camera.main.GetComponent<CameraTargetTracking>();
+        cameraFollow.Init(levelSegmentManager);
+        cameraFollow.Target = chameleon.Transform;
+    }
+
+    private void InitUI()
+    {
+        UIManager = FindObjectOfType<UIManager>();
+        UIManager.Init(chameleon, scoreManager);
+        UIManager.OnNavigationAction += OnUINavigationAction;
+    }
+    #endregion
 
     public void Update()
     {
         if (gameState == State.Game)
         {
-            Chameleon.ChameleonUpdate();
-            scoreManager.Update(Chameleon, StartingPosition.x);
+            chameleon.ChameleonUpdate();
+            scoreManager.Update(chameleon, StartingPosition.x);
+            levelSegmentManager.Update(chameleon.CurrentPowerLevel);
         }
 
         if (InputHelper.PausePressed)
@@ -94,26 +134,32 @@ public class GameManager : MonoBehaviour
 
     private void OnGameOver()
     {
-        Chameleon.EnableControl(false);
+        chameleon.EnableControl(false);
         SetGameState(State.End);
     }
 
     private void ResetGame()
     {
-        Chameleon.Reset();
+        chameleon.Reset();
+
         objectPoolManager.Reset();
         levelSegmentManager.Reset();
+        foreach (BackgroundLayer layer in backgroundLayers) { layer.Reset(); }
+
         scoreManager.Reset();
         InputHelper.Reset();
     }
 
     private void StartGame()
     {
-        Chameleon.Transform.position = StartingPosition;
-        Chameleon.gameObject.SetActive(true);
-        Chameleon.EnableControl(true);
+        chameleon.Transform.position = StartingPosition;
+        chameleon.gameObject.SetActive(true);
+        chameleon.EnableControl(true);
 
-        levelSegmentManager.enabled = true;
+        foreach (BackgroundLayer layer in backgroundLayers)
+        {
+            layer.gameObject.SetActive(true);
+        }
 
         Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
         Camera.main.transform.position = new Vector3(screenBounds.extents.x, 0, Camera.main.transform.position.z);

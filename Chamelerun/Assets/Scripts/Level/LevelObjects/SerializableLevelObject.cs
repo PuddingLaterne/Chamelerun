@@ -30,7 +30,7 @@ namespace Chamelerun.Serialization
 
         public virtual void Spawn(Vector2 positionOffset)
         {
-            LevelObjectSpawner.Instance.SpawnLevelObject(ID, Position + positionOffset, Scale);
+            GameManager.Instance.LevelObjectSpawner.SpawnLevelObject(ID, Position + positionOffset, Scale);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Chamelerun.Serialization
 
         public override void Spawn(Vector2 positionOffset)
         {
-            PowerupSpawner.Instance.SpawnPowerup((PowerupType)ID, Position + positionOffset);
+            GameManager.Instance.PowerupSpawner.SpawnPowerup((PowerupType)ID, Position + positionOffset);
         }
     }
 }

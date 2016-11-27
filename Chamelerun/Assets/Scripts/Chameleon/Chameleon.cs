@@ -23,6 +23,7 @@ public class Chameleon : MonoBehaviour
 
     public PowerupType[] CurrentPowerups { get { return Power.Powerups; } }
     public int CurrentPower { get { return Power.Power; } }
+    public PowerLevel CurrentPowerLevel { get{ return Power.PowerLevel; } }
 
     public void Init()
     {

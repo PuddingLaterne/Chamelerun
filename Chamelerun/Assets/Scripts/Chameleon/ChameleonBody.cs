@@ -51,6 +51,7 @@ public class ChameleonBody : ChameleonBehaviour
     private bool isStickingToWall, isJumpingFromWall;
     private Vector2 wallJumpDirection;
     private GameObject stickedToWall;
+    private Coroutine wallReleasingCoroutine;
 
     private Vector2 lastPosition;
     private float accelerationTime, lastHorizontalInput;
@@ -290,13 +291,19 @@ public class ChameleonBody : ChameleonBehaviour
     {
         stickedToWall = wallObject;
         wallJumpDirection = Vector2.up.Rotate(-WallJumpAngle * (int)jumpDirection) * WallJumpMultiplier;
-        StopCoroutine(WaitForReleaseWall());
-        StartCoroutine(WaitForReleaseWall());
+        if (wallReleasingCoroutine != null)
+        {
+            StopCoroutine(wallReleasingCoroutine);
+        }
+        wallReleasingCoroutine = StartCoroutine(WaitForReleaseWall());
     }
 
     private void ReleaseWall()
     {
-        StopCoroutine(WaitForReleaseWall());
+        if (wallReleasingCoroutine != null)
+        {
+            StopCoroutine(wallReleasingCoroutine);
+        }
         isStickingToWall = false;
         rigidBody.gravityScale = IsDangling ? SwingingGravityScale : NormalGravitiyScale;
     }

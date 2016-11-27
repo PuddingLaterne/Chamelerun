@@ -3,19 +3,6 @@ using System.Collections;
 
 public class LevelObjectSpawner : MonoBehaviour 
 {
-    public static LevelObjectSpawner Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<LevelObjectSpawner>();
-            }
-            return instance;
-        }
-    }
-    private static LevelObjectSpawner instance;
-
     public ObjectPool[] ObjectPools = new ObjectPool[0];
 
     public void SpawnLevelObject(int ID, Vector2 position, Vector2 scale)

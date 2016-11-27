@@ -5,9 +5,9 @@ public class BottomArea : MonoBehaviour
 {
     private LevelSegmentManager levelSegmentManager;
 
-	public void Start () 
+    public void Init(LevelSegmentManager levelSegmentManager) 
     {
-        levelSegmentManager = LevelSegmentManager.Instance;
+        this.levelSegmentManager = levelSegmentManager;
         GetComponentInChildren<TriggerEventSource>().OnTriggerExit += (gameObject) =>
         {
             if (gameObject.transform.position.y < 0)
