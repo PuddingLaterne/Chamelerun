@@ -713,6 +713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 1
+  SuccessorIDs: 0200000003000000
   Width: 30
 --- !u!4 &939635995
 Transform:
@@ -1193,6 +1194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 2
+  SuccessorIDs: 0100000003000000
   Width: 30
 --- !u!4 &1501371640
 Transform:
@@ -1446,6 +1448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
+  SuccessorIDs: 0100000002000000
   Width: 50
 --- !u!4 &1683016366
 Transform:
@@ -1501,6 +1504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 3
+  SuccessorIDs: 000000000100000002000000
   Width: 30
 --- !u!4 &1788467477
 Transform:

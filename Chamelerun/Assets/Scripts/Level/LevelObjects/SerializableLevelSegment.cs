@@ -5,12 +5,13 @@ namespace Chamelerun.Serialization
     public class SerializableLevelSegment : MonoBehaviour
     {
         public int ID;
+        public int[] SuccessorIDs;
         public float Width;
 
         public LevelSegment GetSerializableObject()
         {
             SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
-            LevelSegment levelSegment = new LevelSegment(ID, Width, levelObjects);
+            LevelSegment levelSegment = new LevelSegment(ID, SuccessorIDs ,Width, levelObjects);
             return levelSegment;
         }
     }
@@ -18,14 +19,16 @@ namespace Chamelerun.Serialization
     public class LevelSegment
     {
         public int ID { get; private set; }
+        public int[] SuccessorIDs { get; private set; }
         public float Width { get; private set; }
         public LevelObject[] LevelObjects { get; private set; }
 
         public LevelSegment() { }
 
-        public LevelSegment(int ID, float width, SerializableLevelObject[] levelObjects)
+        public LevelSegment(int ID, int[] successorIDs , float width, SerializableLevelObject[] levelObjects)
         {
             this.ID = ID;
+            SuccessorIDs = successorIDs;
             Width = width;
             LevelObjects = new LevelObject[levelObjects.Length];
             for (int i = 0; i < levelObjects.Length; i++)

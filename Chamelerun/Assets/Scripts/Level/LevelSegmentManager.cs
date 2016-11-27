@@ -11,7 +11,6 @@ public class LevelSegmentManager
     public float CurrentMaxBacktrackingPositionX { get; private set; }
 
     private LevelSegmentPicker levelSegmentPicker;
-    private Dictionary<int, LevelSegment> levelSegments;
     
     private float maxBacktrackingDistance;
     private float currentOuterBound;
@@ -19,9 +18,7 @@ public class LevelSegmentManager
     public LevelSegmentManager()
     {
         LevelSegmentLoader segmentLoader = new LevelSegmentLoader();
-        levelSegments = segmentLoader.LoadLevelSegments(resourceDirectory);
-
-        levelSegmentPicker = new LevelSegmentPicker();
+        levelSegmentPicker = new LevelSegmentPicker(segmentLoader.LoadLevelSegments(resourceDirectory));
     }
 
     public void Reset()
@@ -33,13 +30,10 @@ public class LevelSegmentManager
 
     public void Update(PowerLevel powerLevel)
     {
-        if (levelSegments.Count == 0) return;
-
         Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
         while(Camera.main.transform.position.x + bounds.extents.x + (bounds.size.x * minCameraDistanceToOuterBoundScreenFraction) > currentOuterBound)
         {
-            int segmentID = levelSegmentPicker.PickNextLevelSegment(powerLevel);
-            CreateSegment(segmentID);
+            CreateSegment(levelSegmentPicker.PickNextLevelSegment(powerLevel));
         }
         maxBacktrackingDistance = bounds.size.x * maxBacktrackingScreenFraction;
         float maxBacktrackingPositionX = Camera.main.transform.position.x - bounds.extents.x - maxBacktrackingDistance;
@@ -49,9 +43,9 @@ public class LevelSegmentManager
         }
     }
 
-    private void CreateSegment(int ID)
+    private void CreateSegment(LevelSegment levelSegment)
     {
-        levelSegments[ID].Spawn(new Vector2(currentOuterBound, 0));
-        currentOuterBound += levelSegments[ID].Width;
+        levelSegment.Spawn(new Vector2(currentOuterBound, 0));
+        currentOuterBound += levelSegment.Width;
     } 
 }
