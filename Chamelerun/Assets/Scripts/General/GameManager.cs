@@ -106,7 +106,7 @@ public class GameManager : MonoBehaviour
         {
             chameleon.ChameleonUpdate();
             scoreManager.Update(chameleon, StartingPosition.x);
-            levelSegmentManager.Update(chameleon.CurrentPowerLevel);
+            levelSegmentManager.Update(chameleon.CurrentPowerLevel, scoreManager.CurrentTravelledDistance);
         }
 
         if (InputHelper.PausePressed)

@@ -23,15 +23,14 @@ namespace Chamelerun.Serialization
         {
             pathName = EditorGUILayout.TextField("Path", pathName);
 
-            if (GUILayout.Button("Serialize"))
+            if (GUILayout.Button("Serialize Selected"))
             {
                 if (Selection.activeGameObject != null)
                 {
                     SerializableLevelSegment levelSegment = Selection.activeGameObject.GetComponent<SerializableLevelSegment>();
                     if (levelSegment != null)
                     {
-                        string fileName = pathName + levelSegment.name + ".xml";
-                        SerializeLevelSegment(fileName, levelSegment);
+                        SerializeLevelSegment(levelSegment);
                     }
                     else
                     {
@@ -39,16 +38,25 @@ namespace Chamelerun.Serialization
                     }
                 }
             }
+            if (GUILayout.Button("Serialize All"))
+            {
+                SerializableLevelSegment[] allLevelSegments = GameObject.FindObjectsOfType<SerializableLevelSegment>();
+                foreach (SerializableLevelSegment levelSegment in allLevelSegments)
+                {
+                    SerializeLevelSegment(levelSegment);
+                }
+            }
         }
 
-        public void SerializeLevelSegment(string fileName, SerializableLevelSegment levelSegment)
+        private void SerializeLevelSegment(SerializableLevelSegment levelSegment)
         {
             Type[] extraTypes = { typeof(Powerup), typeof(Hazard), typeof(Enemy) };
             XmlSerializer serializer = new XmlSerializer(typeof(LevelSegment), extraTypes);
-            Stream fs = new FileStream(fileName, FileMode.Create);
+            Stream fs = new FileStream(pathName + levelSegment.name + ".xml", FileMode.Create);
             XmlWriter writer = new XmlTextWriter(fs, Encoding.Unicode);
             serializer.Serialize(writer, levelSegment.GetSerializableObject());
             writer.Close();
+            Debug.Log("Sucessfully serialized " + levelSegment.name);
         }
     }
 }

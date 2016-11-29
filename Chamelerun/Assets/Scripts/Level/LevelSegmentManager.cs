@@ -28,12 +28,12 @@ public class LevelSegmentManager
         currentOuterBound = 0;
     }
 
-    public void Update(PowerLevel powerLevel)
+    public void Update(PowerLevel currentPowerLevel, float currentTravelledDistance)
     {
         Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
         while(Camera.main.transform.position.x + bounds.extents.x + (bounds.size.x * minCameraDistanceToOuterBoundScreenFraction) > currentOuterBound)
         {
-            CreateSegment(levelSegmentPicker.PickNextLevelSegment(powerLevel));
+            CreateSegment(levelSegmentPicker.PickNextLevelSegment(currentPowerLevel, currentTravelledDistance));
         }
         maxBacktrackingDistance = bounds.size.x * maxBacktrackingScreenFraction;
         float maxBacktrackingPositionX = Camera.main.transform.position.x - bounds.extents.x - maxBacktrackingDistance;

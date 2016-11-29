@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine.Events;
 
+[System.Serializable]
 public struct PowerLevel
 {
     public int Red;
@@ -14,6 +15,21 @@ public struct PowerLevel
         Red = red;
         Yellow = yellow;
         Blue = blue;
+    }
+
+    public static bool operator >=(PowerLevel levelA, PowerLevel levelB)
+    {
+        return levelA.Red >= levelB.Red && levelA.Yellow >= levelB.Yellow && levelA.Blue >= levelB.Blue;
+    }
+
+    public static bool operator <=(PowerLevel levelA, PowerLevel levelB)
+    {
+        return levelA.Red <= levelB.Red && levelA.Yellow <= levelB.Yellow && levelA.Blue <= levelB.Blue;
+    }
+
+    public override string ToString()
+    {
+        return "Red: " + Red + ", Yellow: " + Yellow + ", Blue: " + Blue;
     }
 }
 
