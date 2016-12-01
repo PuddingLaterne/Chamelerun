@@ -17,14 +17,30 @@ public class LevelSegmentPicker
     {
         currentStressLevel = 0;
         currentID = -1;
+        for (int i = 0; i < segments.Count; i++)
+        {
+            segments[i].RemainingCooldown = 0;
+        }
     }
 
     public LevelSegment PickNextLevelSegment(PowerLevel currentPowerLevel, int currentDifficultyLevel)
     {
-        int segmentID = currentID;
+        currentID = GetSuccessorID(currentPowerLevel, currentDifficultyLevel);
+        for(int i = 0; i < segments.Count; i++)
+        {
+            segments[i].RemainingCooldown = (i == currentID) ? segments[i].Cooldown : segments[i].RemainingCooldown - 1; 
+        }
+
+        LevelSegment chosenSegment = segments[currentID];
+        currentStressLevel = Mathf.Clamp(currentStressLevel + chosenSegment.StressRating, 0, 100);
+        return chosenSegment;
+    }
+
+    private int GetSuccessorID(PowerLevel currentPowerLevel, int currentDifficultyLevel)
+    {
         if (currentID == -1)
         {
-            segmentID = 0;
+           return 0;
         }
         else
         {
@@ -41,15 +57,12 @@ public class LevelSegmentPicker
                     Debug.LogWarning("no valid successor found (segment ID " + currentID + ")\n" +
                         "powerLevel: " + currentPowerLevel + "\n" +
                         "difficultyLevel: " + currentDifficultyLevel + "\n" +
-                        "non dangerous segment required: " + requireNonDangerous);                   
+                        "non dangerous segment required: " + requireNonDangerous);
+                    return currentID;
                 }
             }
-            segmentID = ProbabilityHelper.PickRandom(validSuccessors);
+            return ProbabilityHelper.PickRandom(validSuccessors);
         }
-        currentID = segmentID;
-        LevelSegment chosenSegment = segments[currentID];
-        currentStressLevel = Mathf.Clamp(currentStressLevel + chosenSegment.StressRating, 0, 100);
-        return chosenSegment;
     }
 
     private int[] GetValidSuccessorIDs(int[] possibleSuccessorIDs, PowerLevel powerLevel, int difficultyLevel, bool requireNonDangerous)
@@ -59,7 +72,8 @@ public class LevelSegmentPicker
         foreach (int successorID in possibleSuccessorIDs)
         {
             LevelSegment segment = segments[successorID];
-            if (powerLevel >= segment.MinPowerLevel &&
+            if (segment.RemainingCooldown == 0 &&
+                powerLevel >= segment.MinPowerLevel &&
                 powerLevel <= segment.MaxPowerLevel &&
                 difficultyLevel >= segment.MinDifficulty &&
                 difficultyLevel <= segment.MaxDifficulty &&

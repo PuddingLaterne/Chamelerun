@@ -972,7 +972,7 @@ MonoBehaviour:
   WallJumpGravityScale: 0.5
   WallStickDuration: 0.5
   WallJumpAngle: 30
-  WallJumpStrength: 30
+  WallJumpStrength: 35
 --- !u!114 &114000014208087142
 MonoBehaviour:
   m_ObjectHideFlags: 1

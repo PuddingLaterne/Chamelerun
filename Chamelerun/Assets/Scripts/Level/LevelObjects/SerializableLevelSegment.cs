@@ -17,13 +17,14 @@ namespace Chamelerun.Serialization
         public PowerLevel MaxPowerLevel = new PowerLevel(3, 3, 3);
         public int MinDifficulty = 0;
         public int MaxDifficulty = 10;
+        public int Cooldown = 0;
 
         public LevelSegment GetSerializableObject()
         {
             SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
             LevelSegment levelSegment = new LevelSegment(ID, PossibleSuccessorIDs, levelObjects);
             levelSegment.SetInformation(Width, IsDangerous, StressRating);
-            levelSegment.SetRequirements(MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty);
+            levelSegment.SetRequirements(MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty, Cooldown);
             return levelSegment;
         }
     }
@@ -39,6 +40,16 @@ namespace Chamelerun.Serialization
         public PowerLevel MaxPowerLevel { get; private set; }
         public int MinDifficulty { get; private set; }
         public int MaxDifficulty { get; private set; }
+        public int Cooldown { get; private set; }
+        public int RemainingCooldown
+        {
+            get { return remainingCooldown; }
+            set
+            {
+                remainingCooldown = Mathf.Clamp(value, 0, Cooldown);
+            }
+        }
+        private int remainingCooldown;
 
         public bool IsDangerous { get; private set; }
         public int StressRating { get; private set; }
@@ -63,12 +74,14 @@ namespace Chamelerun.Serialization
             StressRating = stressRating;
         }
 
-        public void SetRequirements(PowerLevel minPowerLevel, PowerLevel maxPowerLevel, int minDifficulty, int maxDifficulty)
+        public void SetRequirements(PowerLevel minPowerLevel, PowerLevel maxPowerLevel, 
+            int minDifficulty, int maxDifficulty, int coolDown)
         {
             MinPowerLevel = minPowerLevel;
             MaxPowerLevel = maxPowerLevel;
             MinDifficulty = minDifficulty;
             MaxDifficulty = maxDifficulty;
+            Cooldown = coolDown;
         }
 
         public void Spawn(Vector2 positionOffset, int optionalObjectProbability)

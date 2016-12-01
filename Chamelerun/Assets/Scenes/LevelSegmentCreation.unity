@@ -960,6 +960,7 @@ MonoBehaviour:
     Blue: 3
   MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 0
 --- !u!4 &939635995
 Transform:
   m_ObjectHideFlags: 0
@@ -1331,6 +1332,7 @@ MonoBehaviour:
     Blue: 3
   MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 10
 --- !u!4 &1207429197
 Transform:
   m_ObjectHideFlags: 0
@@ -1721,6 +1723,7 @@ MonoBehaviour:
     Blue: 3
   MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 0
 --- !u!4 &1501371640
 Transform:
   m_ObjectHideFlags: 0
@@ -2107,6 +2110,7 @@ MonoBehaviour:
     Blue: 0
   MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 0
 --- !u!4 &1683016366
 Transform:
   m_ObjectHideFlags: 0
@@ -2227,6 +2231,7 @@ MonoBehaviour:
     Blue: 3
   MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 5
 --- !u!4 &1788467477
 Transform:
   m_ObjectHideFlags: 0
@@ -2568,8 +2573,9 @@ MonoBehaviour:
     Red: 3
     Yellow: 3
     Blue: 3
-  MinDifficulty: 1
+  MinDifficulty: 0
   MaxDifficulty: 10
+  Cooldown: 5
 --- !u!4 &2025032158
 Transform:
   m_ObjectHideFlags: 0
