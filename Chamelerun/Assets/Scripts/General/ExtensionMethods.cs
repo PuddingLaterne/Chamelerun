@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
-using System.IO;
+using System;
 
 public static  class ExtensionMethods
 {
@@ -46,5 +45,12 @@ public static  class ExtensionMethods
     public static bool IsPartOfBitmask(this int x, int mask)
     {
         return (x & mask) != 0;
+    }
+
+    public static int[] Shorten(this int[] array, int targetLength)
+    {
+        int[] shortenedArray = new int[targetLength];
+        Array.Copy(array, shortenedArray, targetLength);
+        return shortenedArray;
     }
 }

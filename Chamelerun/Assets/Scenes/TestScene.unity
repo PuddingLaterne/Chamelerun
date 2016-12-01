@@ -3754,16 +3754,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 114000013868322942, guid: 94f9c0b45216f8646b915e510922cba5,
-        type: 2}
-      propertyPath: WallJumpGravityScale
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114000013868322942, guid: 94f9c0b45216f8646b915e510922cba5,
-        type: 2}
-      propertyPath: WallJumpStrength
-      value: 32.5
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 94f9c0b45216f8646b915e510922cba5, type: 2}
   m_IsPrefabParent: 0

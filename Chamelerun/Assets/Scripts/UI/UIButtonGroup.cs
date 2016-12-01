@@ -13,6 +13,15 @@ public class UIButtonGroup : MonoBehaviour
     {
         isLocked = false;
         HighlightButton(0);
+        for(int i = 0; i < Buttons.Length; i++)
+        {
+            int buttonIndex = i;
+            UIButton button = Buttons[i];
+            button.OnHighlighted += (highlighted) =>
+                {
+                    HighlightButton(highlighted ? buttonIndex : -1);
+                };
+        }
     }
 
     public void Update()
@@ -30,7 +39,7 @@ public class UIButtonGroup : MonoBehaviour
             }
         }
 
-        if (InputHelper.ConfirmPressed)
+        if (InputHelper.ConfirmPressed && highlightedIndex != -1)
         {
             Buttons[highlightedIndex].Select();
         }
@@ -43,7 +52,10 @@ public class UIButtonGroup : MonoBehaviour
         {
             Buttons[i].Highlight(i == index); 
         }
-        StartCoroutine(WaitForRepeatDelay());
+        if (index != -1)
+        {
+            StartCoroutine(WaitForRepeatDelay());
+        }
     }
 
     private IEnumerator WaitForRepeatDelay()

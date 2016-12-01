@@ -1317,7 +1317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 5
-  Width: 30
+  Width: 45
   PossibleSuccessorIDs: 01000000020000000300000004000000
   IsDangerous: 0
   StressRating: -50

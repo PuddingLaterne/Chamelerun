@@ -968,11 +968,11 @@ MonoBehaviour:
   WallJumpLayers:
     serializedVersion: 2
     m_Bits: 512
-  WallJumpGravityScale: 1
-  WallJumpAngleTolerance: 30
-  WallJumpTolerance: 1
+  WallAngleTolerance: 30
+  WallJumpGravityScale: 0.5
+  WallStickDuration: 0.5
   WallJumpAngle: 30
-  WallJumpMultiplier: 1.2
+  WallJumpStrength: 30
 --- !u!114 &114000014208087142
 MonoBehaviour:
   m_ObjectHideFlags: 1
