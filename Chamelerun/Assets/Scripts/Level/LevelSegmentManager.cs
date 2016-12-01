@@ -4,6 +4,28 @@ using Chamelerun.Serialization;
 
 public class LevelSegmentManager 
 {
+    private static class ProgressBasedValues
+    {
+        private static int[] difficultySteps = { 0, 500, 1000 };
+
+        public static int GetDifficultyLevel(float travelledDistance)
+        {
+            for (int i = 0; i < difficultySteps.Length; i++)
+            {
+                if (travelledDistance < difficultySteps[i])
+                {
+                    return i - 1;
+                }
+            }
+            return difficultySteps.Length - 1;
+        }
+
+        public static int GetOptionalObjectProbability(float travelledDistance)
+        {
+            return (int)(Mathf.Sqrt(travelledDistance * 0.1f));
+        }
+    }
+
     private const string resourceDirectory = "LevelSegments";
     private const float minCameraDistanceToOuterBoundScreenFraction = 0.1f;
     private const float maxBacktrackingScreenFraction = 1;
@@ -33,7 +55,10 @@ public class LevelSegmentManager
         Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
         while(Camera.main.transform.position.x + bounds.extents.x + (bounds.size.x * minCameraDistanceToOuterBoundScreenFraction) > currentOuterBound)
         {
-            CreateSegment(levelSegmentPicker.PickNextLevelSegment(currentPowerLevel, currentTravelledDistance));
+            int currentDifficultyLevel = ProgressBasedValues.GetDifficultyLevel(currentTravelledDistance);
+            int optionalObjectProbability = ProgressBasedValues.GetOptionalObjectProbability(currentTravelledDistance);
+            LevelSegment nextLevelSegment = levelSegmentPicker.PickNextLevelSegment(currentPowerLevel, currentDifficultyLevel);
+            CreateSegment(nextLevelSegment, optionalObjectProbability);
         }
         maxBacktrackingDistance = bounds.size.x * maxBacktrackingScreenFraction;
         float maxBacktrackingPositionX = Camera.main.transform.position.x - bounds.extents.x - maxBacktrackingDistance;
@@ -43,9 +68,9 @@ public class LevelSegmentManager
         }
     }
 
-    private void CreateSegment(LevelSegment levelSegment)
+    private void CreateSegment(LevelSegment levelSegment, int optionalObjectProbability)
     {
-        levelSegment.Spawn(new Vector2(currentOuterBound, 0));
+        levelSegment.Spawn(new Vector2(currentOuterBound, 0), optionalObjectProbability);
         currentOuterBound += levelSegment.Width;
     } 
 }

@@ -4,25 +4,9 @@ using Chamelerun.Serialization;
 
 public class LevelSegmentPicker 
 {
-    private static class DifficultyLevel
-    {
-        private static int[] difficultySteps = { 0, 500, 1000 };
-
-        public static int GetDifficultyLevel(float travelledDistance)
-        {
-            for (int i = 0; i < difficultySteps.Length; i++)
-            {
-                if (travelledDistance < difficultySteps[i])
-                {
-                    return i - 1;
-                }
-            }
-            return difficultySteps.Length - 1;
-        }
-    }
-
     private Dictionary<int, LevelSegment> segments;
     private int currentID = -1;
+    private int currentStressLevel;
 
     public LevelSegmentPicker(Dictionary<int, LevelSegment> segments)
     {
@@ -31,10 +15,11 @@ public class LevelSegmentPicker
 
     public void Reset()
     {
+        currentStressLevel = 0;
         currentID = -1;
     }
 
-    public LevelSegment PickNextLevelSegment(PowerLevel currentPowerLevel, float currentTravelledDistance)
+    public LevelSegment PickNextLevelSegment(PowerLevel currentPowerLevel, int currentDifficultyLevel)
     {
         int segmentID = currentID;
         if (currentID == -1)
@@ -43,33 +28,38 @@ public class LevelSegmentPicker
         }
         else
         {
-            int currentDifficultyLevel = DifficultyLevel.GetDifficultyLevel(currentTravelledDistance);
+            bool nonDangerousSegmentRequired = ProbabilityHelper.RollDice(currentStressLevel);
 
             LevelSegment currentSegment = segments[currentID];
-            int[] validSuccessors = new int[currentSegment.SuccessorIDs.Length];
+            int[] validSuccessors = new int[currentSegment.PossibleSuccessorIDs.Length];
             int numValidSuccessors = 0;
-            foreach(int successorID in currentSegment.SuccessorIDs)
+            foreach(int successorID in currentSegment.PossibleSuccessorIDs)
             {
                 LevelSegment segment = segments[successorID];
                 if (currentPowerLevel >= segment.MinPowerLevel &&
                     currentPowerLevel <= segment.MaxPowerLevel &&
                     currentDifficultyLevel >= segment.MinDifficulty &&
-                    currentDifficultyLevel <= segment.MaxDifficulty)
+                    currentDifficultyLevel <= segment.MaxDifficulty &&
+                    !segment.IsDangerous == nonDangerousSegmentRequired)
                 {
                     validSuccessors[numValidSuccessors] = successorID;
                     numValidSuccessors++;
                 }
             }
-            int successor = Random.Range(0, numValidSuccessors);
-            segmentID = validSuccessors[successor];
+            if (numValidSuccessors != 0)
+            {
+                int successor = Random.Range(0, numValidSuccessors);
+                segmentID = validSuccessors[successor];
+            }
+            else
+            {
+                Debug.LogWarning("no valid successor found (segment ID " + currentID + ")");
+            }
         }
 
         currentID = segmentID;
-        return segments[currentID];
-    }
-
-    private bool RollDice(int probability)
-    {
-        return Random.Range(0, 101) <= probability;
+        LevelSegment chosenSegment = segments[currentID];
+        currentStressLevel = Mathf.Clamp(currentStressLevel + chosenSegment.StressRating, 0, 100);
+        return chosenSegment;
     }
 }

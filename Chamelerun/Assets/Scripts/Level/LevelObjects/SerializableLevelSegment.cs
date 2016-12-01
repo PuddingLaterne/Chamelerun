@@ -6,7 +6,11 @@ namespace Chamelerun.Serialization
     {
         public int ID;
         public float Width;
-        public int[] SuccessorIDs;
+
+        public int[] PossibleSuccessorIDs;
+        public bool IsDangerous = true;
+        [Range(-100, 100)]
+        public int StressRating = 0;
 
         [Header("Requirements")]
         public PowerLevel MinPowerLevel = new PowerLevel(0, 0, 0);
@@ -17,7 +21,8 @@ namespace Chamelerun.Serialization
         public LevelSegment GetSerializableObject()
         {
             SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
-            LevelSegment levelSegment = new LevelSegment(ID, SuccessorIDs, Width, levelObjects);
+            LevelSegment levelSegment = new LevelSegment(ID, PossibleSuccessorIDs, levelObjects);
+            levelSegment.SetInformation(Width, IsDangerous, StressRating);
             levelSegment.SetRequirements(MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty);
             return levelSegment;
         }
@@ -26,7 +31,7 @@ namespace Chamelerun.Serialization
     public class LevelSegment
     {
         public int ID { get; private set; }
-        public int[] SuccessorIDs { get; private set; }
+        public int[] PossibleSuccessorIDs { get; private set; }
         public float Width { get; private set; }
         public LevelObject[] LevelObjects { get; private set; }
 
@@ -35,18 +40,27 @@ namespace Chamelerun.Serialization
         public int MinDifficulty { get; private set; }
         public int MaxDifficulty { get; private set; }
 
+        public bool IsDangerous { get; private set; }
+        public int StressRating { get; private set; }
+
         public LevelSegment() { }
 
-        public LevelSegment(int ID, int[] successorIDs , float width, SerializableLevelObject[] levelObjects)
+        public LevelSegment(int ID, int[] possibleSuccessorIDs , SerializableLevelObject[] levelObjects)
         {
             this.ID = ID;
-            SuccessorIDs = successorIDs;
-            Width = width;
+            PossibleSuccessorIDs = possibleSuccessorIDs;
             LevelObjects = new LevelObject[levelObjects.Length];
             for (int i = 0; i < levelObjects.Length; i++)
             {
                 LevelObjects[i] = levelObjects[i].GetSerializableObject();
             }
+        }
+
+        public void SetInformation(float width, bool isDangerous, int stressRating)
+        {
+            Width = width;
+            IsDangerous = isDangerous;
+            StressRating = stressRating;
         }
 
         public void SetRequirements(PowerLevel minPowerLevel, PowerLevel maxPowerLevel, int minDifficulty, int maxDifficulty)
@@ -57,11 +71,15 @@ namespace Chamelerun.Serialization
             MaxDifficulty = maxDifficulty;
         }
 
-        public void Spawn(Vector2 positionOffset)
+        public void Spawn(Vector2 positionOffset, int optionalObjectProbability)
         {
             for (int i = 0; i < LevelObjects.Length; i++)
             {
-                LevelObjects[i].Spawn(positionOffset);
+                LevelObject levelObject = LevelObjects[i];
+                if (!levelObject.IsOptional || ProbabilityHelper.RollDice(optionalObjectProbability))
+                {
+                    levelObject.Spawn(positionOffset);
+                }
             }
         }
     }

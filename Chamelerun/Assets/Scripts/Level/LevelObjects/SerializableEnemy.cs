@@ -6,7 +6,7 @@ namespace Chamelerun.Serialization
     {
         public override LevelObject GetSerializableObject()
         {
-            return new Enemy(ID, transform.localPosition);
+            return new Enemy(ID, IsOptional, transform.localPosition);
         }
     }
 
@@ -14,9 +14,10 @@ namespace Chamelerun.Serialization
     {
         public Enemy() { }
 
-        public Enemy(int ID, Vector2 position)
+        public Enemy(int ID, bool isOptional, Vector2 position)
         {
             this.ID = ID;
+            IsOptional = isOptional;
             Position = position;
         }
 

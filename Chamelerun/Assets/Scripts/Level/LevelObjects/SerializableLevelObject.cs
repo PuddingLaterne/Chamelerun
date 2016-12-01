@@ -6,10 +6,11 @@ namespace Chamelerun.Serialization
     public class SerializableLevelObject : MonoBehaviour
     {
         public int ID;
+        public bool IsOptional;
 
         public virtual LevelObject GetSerializableObject()
         {
-            return new LevelObject(ID, transform.localPosition, transform.localScale);
+            return new LevelObject(ID, IsOptional, transform.localPosition, transform.localScale);
         }
     }
 
@@ -18,12 +19,14 @@ namespace Chamelerun.Serialization
         public Vector2 Position { get; protected set; }
         public Vector2 Scale { get; protected set; }
         public int ID { get; protected set; }
+        public bool IsOptional { get; protected set; }
 
         public LevelObject() { }
 
-        public LevelObject(int ID, Vector2 position, Vector2 scale)
+        public LevelObject(int ID, bool isOptional, Vector2 position, Vector2 scale)
         {
             this.ID = ID;
+            IsOptional = isOptional;
             Position = position;
             Scale = scale;
         }

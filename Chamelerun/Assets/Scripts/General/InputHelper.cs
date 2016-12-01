@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class InputHelper 
 {
-    private static bool usingJoystickInput = true;
+    private static bool usingJoystickInput;
 
     private static Vector2 defaultTargetPosition = Vector2.up.Rotate(-45);
     private static float manualTargetSpeed = 8;
@@ -28,10 +28,12 @@ public static class InputHelper
     public static void Init(Chameleon chameleonReference)
     {
         chameleon = chameleonReference;
+        usingJoystickInput = Input.GetJoystickNames().Length != 0;
     }
 
     public static void Reset()
     {
+        usingJoystickInput = Input.GetJoystickNames().Length != 0;
         lastUpdatedFrameCount = -1;
         tongueTriggerWasReleased = true;
         jumpTriggerWasReleased = true;

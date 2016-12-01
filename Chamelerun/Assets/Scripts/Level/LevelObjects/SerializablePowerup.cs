@@ -8,7 +8,7 @@ namespace Chamelerun.Serialization
     {
         public override LevelObject GetSerializableObject()
         {
-            return new Powerup(ID, transform.localPosition);
+            return new Powerup(ID, IsOptional, transform.localPosition);
         }
     }
 
@@ -16,9 +16,10 @@ namespace Chamelerun.Serialization
     {
         public Powerup() { }
 
-        public Powerup(int ID, Vector2 position)
+        public Powerup(int ID, bool isOptional, Vector2 position)
         {
             this.ID = ID;
+            IsOptional = isOptional;
             Position = position;
         }
 

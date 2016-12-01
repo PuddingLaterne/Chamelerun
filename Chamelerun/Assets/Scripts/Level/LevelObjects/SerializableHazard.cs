@@ -7,7 +7,7 @@ namespace Chamelerun.Serialization
     {
         public override LevelObject GetSerializableObject()
         {
-            return new Hazard(ID, transform.localPosition, transform.localScale);
+            return new Hazard(ID, IsOptional, transform.localPosition, transform.localScale);
         }
     }
 
@@ -15,9 +15,10 @@ namespace Chamelerun.Serialization
     {
         public Hazard() { }
 
-        public Hazard(int ID, Vector2 position, Vector2 scale)
+        public Hazard(int ID, bool isOptional, Vector2 position, Vector2 scale)
         {
             this.ID = ID;
+            IsOptional = isOptional;
             Position = position;
             Scale = scale;
         }

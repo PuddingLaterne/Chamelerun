@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         InitLevelSegmentManager();
         InitCamera();
         InitUI();
+        InputHelper.Init(chameleon);
         SetGameState(State.Start);
     }
 
