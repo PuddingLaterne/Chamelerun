@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: TestCloud
   m_Shader: {fileID: 4800000, guid: 9a3c1bbcc312a6b4b841c8dc31a4ba97, type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_ShaderKeywords: _EMISSION _USEFOG_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -141,7 +141,7 @@ Material:
       second: 0
     - first:
         name: _UseFog
-      second: 0
+      second: 1
     - first:
         name: _ZWrite
       second: 1
@@ -151,10 +151,10 @@ Material:
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _DetailAHighlights
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 1, g: 0.86004055, b: 0.49264705, a: 1}
     - first:
         name: _DetailAMidtones
-      second: {r: 0.5, g: 0.5, b: 0.5, a: 1}
+      second: {r: 0.72794116, g: 0.16566935, b: 0, a: 1}
     - first:
         name: _DetailAShadows
       second: {r: 0, g: 0, b: 0, a: 1}
@@ -172,10 +172,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 0.85294116, g: 1, b: 0.95740366, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.41782007, g: 0.5836535, b: 0.61764705, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0.15686275, g: 0.16862746, b: 0.19215688, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}

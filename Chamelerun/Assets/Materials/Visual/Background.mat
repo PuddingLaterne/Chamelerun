@@ -8,7 +8,7 @@ Material:
   m_PrefabInternal: {fileID: 0}
   m_Name: Background
   m_Shader: {fileID: 4800000, guid: 9a3c1bbcc312a6b4b841c8dc31a4ba97, type: 3}
-  m_ShaderKeywords: _EMISSION
+  m_ShaderKeywords: _EMISSION _USEFOG_ON
   m_LightmapFlags: 1
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -141,7 +141,7 @@ Material:
       second: 0
     - first:
         name: _UseFog
-      second: 0
+      second: 1
     - first:
         name: _ZWrite
       second: 1
@@ -172,10 +172,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 0.79692906, g: 0.9852941, b: 0.8917611, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.3464533, g: 0.499129, b: 0.5294118, a: 1}
+      second: {r: 0.49019608, g: 0.49019608, b: 0.49019608, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0.09488538, g: 0.19852942, b: 0.1727971, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 1}

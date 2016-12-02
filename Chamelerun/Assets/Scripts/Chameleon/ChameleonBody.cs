@@ -43,7 +43,7 @@ public class ChameleonBody : MonoBehaviour
     public float WallJumpGravityScale = 0.5f;
     public float WallStickDuration = 0.5f;
     public float WallJumpAngle = 30;
-    public float WallJumpStrength = 32.5f;
+    public float WallJumpStrengthFraction = 0.8f;
 
     public Vector2 Position { get { return transform.position; } }
     public Direction CurrentDirection { get; private set; }
@@ -160,7 +160,7 @@ public class ChameleonBody : MonoBehaviour
         {
             if (isJumping && !InputHelper.JumpHeld && !IsDangling)
             {
-                rigidBody.velocity = new Vector2(rigidBody.velocity.x, rigidBody.velocity.y / 2f);
+                rigidBody.velocity = new Vector2(rigidBody.velocity.x, 0);
             }
         }
 
@@ -224,7 +224,7 @@ public class ChameleonBody : MonoBehaviour
                 force = direction * jumpStrength * SwingReleaseJumpMultiplier;
                 break;
             case JumpType.Wall:
-                force = wallJumpDirection * WallJumpStrength;
+                force = wallJumpDirection * jumpStrength * WallJumpStrengthFraction;
                 ReleaseWall();
                 isJumpingFromWall = true;
                 break;
