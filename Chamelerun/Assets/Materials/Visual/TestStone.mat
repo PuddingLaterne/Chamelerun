@@ -114,7 +114,7 @@ Material:
       second: 1
     - first:
         name: _LightInfluence
-      second: 1
+      second: 0
     - first:
         name: _Metallic
       second: 0
@@ -172,10 +172,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0.078431375, g: 0.078431375, b: 0.078431375, a: 1}
