@@ -18,7 +18,11 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy(int ID, Vector2 position)
     {
-        if (ID >= EnemyObjectPools.Length || ID < 0) return;
+        if (ID >= EnemyObjectPools.Length || ID < 0)
+        {
+            Debug.LogWarning("objectpool for hazard " + ID + " is missing!");
+            return;
+        }
 
         GameObject enemyObject = EnemyObjectPools[ID].GetObjectFromPool();
         Enemy enemy = enemyObject.GetComponentsInChildren<Enemy>(true)[0];

@@ -3,7 +3,7 @@ using System.Collections;
 
 public enum PowerupType
 {
-    None,
+    Clear,
     Red, Yellow, Blue
 }
 
@@ -12,6 +12,7 @@ public class PowerupSpawner : MonoBehaviour
     public ObjectPool RedPowerupPool;
     public ObjectPool YellowPowerupPool;
     public ObjectPool BluePowerupPool;
+    public ObjectPool ClearPowerupPool;
 
     private ScoreManager scoreManager;
     private Chameleon chameleon;
@@ -36,8 +37,11 @@ public class PowerupSpawner : MonoBehaviour
             case PowerupType.Blue:
                 powerup = BluePowerupPool.GetObjectFromPool();
                 break;
-
+            case PowerupType.Clear:
+                powerup = ClearPowerupPool.GetObjectFromPool();
+                break;
             default:
+                Debug.LogWarning("objectpool for powerup " + type + " is missing!");
                 return;
         }
         TriggerEventSource eventSource = powerup.GetComponent<TriggerEventSource>();

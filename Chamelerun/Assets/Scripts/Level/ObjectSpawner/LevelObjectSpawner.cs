@@ -7,7 +7,11 @@ public class LevelObjectSpawner : MonoBehaviour
 
     public void SpawnLevelObject(int ID, Vector2 position, Vector2 scale)
     {
-        if (ID >= ObjectPools.Length || ID < 0) return;
+        if (ID >= ObjectPools.Length || ID < 0)
+        {
+            Debug.LogWarning("objectpool for levelObject " + ID + " is missing!");
+            return;
+        }
 
         GameObject levelObject = ObjectPools[ID].GetObjectFromPool();
 

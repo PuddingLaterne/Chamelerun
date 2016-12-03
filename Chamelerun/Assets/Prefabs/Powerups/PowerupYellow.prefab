@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 2
+  IsOptional: 0
 --- !u!212 &212000010065525370
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -151,6 +152,6 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1089df1a31854824b820ff57e37e718f, type: 3}
-  m_Color: {r: 0.99264705, g: 0.8129437, b: 0.22626512, a: 1}
+  m_Color: {r: 0.99264705, g: 0.8129437, b: 0.22626512, a: 0.78431374}
   m_FlipX: 0
   m_FlipY: 0

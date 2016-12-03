@@ -14,7 +14,11 @@ public class HazardSpawner : MonoBehaviour
 
     public void SpawnHazard(int ID, Vector2 position, Vector2 scale)
     {
-        if (ID >= HazardObjectPools.Length || ID < 0) return;
+        if (ID >= HazardObjectPools.Length || ID < 0)
+        {
+            Debug.LogWarning("objectpool for hazard " + ID + " is missing!");
+            return;
+        }
 
         GameObject hazard = HazardObjectPools[ID].GetObjectFromPool();
 

@@ -100,6 +100,7 @@ public class ChameleonPower : MonoBehaviour
 
     public void AddPowerup(PowerupType type)
     {
+        if (type == PowerupType.Clear) return;
         PowerupType[] tmpPowerups = new PowerupType[maxNumPowerups];
         tmpPowerups[0] = type;
         for(int i = 1; i < maxNumPowerups; i++)
@@ -115,9 +116,9 @@ public class ChameleonPower : MonoBehaviour
     {
         for (int i = maxNumPowerups - 1; i >= 0; i--)
         {
-            if(powerups[i] != PowerupType.None)
+            if(powerups[i] != PowerupType.Clear)
             {
-                powerups[i] = PowerupType.None;
+                powerups[i] = PowerupType.Clear;
                 RecalculatePower();
                 OnPowerChanged();
                 return;
@@ -131,7 +132,7 @@ public class ChameleonPower : MonoBehaviour
         int count = 0;
         foreach(PowerupType powerup in powerups)
         {
-            if(powerup != PowerupType.None)
+            if(powerup != PowerupType.Clear)
             {
                 count++;
             }
