@@ -12,6 +12,7 @@ public class Chameleon : MonoBehaviour
 
     public Transform Transform { get { return body.transform; } }
     public Vector2 Position { get { return body.Position; } }
+    public Vector2 TonguePosition { get { return Position + tongue.OffsetOnBody; } }
 
     public PowerupType[] CurrentPowerups { get { return power.Powerups; } }
     public int CurrentPower { get { return power.Power; } }

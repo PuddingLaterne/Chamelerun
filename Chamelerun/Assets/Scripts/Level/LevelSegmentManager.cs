@@ -52,7 +52,7 @@ public class LevelSegmentManager
 
     public void Update(PowerLevel currentPowerLevel, float currentTravelledDistance)
     {
-        Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);        
+        Bounds bounds = CameraBounds.GetOrthograpgicBounds();        
         while(Camera.main.transform.position.x + bounds.extents.x + (bounds.size.x * minCameraDistanceToOuterBoundScreenFraction) > currentOuterBound)
         {
             int currentDifficultyLevel = ProgressBasedValues.GetDifficultyLevel(currentTravelledDistance);

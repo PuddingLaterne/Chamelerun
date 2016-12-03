@@ -218,7 +218,7 @@ public static class InputHelper
         {
             Ray cursorPositionRay = Camera.main.ScreenPointToRay(Input.mousePosition);
             Vector2 cursorPosition = cursorPositionRay.origin + cursorPositionRay.direction * -Camera.main.transform.position.z;
-            Vector2 relativeToPosition = (Vector2)chameleon.Position;
+            Vector2 relativeToPosition = chameleon.TonguePosition;
             aimingDirection = (cursorPosition - relativeToPosition).normalized;
         }
         float angle = Vector2.Angle(Vector2.up, aimingDirection);

@@ -34,7 +34,7 @@ public class BackgroundLayer : MonoBehaviour
             AddBackgroundObject(0);
         }
 
-        Bounds cameraBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
+        Bounds cameraBounds = CameraBounds.GetOrthograpgicBounds();
         float currentOuterBound = Camera.main.transform.position.x + cameraBounds.extents.x;
 
         BackgroundObject lastBackgroundObject = backgroundObjects[backgroundObjects.Count - 1];
@@ -84,7 +84,7 @@ public class BackgroundLayer : MonoBehaviour
 
     public void LateUpdate()
     {
-        Bounds cameraBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
+        Bounds cameraBounds = CameraBounds.GetOrthograpgicBounds();
         float targetPosX = Camera.main.transform.position.x * ScrollSpeed - cameraBounds.extents.x;
         transform.position = new Vector3(Mathf.Lerp(transform.position.x, targetPosX, 0.5f), transform.position.y, transform.position.z);
     }

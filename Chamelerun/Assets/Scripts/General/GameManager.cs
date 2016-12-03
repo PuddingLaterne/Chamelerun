@@ -162,7 +162,7 @@ public class GameManager : MonoBehaviour
             layer.gameObject.SetActive(true);
         }
 
-        Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
+        Bounds screenBounds = CameraBounds.GetOrthograpgicBounds();
         Camera.main.transform.position = new Vector3(screenBounds.extents.x, 0, Camera.main.transform.position.z);
 
         SetGameState(State.Game);

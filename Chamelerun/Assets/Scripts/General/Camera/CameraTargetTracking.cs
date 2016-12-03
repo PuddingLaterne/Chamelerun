@@ -30,7 +30,7 @@ public class CameraTargetTracking : MonoBehaviour
         if (Target == null) return;
 
         Vector3 posDifference = transform.position - Target.transform.position;
-        Bounds screenBounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
+        Bounds screenBounds = CameraBounds.GetOrthograpgicBounds();
 
         Vector3 targetPos = transform.position;        
 

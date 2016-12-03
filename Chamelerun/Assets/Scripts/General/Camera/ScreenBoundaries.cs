@@ -13,7 +13,7 @@ public class ScreenBoundaries : MonoBehaviour
 
     public void Update()
     {
-        Bounds bounds = CameraBounds.GetOrthograpgicBounds(Camera.main);
+        Bounds bounds = CameraBounds.GetOrthograpgicBounds();
 
         Vector2[] boundaryPoints = new Vector2[4];
         boundaryPoints[0] = new Vector2(-bounds.extents.x, -bounds.extents.y);
