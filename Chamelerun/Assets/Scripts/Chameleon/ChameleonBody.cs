@@ -12,7 +12,7 @@ public class ChameleonBody : MonoBehaviour
 
     private enum JumpType
     {
-        None,
+        None, Waiting,
         Normal, Wall, Swinging
     }
 
@@ -20,6 +20,8 @@ public class ChameleonBody : MonoBehaviour
     public float JumpCooldown = 0.1f;
     public float AirJumpTolerance = 0.5f;
     public TriggerZone GroundTrigger;
+    public float GroundProximityTolerance = 0.5f;
+    public LayerMask GroundLayers;
 
     [Header("Speed")]
     public float AirSpeedFraction = 0.9f;
@@ -52,6 +54,7 @@ public class ChameleonBody : MonoBehaviour
     private Rigidbody2D rigidBody;
 
     private bool jumpingEnabled, isJumping;
+    private bool groundIsCloseEnough;
     private JumpType jumpType;
     private bool isFlying;
     private bool isRecoveringFromKnockBack;
@@ -114,23 +117,33 @@ public class ChameleonBody : MonoBehaviour
 
         isJumpingFromWall = isJumpingFromWall && !(GroundTrigger.IsActive);
 
-        if (InputHelper.JumpPressed && jumpingEnabled)
+        if (InputHelper.JumpPressed || jumpType == JumpType.Waiting)
         {
-            if (GroundTrigger.IsActive)
-            {                
-                jumpType = JumpType.Normal;
-            }
-            else if (isStickingToWall)
+            if (jumpingEnabled)
             {
-                jumpType = JumpType.Wall;
+                if (GroundTrigger.IsActive)
+                {
+                    jumpType = JumpType.Normal;
+                }
+                else if (isStickingToWall)
+                {
+                    jumpType = JumpType.Wall;
+                }
+                else if (IsDangling)
+                {
+                    jumpType = JumpType.Swinging;
+                }
+                else if (GroundTrigger.InactiveTime < AirJumpTolerance)
+                {
+                    jumpType = JumpType.Normal;
+                }
             }
-            else if (IsDangling)
+            else if(jumpType == JumpType.None)
             {
-                jumpType = JumpType.Swinging;
-            }
-            else if (GroundTrigger.InactiveTime < AirJumpTolerance)
-            {
-                jumpType = JumpType.Normal;
+                if (rigidBody.velocity.y < 0 && Physics2D.Raycast(Position, Vector2.down, GroundProximityTolerance, GroundLayers))
+                {
+                    jumpType = JumpType.Waiting;
+                }
             }
         }
 
