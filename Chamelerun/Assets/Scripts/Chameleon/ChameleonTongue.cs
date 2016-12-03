@@ -80,10 +80,12 @@ public class ChameleonTongue : MonoBehaviour
         currentTongueLength = MinLength;
 
         CreateTongueSegments();
-        
-        firstJoint = Beginning.GetComponent<HingeJoint2D>();
+
+        HingeJoint2D[] beginningHingeJoints = Beginning.GetComponents<HingeJoint2D>();
+        firstJoint = beginningHingeJoints[0];
         firstJoint.connectedBody = tongueSegments[0].Rigidbody;
         firstJoint.connectedAnchor = new Vector2(0, -currentSegmentLength / 2f);
+        beginningHingeJoints[1].connectedAnchor = OffsetOnBody;
 
         distanceJoint = Beginning.GetComponent<DistanceJoint2D>();
         distanceJoint.distance = 0;
@@ -272,6 +274,10 @@ public class ChameleonTongue : MonoBehaviour
     private AttachmentState TryAttaching(float tongueWidth)
     {
         Vector2 direction = Vector2.up.Rotate(currentAngle);
+        if(CameraBounds.IsOutOfBounds(currentOrigin + direction * currentTongueLength))
+        {
+            return AttachmentState.Failed;
+        }
         Vector2 offsetDirection = direction.Rotate(90);
 
         bool numRaycastsIsEven = NumRaycasts % 2 == 0;
