@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public int MaxHealth;
     public float InvincibilityTime;
+    public bool CauseDamageOnCollision = true;
 
     [Header("Tongue Interaction")]
     public float KnockbackForce;
@@ -49,7 +50,10 @@ public class Enemy : MonoBehaviour
         {
             movement.KnockBack(direction * KnockbackForce);
         }
-        ApplyDamage();
+        if (DamagedByPunching)
+        {
+            ApplyDamage();
+        }
     }
 
     public Vector2 Bounce()

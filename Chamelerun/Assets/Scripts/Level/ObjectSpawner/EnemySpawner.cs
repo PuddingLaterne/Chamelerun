@@ -61,7 +61,10 @@ public class EnemySpawner : MonoBehaviour
             }
             else
             {
-                chameleon.ApplyDamage(enemy.gameObject);
+                if (enemy.CauseDamageOnCollision)
+                {
+                    chameleon.ApplyDamage(enemy.gameObject);
+                }
             }
         }
     }
