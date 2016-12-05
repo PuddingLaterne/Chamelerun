@@ -332,7 +332,14 @@ public class ChameleonTongue : MonoBehaviour
         End.transform.eulerAngles = new Vector3(0, 0, currentAngle);
 
         End.connectedBody = hit.rigidbody;
-        End.connectedAnchor = hit.rigidbody.transform.InverseTransformPoint(hit.point);
+        if (hit.rigidbody != null)
+        {
+            End.connectedAnchor = hit.rigidbody.transform.InverseTransformPoint(hit.point);
+        }
+        else
+        {
+            End.connectedAnchor = hit.point;
+        }
         End.enabled = true;
         
         IsAttached = true;

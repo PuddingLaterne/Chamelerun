@@ -25,8 +25,9 @@ public class Shadow : MonoBehaviour
             
             float posX = hit.point.x - (extentsLeft / 2f) + (extensRight / 2f);
 
-            transform.localScale = new Vector2(extensRight + extentsLeft, scale);
             transform.position = new Vector2(posX, hit.point.y);
+            transform.localEulerAngles = new Vector3(0, 0, hit.normal.GetAngle());
+            transform.localScale = new Vector2(extensRight + extentsLeft, scale);
         }
         else
         {

@@ -19,9 +19,7 @@ public class ChameleonBody : MonoBehaviour
     [Header("Jumping")]
     public float JumpCooldown = 0.1f;
     public float AirJumpTolerance = 0.5f;
-    public TriggerZone GroundTrigger;
     public float GroundProximityTolerance = 0.5f;
-    public LayerMask GroundLayers;
 
     [Header("Speed")]
     public float AirSpeedFraction = 0.9f;
@@ -52,9 +50,9 @@ public class ChameleonBody : MonoBehaviour
     public bool IsDangling { get; private set; }
 
     private Rigidbody2D rigidBody;
+    private GroundContact groundContact;
 
     private bool jumpingEnabled, isJumping;
-    private bool groundIsCloseEnough;
     private JumpType jumpType;
     private bool isFlying;
     private bool isRecoveringFromKnockBack;
@@ -76,6 +74,7 @@ public class ChameleonBody : MonoBehaviour
         this.power = power;
 
         rigidBody = GetComponent<Rigidbody2D>();
+        groundContact = GetComponentInChildren<GroundContact>();
 
         CollisionEventSource collisionEventSource = GetComponent<CollisionEventSource>();
         collisionEventSource.OnCollisionEnter += CollisionEnter;
@@ -104,24 +103,22 @@ public class ChameleonBody : MonoBehaviour
 
         accelerationTime = 0f;
         lastHorizontalInput = 0f;
-
-        GroundTrigger.Reset();
     }
 
     public void ChameleonUpdate()
     {
-        IsDangling = tongue.IsAttached && !GroundTrigger.IsActive;
+        IsDangling = tongue.IsAttached && !groundContact.HasGroundContact;
 
         isJumping = isJumping && rigidBody.velocity.y > 0;
-        isFlying = isFlying && !GroundTrigger.IsActive;
+        isFlying = isFlying && !groundContact.HasGroundContact;
 
-        isJumpingFromWall = isJumpingFromWall && !(GroundTrigger.IsActive);
+        isJumpingFromWall = isJumpingFromWall && !(groundContact.HasGroundContact);
 
         if (InputHelper.JumpPressed || jumpType == JumpType.Waiting)
         {
             if (jumpingEnabled)
             {
-                if (GroundTrigger.IsActive)
+                if (groundContact.HasGroundContact)
                 {
                     jumpType = JumpType.Normal;
                 }
@@ -133,14 +130,14 @@ public class ChameleonBody : MonoBehaviour
                 {
                     jumpType = JumpType.Swinging;
                 }
-                else if (GroundTrigger.InactiveTime < AirJumpTolerance)
+                else if (groundContact.TimeWithoutGroundContact < AirJumpTolerance)
                 {
                     jumpType = JumpType.Normal;
                 }
             }
             else if(jumpType == JumpType.None)
             {
-                if (rigidBody.velocity.y < 0 && Physics2D.Raycast(Position, Vector2.down, GroundProximityTolerance, GroundLayers))
+                if (rigidBody.velocity.y < 0 && Physics2D.Raycast(Position, Vector2.down, GroundProximityTolerance, groundContact.GroundLayers))
                 {
                     jumpType = JumpType.Waiting;
                 }
@@ -197,9 +194,10 @@ public class ChameleonBody : MonoBehaviour
         accelerationTime += Time.fixedDeltaTime;
         float maxSpeed = power.GetGroundSpeed();
         float acceleration = Acceleration.Evaluate(accelerationTime);
+
         float speed = maxSpeed * acceleration * horizontalInput;
 
-        if (!GroundTrigger.IsActive)
+        if (!groundContact.HasGroundContact)
         {
             if (Mathf.Abs(speed) < Mathf.Abs(rigidBody.velocity.x) && isFlying)
             {
@@ -282,7 +280,7 @@ public class ChameleonBody : MonoBehaviour
 
     public void OnTongueReleased()
     {
-        isFlying = !GroundTrigger.IsActive;
+        isFlying = !groundContact.HasGroundContact;
         rigidBody.gravityScale = NormalGravitiyScale;
         rigidBody.freezeRotation = true;
         transform.localEulerAngles = Vector3.zero;
@@ -292,7 +290,7 @@ public class ChameleonBody : MonoBehaviour
     {
         jumpingEnabled = false;
         yield return new WaitForSeconds(JumpCooldown);
-        yield return new WaitUntil(() => GroundTrigger.IsActive || IsDangling || isStickingToWall);
+        yield return new WaitUntil(() => groundContact.HasGroundContact || IsDangling || isStickingToWall);
         jumpingEnabled = true;
     }
 

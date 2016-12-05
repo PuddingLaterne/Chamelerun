@@ -377,10 +377,9 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4000012241430182}
-  - 61: {fileID: 61000013503271988}
-  - 114: {fileID: 114000010858874234}
+  - 114: {fileID: 114000014052148954}
   m_Layer: 31
-  m_Name: GroundTrigger
+  m_Name: GroundContact
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -787,20 +786,6 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0.8}
   serializedVersion: 2
   m_Size: {x: 1, y: 1.6}
---- !u!61 &61000013503271988
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014054313674}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Size: {x: 0.8, y: 0.2}
 --- !u!114 &114000010157448424
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -810,17 +795,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1a976bf2def15e49b25cb58f9dc6e14, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &114000010858874234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014054313674}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d71516f5d5cb9f4459f8fa6284a25e9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114000011045958262
@@ -864,24 +838,24 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 30
-      inSlope: 7.5
-      outSlope: 7.5
+      value: 30.95
+      inSlope: 7.1500015
+      outSlope: 7.1500015
       tangentMode: 10
     - time: 1
-      value: 37.5
-      inSlope: 7.5
-      outSlope: 7.5
+      value: 38.100002
+      inSlope: 7.1500015
+      outSlope: 6.25
       tangentMode: 21
     - time: 2
-      value: 45
-      inSlope: 7.5
-      outSlope: 10
+      value: 44.350002
+      inSlope: 6.25
+      outSlope: 10.799999
       tangentMode: 21
     - time: 3
-      value: 55
-      inSlope: 10
-      outSlope: 10
+      value: 55.15
+      inSlope: 10.799999
+      outSlope: 10.799999
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
@@ -890,29 +864,32 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - time: 0
-      value: 9
-      inSlope: 4
-      outSlope: 4
+      value: 9.85
+      inSlope: 3.8999996
+      outSlope: 3.8999996
       tangentMode: 10
     - time: 1
-      value: 13
-      inSlope: 4
-      outSlope: 4
+      value: 13.75
+      inSlope: 3.8999996
+      outSlope: 3.9500008
       tangentMode: 21
     - time: 2
-      value: 17
-      inSlope: 4
-      outSlope: 6
+      value: 17.7
+      inSlope: 3.9500008
+      outSlope: 5.8500004
       tangentMode: 21
     - time: 3
-      value: 23
-      inSlope: 6
-      outSlope: 6
+      value: 23.550001
+      inSlope: 5.8500004
+      outSlope: 5.8500004
       tangentMode: 10
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 0
   FullPowerupMultiplier: 2
+  red: 0
+  yellow: 0
+  blue: 0
 --- !u!114 &114000011618490064
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1004,11 +981,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   JumpCooldown: 0.1
   AirJumpTolerance: 0.5
-  GroundTrigger: {fileID: 114000010858874234}
   GroundProximityTolerance: 1
-  GroundLayers:
-    serializedVersion: 2
-    m_Bits: 512
   AirSpeedFraction: 0.9
   Acceleration:
     serializedVersion: 2
@@ -1042,6 +1015,22 @@ MonoBehaviour:
   WallStickDuration: 0.5
   WallJumpAngle: 30
   WallJumpStrengthFraction: 0.8
+--- !u!114 &114000014052148954
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000014054313674}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86bf903d0936a9b4fb1d93695b884523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GroundLayers:
+    serializedVersion: 2
+    m_Bits: 512
+  MaxDistance: 0.1
+  Width: 0.8
 --- !u!114 &114000014208087142
 MonoBehaviour:
   m_ObjectHideFlags: 1

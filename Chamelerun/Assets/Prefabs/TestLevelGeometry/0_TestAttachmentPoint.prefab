@@ -21,7 +21,6 @@ GameObject:
   - 4: {fileID: 4000012301686670}
   - 212: {fileID: 212000012159169530}
   - 58: {fileID: 58000010144630884}
-  - 50: {fileID: 50000010754582424}
   - 114: {fileID: 114000013381243906}
   - 114: {fileID: 114000012690940830}
   m_Layer: 11
@@ -44,23 +43,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!50 &50000010754582424
-Rigidbody2D:
-  serializedVersion: 2
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000010875966622}
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!58 &58000010144630884
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -98,6 +80,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ID: 0
+  IsOptional: 0
 --- !u!212 &212000012159169530
 SpriteRenderer:
   m_ObjectHideFlags: 1

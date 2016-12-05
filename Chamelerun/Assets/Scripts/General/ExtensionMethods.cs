@@ -53,4 +53,13 @@ public static  class ExtensionMethods
         Array.Copy(array, shortenedArray, targetLength);
         return shortenedArray;
     }
+
+    public static bool Contains(this int[] array, int value)
+    {
+        foreach (var element in array)
+        {
+            if (element == value) return true;
+        }
+        return false;
+    }
 }
