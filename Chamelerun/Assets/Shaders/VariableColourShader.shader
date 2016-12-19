@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
-
-Shader "Chamelerun/VariableColourShader"
+﻿Shader "Chamelerun/VariableColourShader"
 {
 	Properties
 	{
@@ -57,7 +55,6 @@ Shader "Chamelerun/VariableColourShader"
 				float4 pos : SV_POSITION;
 				float2 uv : TEXCOORD0;
 				float3 vertexLighting : TEXCOORD1;
-				UNITY_FOG_COORDS(2)
 			};
 
 			float _UseFog;
@@ -102,12 +99,6 @@ Shader "Chamelerun/VariableColourShader"
 				}
 
 				output.vertexLighting = vertexLighting;
-
-				if(_UseFog == 1)
-				{
-					UNITY_TRANSFER_FOG(output, output.pos);
-				}
-
 				return output;
 			}
 			
@@ -159,7 +150,7 @@ Shader "Chamelerun/VariableColourShader"
 
 				if(_UseFog == 1)
 				{
-					UNITY_APPLY_FOG(input.fogCoord, color);
+					color = fixed4(interpolate(unity_FogColor, color, input.pos.z), color.a);
 				}
 				return color;
 			}
