@@ -36,6 +36,7 @@ public struct PowerLevel
 public class ChameleonPower : MonoBehaviour 
 {
     public AnimationCurve TongueLength;
+    public AnimationCurve TongueWidth;
     public AnimationCurve JumpStrength;
     public AnimationCurve MoveSpeed;
 
@@ -71,8 +72,11 @@ public class ChameleonPower : MonoBehaviour
         }
     }
 
+    [SerializeField]
     private int red;
+    [SerializeField]
     private int yellow;
+    [SerializeField]
     private int blue;
 
     public void Reset()
@@ -85,6 +89,11 @@ public class ChameleonPower : MonoBehaviour
     public float GetMaxTongueLength()
     {
         return TongueLength.Evaluate(red);
+    }
+
+    public float GetTongueWidth()
+    {
+        return TongueWidth.Evaluate(red);
     }
 
     public float GetGroundSpeed()

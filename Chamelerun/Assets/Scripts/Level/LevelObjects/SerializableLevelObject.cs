@@ -5,7 +5,7 @@ namespace Chamelerun.Serialization
 {
     public class SerializableLevelObject : MonoBehaviour
     {
-        public int ID;
+        public string ID;
         public bool IsOptional;
 
         public virtual LevelObject GetSerializableObject()
@@ -18,12 +18,12 @@ namespace Chamelerun.Serialization
     {
         public Vector2 Position { get; protected set; }
         public Vector2 Scale { get; protected set; }
-        public int ID { get; protected set; }
+        public string ID { get; protected set; }
         public bool IsOptional { get; protected set; }
 
         public LevelObject() { }
 
-        public LevelObject(int ID, bool isOptional, Vector2 position, Vector2 scale)
+        public LevelObject(string ID, bool isOptional, Vector2 position, Vector2 scale)
         {
             this.ID = ID;
             IsOptional = isOptional;

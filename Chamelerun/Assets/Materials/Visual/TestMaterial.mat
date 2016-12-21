@@ -30,13 +30,13 @@ Material:
     - first:
         name: _DetailMapA
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8258e4aab220fa145ad4487feaddba67, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
         name: _DetailMapB
       second:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 36a87aa38ccc37a439b5c371a167ebae, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:
@@ -159,7 +159,7 @@ Material:
       second: 0
     - first:
         name: _UseFog
-      second: 1
+      second: 0
     - first:
         name: _ZWrite
       second: 1
@@ -178,10 +178,10 @@ Material:
       second: {r: 0, g: 0.029158218, b: 0.16911763, a: 1}
     - first:
         name: _DetailBHilights
-      second: {r: 0.19117647, g: 1, b: 0.46450314, a: 1}
+      second: {r: 1, g: 0.44852942, b: 0.8935092, a: 1}
     - first:
         name: _DetailBMidtones
-      second: {r: 0.28952205, g: 0.7121577, b: 0.77205884, a: 1}
+      second: {r: 0.6985294, g: 0.22599483, b: 0.6072812, a: 1}
     - first:
         name: _DetailBShadows
       second: {r: 0, g: 0, b: 0, a: 0}
@@ -193,19 +193,19 @@ Material:
       second: {r: 0.014705896, g: 1, b: 0.14381352, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 1, g: 0.94563895, b: 0.50735295, a: 1}
     - first:
         name: _MainMidtoneColor
       second: {r: 0.28043902, g: 0.41178566, b: 0.6691177, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.39215687, g: 0.39215687, b: 0.39215687, a: 1}
+      second: {r: 0.36407876, g: 0.6691177, b: 0.3788048, a: 1}
     - first:
         name: _MainShadowColor
       second: {r: 0.25424692, g: 0.024816178, b: 0.375, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0, g: 0, b: 0, a: 1}
+      second: {r: 0.89705884, g: 0, b: 0, a: 1}
     - first:
         name: _PrimaryDetailHighlightColor
       second: {r: 0.8014706, g: 0.28876513, b: 0.59638834, a: 1}

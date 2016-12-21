@@ -15,7 +15,7 @@ namespace Chamelerun.Serialization
     {
         public Hazard() { }
 
-        public Hazard(int ID, bool isOptional, Vector2 position, Vector2 scale)
+        public Hazard(string ID, bool isOptional, Vector2 position, Vector2 scale)
         {
             this.ID = ID;
             IsOptional = isOptional;

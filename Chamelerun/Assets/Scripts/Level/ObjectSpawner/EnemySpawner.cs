@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour 
 {
-    public ObjectPool[] EnemyObjectPools;
+    public ObjectPool[] ObjectPools;
 
     private PowerupSpawner powerupSpawner;
     private ScoreManager scoreManager;
     private Chameleon chameleon;
+    private Dictionary<string, ObjectPool> objectPoolsByID;
+
+    public void Awake()
+    {
+        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
+    }
 
     public void Init(Chameleon chameleon, PowerupSpawner powerupSpawner, ScoreManager scoreManager)
     {
@@ -16,15 +22,17 @@ public class EnemySpawner : MonoBehaviour
         this.scoreManager = scoreManager;
     }
 
-    public void SpawnEnemy(int ID, Vector2 position)
+    public void SpawnEnemy(string ID, Vector2 position)
     {
-        if (ID >= EnemyObjectPools.Length || ID < 0)
+        ObjectPool objectPool;
+        objectPoolsByID.TryGetValue(ID, out objectPool);
+        if (objectPool == null)
         {
-            Debug.LogWarning("objectpool for hazard " + ID + " is missing!");
+            Debug.LogWarning("objectpool for levelObject " + ID + " is missing!");
             return;
         }
 
-        GameObject enemyObject = EnemyObjectPools[ID].GetObjectFromPool();
+        GameObject enemyObject = objectPool.GetObjectFromPool();
         Enemy enemy = enemyObject.GetComponentsInChildren<Enemy>(true)[0];
 
         enemy.OnDamaged = () => OnEnemyDamaged(enemy);

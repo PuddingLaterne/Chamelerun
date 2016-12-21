@@ -28,7 +28,6 @@ public class ChameleonTongue : MonoBehaviour
     public int NumSegments;
     public Vector2 OffsetOnBody;
     public float MinLength;
-    public float TongueWidthFraction = 0.04f;
     public int NumRaycasts = 5;
 
     [Header("Speed")]
@@ -191,7 +190,7 @@ public class ChameleonTongue : MonoBehaviour
         maxLength = power.GetMaxTongueLength();
         float expansionSpeed = maxLength * ExpansionSpeedMultiplier;
         float retractionSpeed = maxLength * RetractionSpeedMultiplier;
-        float tongueWidth = maxLength * TongueWidthFraction;
+        float tongueWidth = power.GetTongueWidth();
 
         while(isExpanding || isRetracting)
         {
@@ -371,7 +370,7 @@ public class ChameleonTongue : MonoBehaviour
         distanceJoint.distance = newLength;
         firstJoint.connectedAnchor = new Vector2(0, -currentSegmentLength / 2f);
 
-        float tongueWidth = power.GetMaxTongueLength() * TongueWidthFraction;
+        float tongueWidth = power.GetTongueWidth();
 
         for (int i = 0; i < NumSegments; i++)
         {

@@ -14,7 +14,7 @@ namespace Chamelerun.Serialization
     {
         public Enemy() { }
 
-        public Enemy(int ID, bool isOptional, Vector2 position)
+        public Enemy(string ID, bool isOptional, Vector2 position)
         {
             this.ID = ID;
             IsOptional = isOptional;

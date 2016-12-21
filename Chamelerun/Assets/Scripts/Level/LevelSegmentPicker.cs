@@ -30,7 +30,7 @@ public class LevelSegmentPicker
         {
             segments[i].RemainingCooldown = (i == currentID) ? segments[i].Cooldown : segments[i].RemainingCooldown - 1; 
         }
-
+        Debug.Log("currentID: " + currentID);
         LevelSegment chosenSegment = segments[currentID];
         currentStressLevel = Mathf.Clamp(currentStressLevel + chosenSegment.StressRating, 0, 100);
         return chosenSegment;

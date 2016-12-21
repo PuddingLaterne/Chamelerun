@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
+using System;
 
 namespace Chamelerun.Serialization
 {
@@ -16,7 +17,7 @@ namespace Chamelerun.Serialization
     {
         public Powerup() { }
 
-        public Powerup(int ID, bool isOptional, Vector2 position)
+        public Powerup(string ID, bool isOptional, Vector2 position)
         {
             this.ID = ID;
             IsOptional = isOptional;
@@ -25,7 +26,7 @@ namespace Chamelerun.Serialization
 
         public override void Spawn(Vector2 positionOffset)
         {
-            GameManager.Instance.PowerupSpawner.SpawnPowerup((PowerupType)ID, Position + positionOffset);
+            GameManager.Instance.PowerupSpawner.SpawnPowerup((PowerupType)Enum.Parse(typeof(PowerupType), ID), Position + positionOffset);
         }
     }
 }

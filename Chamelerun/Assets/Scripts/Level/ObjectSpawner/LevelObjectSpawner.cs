@@ -1,19 +1,27 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class LevelObjectSpawner : MonoBehaviour 
 {
-    public ObjectPool[] ObjectPools = new ObjectPool[0];
+    public ObjectPool[] ObjectPools;
+    private Dictionary<string, ObjectPool> objectPoolsByID;
 
-    public void SpawnLevelObject(int ID, Vector2 position, Vector2 scale)
+    public void Awake()
     {
-        if (ID >= ObjectPools.Length || ID < 0)
+        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
+    }
+
+    public void SpawnLevelObject(string ID, Vector2 position, Vector2 scale)
+    {
+        ObjectPool objectPool;
+        objectPoolsByID.TryGetValue(ID, out objectPool);
+        if (objectPool == null)
         {
             Debug.LogWarning("objectpool for levelObject " + ID + " is missing!");
             return;
         }
 
-        GameObject levelObject = ObjectPools[ID].GetObjectFromPool();
+        GameObject levelObject = objectPool.GetObjectFromPool();
 
         TriggerEventForwarder eventForwarder = levelObject.GetComponentInChildren<TriggerEventForwarder>();
         eventForwarder.OnLeftBacktrackingArea = () => levelObject.SetActive(false);

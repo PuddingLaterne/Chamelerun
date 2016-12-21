@@ -1,26 +1,34 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class HazardSpawner : MonoBehaviour 
 {
-    public ObjectPool[] HazardObjectPools;
+    public ObjectPool[] ObjectPools;
 
     private Chameleon chameleon;
+    private Dictionary<string, ObjectPool> objectPoolsByID;
+
+    public void Awake()
+    {
+        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
+    }
 
     public void Init(Chameleon chameleon)
     {
         this.chameleon = chameleon;
     }
 
-    public void SpawnHazard(int ID, Vector2 position, Vector2 scale)
+    public void SpawnHazard(string ID, Vector2 position, Vector2 scale)
     {
-        if (ID >= HazardObjectPools.Length || ID < 0)
+        ObjectPool objectPool;
+        objectPoolsByID.TryGetValue(ID, out objectPool);
+        if (objectPool == null)
         {
-            Debug.LogWarning("objectpool for hazard " + ID + " is missing!");
+            Debug.LogWarning("objectpool for levelObject " + ID + " is missing!");
             return;
         }
 
-        GameObject hazard = HazardObjectPools[ID].GetObjectFromPool();
+        GameObject hazard = objectPool.GetObjectFromPool();
 
         CollisionEventSource eventSource = hazard.GetComponentInChildren<CollisionEventSource>();
         eventSource.OnCollisionStay = (collision) => OnHazardTouched(hazard);
