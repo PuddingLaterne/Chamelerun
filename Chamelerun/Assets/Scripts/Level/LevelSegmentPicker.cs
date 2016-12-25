@@ -30,7 +30,6 @@ public class LevelSegmentPicker
         {
             segments[i].RemainingCooldown = (i == currentID) ? segments[i].Cooldown : segments[i].RemainingCooldown - 1; 
         }
-        Debug.Log("currentID: " + currentID);
         LevelSegment chosenSegment = segments[currentID];
         currentStressLevel = Mathf.Clamp(currentStressLevel + chosenSegment.StressRating, 0, 100);
         return chosenSegment;
@@ -41,6 +40,7 @@ public class LevelSegmentPicker
         if (currentID == -1)
         {
            return 0;
+
         }
         else
         {
@@ -48,41 +48,36 @@ public class LevelSegmentPicker
 
             bool requireNonDangerous = ProbabilityHelper.RollDice(currentStressLevel);
 
-            int[] validSuccessors = GetValidSuccessorIDs(currentSegment.PossibleSuccessorIDs, currentPowerLevel, currentDifficultyLevel, requireNonDangerous);
-            if (validSuccessors.Length == 0)
+            int[] validSuccessors = new int[segments.Count];
+            int numValidSuccessors = 0;
+            foreach (var segment in segments)
             {
-                validSuccessors = GetValidSuccessorIDs(currentSegment.PossibleSuccessorIDs, currentPowerLevel, currentDifficultyLevel, !requireNonDangerous);
-                if (validSuccessors.Length == 0)
+                bool segmentIsValid = false;
+                if(currentID == 0)
                 {
-                    Debug.LogWarning("no valid successor found (segment ID " + currentID + ")\n" +
-                        "powerLevel: " + currentPowerLevel + "\n" +
-                        "difficultyLevel: " + currentDifficultyLevel + "\n" +
-                        "non dangerous segment required: " + requireNonDangerous);
-                    return currentID;
+                    segmentIsValid = segment.Value.MeetsRequirementsForPowerupSegment(currentSegment.ExitHeight, currentDifficultyLevel);
                 }
+                else if(currentSegment.CouldImpactPowerLevel)
+                {
+                    segmentIsValid = segment.Value.MeetsRequirementsForAnyPowerlevel(currentSegment.ExitHeight, currentDifficultyLevel, requireNonDangerous);
+                }
+                else
+                {
+                    segmentIsValid = segment.Value.MeetsRequirements(currentSegment.ExitHeight, currentPowerLevel, currentDifficultyLevel, requireNonDangerous);
+                }
+                if(segmentIsValid)
+                {
+                    validSuccessors[numValidSuccessors] = segment.Key;
+                    numValidSuccessors++;
+                }
+            }
+            validSuccessors = validSuccessors.Shorten(numValidSuccessors);
+            if(validSuccessors.Length == 0)
+            {
+                Debug.LogWarning("No valid successor found!");
+                return 0;
             }
             return ProbabilityHelper.PickRandom(validSuccessors);
         }
-    }
-
-    private int[] GetValidSuccessorIDs(int[] possibleSuccessorIDs, PowerLevel powerLevel, int difficultyLevel, bool requireNonDangerous)
-    {
-        int[] validSuccessors = new int[possibleSuccessorIDs.Length];
-        int numValidSuccessors = 0;
-        foreach (int successorID in possibleSuccessorIDs)
-        {
-            LevelSegment segment = segments[successorID];
-            if (segment.RemainingCooldown == 0 &&
-                powerLevel >= segment.MinPowerLevel &&
-                powerLevel <= segment.MaxPowerLevel &&
-                difficultyLevel >= segment.MinDifficulty &&
-                difficultyLevel <= segment.MaxDifficulty &&
-                !segment.IsDangerous == requireNonDangerous)
-            {
-                validSuccessors[numValidSuccessors] = successorID;
-                numValidSuccessors++;
-            }
-        }
-        return validSuccessors.Shorten(numValidSuccessors);
     }
 }

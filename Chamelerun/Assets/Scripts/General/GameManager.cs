@@ -21,7 +21,8 @@ public class GameManager : MonoBehaviour
         Start, Game, Pause, End
     }
 
-    public Vector2 StartingPosition;
+    public Vector2 PlayerStartingPosition;
+    public bool UseLevelSegmentManager = true;
 
     public LevelObjectSpawner LevelObjectSpawner { get; private set; }
     public HazardSpawner HazardSpawner { get; private set; }
@@ -35,14 +36,16 @@ public class GameManager : MonoBehaviour
     private Chameleon chameleon;
     private ScoreManager scoreManager;
     private UIManager UIManager;
+    private MusicManager musicManager;
 
     private State gameState;
 
     #region Initialization
-    public void Start()
+    public void Awake()
     {
         InitChameleon();
         scoreManager = new ScoreManager(chameleon);
+        musicManager = FindObjectOfType<MusicManager>();
         InitObjectSpawners();
         InitLevelSegmentManager();
         InitCamera();
@@ -106,8 +109,11 @@ public class GameManager : MonoBehaviour
         if (gameState == State.Game)
         {
             chameleon.ChameleonUpdate();
-            scoreManager.Update(chameleon, StartingPosition.x);
-            levelSegmentManager.Update(chameleon.CurrentPowerLevel, scoreManager.CurrentTravelledDistance);
+            scoreManager.Update(chameleon, PlayerStartingPosition.x);
+            if (UseLevelSegmentManager)
+            {
+                levelSegmentManager.Update(chameleon.CurrentPowerLevel, scoreManager.CurrentTravelledDistance);
+            }
         }
 
         if (InputHelper.PausePressed)
@@ -153,7 +159,7 @@ public class GameManager : MonoBehaviour
 
     private void StartGame()
     {
-        chameleon.Transform.position = StartingPosition;
+        chameleon.Transform.position = PlayerStartingPosition;
         chameleon.gameObject.SetActive(true);
         chameleon.EnableControl(true);
 
@@ -170,6 +176,7 @@ public class GameManager : MonoBehaviour
 
     private void SetGameState(State newState)
     {
+        musicManager.OnGameStateChanged(gameState, newState);
         gameState = newState;
 
         Time.timeScale = newState == State.Pause ? 0f : 1f;

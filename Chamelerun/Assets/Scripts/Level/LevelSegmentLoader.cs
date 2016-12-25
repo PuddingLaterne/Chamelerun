@@ -74,7 +74,14 @@ namespace Chamelerun.Serialization
                         xmlReader = null;
                     }
                 }
-                levelSegments.Add(levelSegment.ID, levelSegment);
+                if (levelSegments.ContainsKey(levelSegment.ID))
+                {
+                    Debug.LogWarning("ID " + levelSegment.ID + " occurs more than once");
+                }
+                else
+                {
+                    levelSegments.Add(levelSegment.ID, levelSegment);
+                }
             }
             return levelSegments;
         }

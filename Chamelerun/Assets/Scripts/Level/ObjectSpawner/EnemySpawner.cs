@@ -33,32 +33,35 @@ public class EnemySpawner : MonoBehaviour
         }
 
         GameObject enemyObject = objectPool.GetObjectFromPool();
+        InitEnemyEvents(enemyObject);
+        enemyObject.transform.position = position;
+        enemyObject.gameObject.SetActive(true);
+    }
+
+    public void InitEnemyEvents(GameObject enemyObject)
+    {
         Enemy enemy = enemyObject.GetComponentsInChildren<Enemy>(true)[0];
 
         enemy.OnDamaged = () => OnEnemyDamaged(enemy);
         enemy.OnKilled = () => OnEnemyKilled(enemyObject, enemy);
 
         CollisionEventSource eventSource = enemyObject.GetComponentInChildren<CollisionEventSource>();
-        eventSource.OnCollisionStay = (collision) => OnEnemyTouched(enemy, collision);
+        eventSource.OnCollisionEnter = (collision) => OnEnemyTouched(enemy, collision);
 
         TriggerEventForwarder eventForwarder = enemyObject.GetComponentInChildren<TriggerEventForwarder>();
         eventForwarder.OnLeftBacktrackingArea = () => enemyObject.SetActive(false);
         eventForwarder.OnLeftScreen = () => enemyObject.SetActive(false);
-
-        enemyObject.transform.position = position;
-        enemyObject.gameObject.SetActive(true);
     }
 
     private void OnEnemyDamaged(Enemy enemy)
     {
         scoreManager.AddPoints(enemy.PointsForDamage);
-        powerupSpawner.SpawnPowerup(enemy.PowerupDroppedOnDamaged, enemy.transform.position);
     }
 
     private void OnEnemyKilled(GameObject enemyObject, Enemy enemy)
     {
         scoreManager.AddPoints(enemy.PointsForKill);
-        powerupSpawner.SpawnPowerup(enemy.PowerupDroppedOnKilled, enemy.transform.position);
+        powerupSpawner.SpawnPowerup(true, enemy.transform.position);
         enemyObject.SetActive(false);
     }
 

@@ -191,8 +191,6 @@ MonoBehaviour:
   DamagedByBouncing: 1
   PointsForDamage: 5
   PointsForKill: 10
-  PowerupDroppedOnDamaged: 1
-  PowerupDroppedOnKilled: 0
 --- !u!114 &114000010852983490
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -233,7 +231,6 @@ MonoBehaviour:
     RestTime: 0
   - Target: {x: 0, y: -1}
     RestTime: 0
-  StoppingDistance: 0.1
   KnockBackRecoverTime: 0.2
   MoveSpeed: 40
 --- !u!114 &114000012049273382

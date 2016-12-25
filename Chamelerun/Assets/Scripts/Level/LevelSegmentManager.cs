@@ -6,7 +6,7 @@ public class LevelSegmentManager
 {
     private static class ProgressBasedValues
     {
-        private static int[] difficultySteps = { 0, 500, 1000 };
+        private static int[] difficultySteps = { 0, 500 };
 
         public static int GetDifficultyLevel(float travelledDistance)
         {
@@ -27,7 +27,7 @@ public class LevelSegmentManager
     }
 
     private const string resourceDirectory = "LevelSegments";
-    private const float minCameraDistanceToOuterBoundScreenFraction = 0.1f;
+    private const float minCameraDistanceToOuterBoundScreenFraction = 0.01f;
     private const float maxBacktrackingScreenFraction = 1;
 
     public float CurrentMaxBacktrackingPositionX { get; private set; }

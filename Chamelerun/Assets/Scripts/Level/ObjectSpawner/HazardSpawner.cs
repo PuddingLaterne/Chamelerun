@@ -29,16 +29,19 @@ public class HazardSpawner : MonoBehaviour
         }
 
         GameObject hazard = objectPool.GetObjectFromPool();
-
-        CollisionEventSource eventSource = hazard.GetComponentInChildren<CollisionEventSource>();
-        eventSource.OnCollisionStay = (collision) => OnHazardTouched(hazard);
-
-        TriggerEventForwarder eventForwarder = hazard.GetComponentInChildren<TriggerEventForwarder>();
-        eventForwarder.OnLeftBacktrackingArea = () => hazard.SetActive(false);
-
+        InitHazardEvents(hazard);
         hazard.transform.position = position;
         hazard.transform.localScale = scale;
         hazard.SetActive(true);
+    }
+
+    public void InitHazardEvents(GameObject hazardObject)
+    {
+        CollisionEventSource eventSource = hazardObject.GetComponentInChildren<CollisionEventSource>();
+        eventSource.OnCollisionStay = (collision) => OnHazardTouched(hazardObject);
+
+        TriggerEventForwarder eventForwarder = hazardObject.GetComponentInChildren<TriggerEventForwarder>();
+        eventForwarder.OnLeftBacktrackingArea = () => hazardObject.SetActive(false);
     }
 
     private void OnHazardTouched(GameObject hazard)

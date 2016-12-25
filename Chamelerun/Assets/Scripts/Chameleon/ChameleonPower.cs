@@ -17,6 +17,17 @@ public struct PowerLevel
         Blue = blue;
     }
 
+
+    public static bool operator ==(PowerLevel levelA, PowerLevel levelB)
+    {
+        return levelA.Red == levelB.Red && levelA.Yellow == levelB.Yellow && levelA.Blue == levelB.Blue;
+    }
+
+    public static bool operator !=(PowerLevel levelA, PowerLevel levelB)
+    {
+        return !(levelA == levelB);
+    }
+
     public static bool operator >=(PowerLevel levelA, PowerLevel levelB)
     {
         return levelA.Red >= levelB.Red && levelA.Yellow >= levelB.Yellow && levelA.Blue >= levelB.Blue;
@@ -30,6 +41,16 @@ public struct PowerLevel
     public override string ToString()
     {
         return "Red: " + Red + ", Yellow: " + Yellow + ", Blue: " + Blue;
+    }
+
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }
+
+    public override int GetHashCode()
+    {
+        return base.GetHashCode();
     }
 }
 

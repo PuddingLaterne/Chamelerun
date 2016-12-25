@@ -21,10 +21,6 @@ public class Enemy : MonoBehaviour
     public int PointsForDamage;
     public int PointsForKill;
 
-    [Header("Powerups")]
-    public PowerupType PowerupDroppedOnDamaged;
-    public PowerupType PowerupDroppedOnKilled;
-
     public UnityAction OnDamaged = delegate { };
     public UnityAction OnKilled = delegate { };
 

@@ -10,18 +10,9 @@ public class EnemyMovement : MonoBehaviour
         public float RestTime;
     }
 
-    [System.Serializable]
-    public enum Speed
-    {
-        Slow = 10,
-        Normal = 40,
-        Fast = 100
-    }
-
     public Point[] Points;
-    public float StoppingDistance = 0.1f;
     public float KnockBackRecoverTime = 0.5f;
-    public Speed MoveSpeed = Speed.Normal;
+    public int MoveSpeed;
 
     private Point[] currentPoints;
     private Rigidbody2D rigidBody;
@@ -60,7 +51,7 @@ public class EnemyMovement : MonoBehaviour
             return;
         }
         Vector2 direction = (currentPoints[currentTargetPoint].Target - (Vector2)transform.position).normalized;
-        rigidBody.velocity = direction * (int)MoveSpeed * Time.deltaTime;
+        rigidBody.velocity = direction * MoveSpeed * Time.deltaTime;
 
         CheckTargetReached();
     }
@@ -73,7 +64,7 @@ public class EnemyMovement : MonoBehaviour
 
     private void CheckTargetReached()
     {
-        if (Vector2.Distance(transform.position, currentPoints[currentTargetPoint].Target) <= StoppingDistance)
+        if (Vector2.Distance(transform.position, currentPoints[currentTargetPoint].Target).Approximately(0, 0.01f))
         {
             StartCoroutine(RestForSeconds(currentPoints[currentTargetPoint].RestTime));
             currentTargetPoint = currentTargetPoint < currentPoints.Length - 1 ? currentTargetPoint + 1 : 0;

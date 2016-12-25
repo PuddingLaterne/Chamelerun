@@ -2,34 +2,32 @@
 using UnityEditor;
 using Chamelerun.Serialization;
 
-[CustomEditor(typeof(SerializableLevelSegment))]
+[CustomEditor(typeof(LevelSegmentPickerSettings))]
 public class LevelSegmentConnectionVisualizer : Editor 
 {
     public void OnSceneGUI()
     {
-        var levelSegment = target as SerializableLevelSegment;
-        if (levelSegment == null) return;
+        var settings = target as LevelSegmentPickerSettings;
+        if (settings == null) return;
 
-        var style = new GUIStyle();
-        style.normal.textColor = Color.grey;
-
-        Vector2 segmentPosition = (Vector2)levelSegment.transform.position + new Vector2(levelSegment.Width / 2f, 0);
-
-        var levelSegments = GameObject.FindObjectsOfType<SerializableLevelSegment>();
-        foreach (var segment in levelSegments)
+        var levelSegments = FindObjectsOfType<SerializableLevelSegment>();
+        foreach(var levelSegment in levelSegments)
         {
-            if (levelSegment.PossibleSuccessorIDs.Contains(segment.ID))
-            {
-                Vector2 successorPosition = (Vector2)segment.transform.position + new Vector2(segment.Width / 2f, 0);
-                Handles.DrawDottedLine(segmentPosition, successorPosition, 2f);
+            Vector3 segmentCenter = levelSegment.transform.position + new Vector3(levelSegment.Width / 2f, 0, 0);
 
-                string successorInformation = segment.name + "(ID: " + segment.ID + ")\n\n" +
-                    GetPowerLevelText("red  ", segment.MinPowerLevel.Red, segment.MaxPowerLevel.Red) +
-                    GetPowerLevelText("yellow  ", segment.MinPowerLevel.Yellow, segment.MaxPowerLevel.Yellow) +
-                    GetPowerLevelText("blue  ", segment.MinPowerLevel.Blue, segment.MaxPowerLevel.Blue) +
-                    GetDifficultyText("difficulty  ", segment.MinDifficulty, segment.MaxDifficulty);
-                Handles.Label(successorPosition, successorInformation, style);                
+            if (levelSegment.EntryHeight == settings.CurrentEntryHeight &&
+               ((!settings.PowerLevelIsUncertain && (settings.CurrentPowerLevel >= levelSegment.MinPowerLevel && settings.CurrentPowerLevel <= levelSegment.MaxPowerLevel)) ||
+               (settings.PowerLevelIsUncertain && (levelSegment.MinPowerLevel == new PowerLevel(0, 0, 0) && levelSegment.MaxPowerLevel == new PowerLevel(3, 3, 3)))) &&
+               settings.CurrentDifficulty >= levelSegment.MinDifficulty && settings.CurrentDifficulty <= levelSegment.MaxDifficulty &&
+               !levelSegment.IsDangerous == settings.RequireNonDangerous)
+            {
+                Handles.color = Color.green;
             }
+            else
+            {
+                Handles.color = Color.red;
+            }
+            Handles.DrawLine(levelSegment.transform.position, levelSegment.transform.position + new Vector3(levelSegment.Width, 0, 0));
         }
     }
 

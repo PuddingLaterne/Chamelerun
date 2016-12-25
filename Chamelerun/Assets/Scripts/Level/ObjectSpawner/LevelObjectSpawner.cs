@@ -11,7 +11,7 @@ public class LevelObjectSpawner : MonoBehaviour
         objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
     }
 
-    public void SpawnLevelObject(string ID, Vector2 position, Vector2 scale)
+    public void SpawnLevelObject(string ID, Vector2 position, float rotation, Vector2 scale)
     {
         ObjectPool objectPool;
         objectPoolsByID.TryGetValue(ID, out objectPool);
@@ -22,12 +22,17 @@ public class LevelObjectSpawner : MonoBehaviour
         }
 
         GameObject levelObject = objectPool.GetObjectFromPool();
-
-        TriggerEventForwarder eventForwarder = levelObject.GetComponentInChildren<TriggerEventForwarder>();
-        eventForwarder.OnLeftBacktrackingArea = () => levelObject.SetActive(false);
+        InitLevelObjectEvents(levelObject);
         
         levelObject.transform.position = position;
+        levelObject.transform.localEulerAngles = new Vector3(0, 0, rotation);
         levelObject.transform.localScale = scale;
         levelObject.SetActive(true);
+    }
+
+    public void InitLevelObjectEvents(GameObject levelObject)
+    {
+        TriggerEventForwarder eventForwarder = levelObject.GetComponentInChildren<TriggerEventForwarder>();
+        eventForwarder.OnLeftBacktrackingArea = () => levelObject.SetActive(false);
     }
 }

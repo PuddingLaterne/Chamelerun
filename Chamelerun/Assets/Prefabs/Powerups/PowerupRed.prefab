@@ -16,13 +16,12 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000012242667798}
-  - 58: {fileID: 58000013373231830}
-  - 114: {fileID: 114000013350394260}
-  - 114: {fileID: 114000013228213506}
-  - 114: {fileID: 114000011665306602}
+  - component: {fileID: 4000012242667798}
+  - component: {fileID: 58000013373231830}
+  - component: {fileID: 114000013228213506}
+  - component: {fileID: 114000011665306602}
   m_Layer: 12
   m_Name: PowerupRed
   m_TagString: Untagged
@@ -35,10 +34,10 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 4000014254225222}
-  - 212: {fileID: 212000014150262244}
+  - component: {fileID: 4000014254225222}
+  - component: {fileID: 212000014150262244}
   m_Layer: 12
   m_Name: Sprite
   m_TagString: Untagged
@@ -55,11 +54,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000014254225222}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4000014254225222
 Transform:
   m_ObjectHideFlags: 1
@@ -69,10 +68,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.5, y: 0.5, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012242667798}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &58000013373231830
 CircleCollider2D:
   m_ObjectHideFlags: 1
@@ -109,19 +108,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67aa485ed3e8e99488ac4e10e6a58a44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013350394260
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000011002378914}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47b6531fa54ba15438c3794a2672046b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ID: 1
-  IsOptional: 0
 --- !u!212 &212000014150262244
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -136,7 +122,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 0
   m_Materials:
   - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
-  m_SubsetIndices: 
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
@@ -144,7 +132,7 @@ SpriteRenderer:
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
-  m_SelectedWireframeHidden: 1
+  m_SelectedEditorRenderState: 0
   m_MinimumChartSize: 4
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89

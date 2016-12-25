@@ -51,7 +51,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4007096222069210}
   - component: {fileID: 114990363825104148}
-  - component: {fileID: 60632006678362640}
+  - component: {fileID: 68641048103260526}
   m_Layer: 9
   m_Name: Geometry
   m_TagString: Untagged
@@ -170,23 +170,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1698898860184352}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!60 &60632006678362640
-PolygonCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1685974901148450}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 94d98ee0967ecae43ac029a171f6910e, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: 0, y: 0}
-      - {x: 1, y: 0}
-      - {x: 0, y: 1}
 --- !u!64 &64375192593989600
 MeshCollider:
   m_ObjectHideFlags: 1
@@ -201,6 +184,21 @@ MeshCollider:
   m_InflateMesh: 0
   m_SkinWidth: 0.01
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!68 &68641048103260526
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1685974901148450}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 94d98ee0967ecae43ac029a171f6910e, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+  - {x: 0, y: 1}
+  - {x: 1, y: 0}
 --- !u!114 &114296082604439296
 MonoBehaviour:
   m_ObjectHideFlags: 1

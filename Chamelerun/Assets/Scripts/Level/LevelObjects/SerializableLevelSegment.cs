@@ -6,25 +6,27 @@ namespace Chamelerun.Serialization
     {
         public int ID;
         public float Width;
+        public int ExitHeight;
 
-        public int[] PossibleSuccessorIDs;
         public bool IsDangerous = true;
+        public bool CouldImpactPowerLevel = false;
         [Range(-100, 100)]
         public int StressRating = 0;
 
         [Header("Requirements")]
+        public int EntryHeight;
         public PowerLevel MinPowerLevel = new PowerLevel(0, 0, 0);
         public PowerLevel MaxPowerLevel = new PowerLevel(3, 3, 3);
-        public int MinDifficulty = 0;
-        public int MaxDifficulty = 10;
+        public int MinDifficulty;
+        public int MaxDifficulty;
         public int Cooldown = 0;
 
         public LevelSegment GetSerializableObject()
         {
             SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
-            LevelSegment levelSegment = new LevelSegment(ID, PossibleSuccessorIDs, levelObjects);
-            levelSegment.SetInformation(Width, IsDangerous, StressRating);
-            levelSegment.SetRequirements(MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty, Cooldown);
+            LevelSegment levelSegment = new LevelSegment(ID, levelObjects);
+            levelSegment.SetInformation(Width, ExitHeight, CouldImpactPowerLevel, IsDangerous, StressRating);
+            levelSegment.SetRequirements(EntryHeight, MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty, Cooldown);
             return levelSegment;
         }
     }
@@ -32,14 +34,17 @@ namespace Chamelerun.Serialization
     public class LevelSegment
     {
         public int ID { get; private set; }
-        public int[] PossibleSuccessorIDs { get; private set; }
         public float Width { get; private set; }
+        public int ExitHeight { get; private set; }
+
         public LevelObject[] LevelObjects { get; private set; }
 
+        public int EntryHeight { get; private set; }
         public PowerLevel MinPowerLevel { get; private set; }
         public PowerLevel MaxPowerLevel { get; private set; }
         public int MinDifficulty { get; private set; }
         public int MaxDifficulty { get; private set; }
+
         public int Cooldown { get; private set; }
         public int RemainingCooldown
         {
@@ -51,15 +56,15 @@ namespace Chamelerun.Serialization
         }
         private int remainingCooldown;
 
+        public bool CouldImpactPowerLevel { get; private set; }
         public bool IsDangerous { get; private set; }
         public int StressRating { get; private set; }
 
         public LevelSegment() { }
 
-        public LevelSegment(int ID, int[] possibleSuccessorIDs , SerializableLevelObject[] levelObjects)
+        public LevelSegment(int ID, SerializableLevelObject[] levelObjects)
         {
             this.ID = ID;
-            PossibleSuccessorIDs = possibleSuccessorIDs;
             LevelObjects = new LevelObject[levelObjects.Length];
             for (int i = 0; i < levelObjects.Length; i++)
             {
@@ -67,16 +72,18 @@ namespace Chamelerun.Serialization
             }
         }
 
-        public void SetInformation(float width, bool isDangerous, int stressRating)
+        public void SetInformation(float width, int exitHeight, bool couldImpactPowerLevel, bool isDangerous, int stressRating)
         {
             Width = width;
+            ExitHeight = exitHeight;
             IsDangerous = isDangerous;
             StressRating = stressRating;
+            CouldImpactPowerLevel = couldImpactPowerLevel;
         }
 
-        public void SetRequirements(PowerLevel minPowerLevel, PowerLevel maxPowerLevel, 
-            int minDifficulty, int maxDifficulty, int coolDown)
+        public void SetRequirements(int entryHeight, PowerLevel minPowerLevel, PowerLevel maxPowerLevel, int minDifficulty, int maxDifficulty, int coolDown)
         {
+            EntryHeight = entryHeight;
             MinPowerLevel = minPowerLevel;
             MaxPowerLevel = maxPowerLevel;
             MinDifficulty = minDifficulty;
@@ -94,6 +101,32 @@ namespace Chamelerun.Serialization
                     levelObject.Spawn(positionOffset);
                 }
             }
+        }
+
+        public bool MeetsRequirements(int entryHeight, PowerLevel powerLevel, int difficultyLevel, bool requireNonDangerous)
+        {
+            return RemainingCooldown == 0 &&
+                EntryHeight == entryHeight && 
+                powerLevel >= MinPowerLevel && powerLevel <= MaxPowerLevel &&
+                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
+                !IsDangerous == requireNonDangerous;
+        }
+
+        public bool MeetsRequirementsForAnyPowerlevel(int entryHeight, int difficultyLevel, bool requireNonDangerous)
+        {
+            return RemainingCooldown == 0 &&
+                EntryHeight == entryHeight &&
+                MinPowerLevel == new PowerLevel(0, 0, 0) && MaxPowerLevel == new PowerLevel(3, 3, 3) &&
+                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
+                !IsDangerous == requireNonDangerous;
+        }
+
+        public bool MeetsRequirementsForPowerupSegment(int entryHeight, int difficultyLevel)
+        {
+            return RemainingCooldown == 0 &&
+                EntryHeight == entryHeight &&
+                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
+                CouldImpactPowerLevel && !IsDangerous;
         }
     }
 }

@@ -23,8 +23,9 @@ public class PowerupSpawner : MonoBehaviour
         this.scoreManager = scoreManager;
     }
 
-    public void SpawnPowerup(PowerupType type, Vector2 position)
+    public void SpawnPowerup(bool isClear, Vector2 position)
     {
+        PowerupType type =  isClear ? PowerupType.Clear : (PowerupType)Random.Range(1, 4);
         GameObject powerup = null;
         switch(type)
         {
@@ -44,14 +45,18 @@ public class PowerupSpawner : MonoBehaviour
                 Debug.LogWarning("objectpool for powerup " + type + " is missing!");
                 return;
         }
+        InitPowerupEvents(powerup, type);
+        powerup.transform.position = position;
+        powerup.SetActive(true);
+    }
+
+    public void InitPowerupEvents(GameObject powerup, PowerupType type)
+    {
         TriggerEventSource eventSource = powerup.GetComponent<TriggerEventSource>();
         eventSource.OnTriggerEnter = (_) => OnPowerupTouched(powerup, type);
 
         TriggerEventForwarder eventForwarder = powerup.GetComponentInChildren<TriggerEventForwarder>();
         eventForwarder.OnLeftBacktrackingArea = () => powerup.SetActive(false);
-
-        powerup.transform.position = position;
-        powerup.SetActive(true);
     }
 
     private void OnPowerupTouched(GameObject powerup, PowerupType type)
