@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour
 {
     public int MaxHealth;
     public float InvincibilityTime;
+    public float DeathAnimationSpeedScale = 2f;
     public bool CauseDamageOnCollision = true;
 
     [Header("Tongue Interaction")]
@@ -42,7 +43,7 @@ public class Enemy : MonoBehaviour
         hasBounceAnimation = anim.HasParameter("bounce");
         hasHurtAnimation = anim.HasParameter("hurt");
         hasDeathAnimation = anim.HasParameter("death");
-        deathAnimationClipLength = anim.GetAnimationClipLength("death");
+        deathAnimationClipLength = anim.GetAnimationClipLength("death") / DeathAnimationSpeedScale;
     }
 
     public void OnEnable()

@@ -30064,6 +30064,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4040409198550778}
   - component: {fileID: 114402396794144806}
+  - component: {fileID: 114686200745379024}
   m_Layer: 9
   m_Name: Box_Side_R
   m_TagString: Untagged
@@ -90779,7 +90780,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c0bbd3c27e68714aa9836b13de3a6cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ID: box_0
+  ID: box_1
 --- !u!114 &114450575380214916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -96682,6 +96683,20 @@ MonoBehaviour:
   MaxShadowDistance: 2
   MaxAdditionalRaycasts: 2
   AdditionalRaycastFraction: 0.5
+--- !u!114 &114686200745379024
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1973812842769498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 51eb1e934ffcea5438c20593fc13d961, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConstraintID: 0
+  Offset: {x: 1, y: -2}
+  Type: 1
 --- !u!114 &114686583661131834
 MonoBehaviour:
   m_ObjectHideFlags: 1

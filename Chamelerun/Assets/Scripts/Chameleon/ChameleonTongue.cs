@@ -19,6 +19,7 @@ public class ChameleonTongue : MonoBehaviour
     }
 
     [Header("Interaction Layers")]
+    public LayerMask BlockingLayers;
     public LayerMask AttachmentLayers;
     public LayerMask CollectableLayers;
     public LayerMask PunchableLayers;
@@ -74,7 +75,7 @@ public class ChameleonTongue : MonoBehaviour
         this.body = body;
         this.power = power;
 
-        tongueInteractionLayers = AttachmentLayers | CollectableLayers | DamagingLayers | PunchableLayers;
+        tongueInteractionLayers = BlockingLayers | AttachmentLayers | CollectableLayers | DamagingLayers | PunchableLayers;
 
         endPointRadius = End.GetComponent<CircleCollider2D>().radius;
         currentSegmentLength = (MinLength - endPointRadius * 2f) / NumSegments;
@@ -296,6 +297,10 @@ public class ChameleonTongue : MonoBehaviour
             if (hit)
             {
                 int layer = hit.transform.gameObject.layer.ToBitmask();
+                if (layer.IsPartOfBitmask(BlockingLayers))
+                {
+                    return AttachmentState.Failed;
+                }
                 if (layer.IsPartOfBitmask(AttachmentLayers))
                 {
                     Attach(hit, direction);

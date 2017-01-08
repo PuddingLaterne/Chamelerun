@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class ChameleonColour : MonoBehaviour
 {
@@ -19,6 +20,9 @@ public class ChameleonColour : MonoBehaviour
         public Color Midtones;
         public Color Highlights;
     }
+
+    public float FadeDuration = 0.5f;
+    public float FadeSteps = 8;
 
     public ColourSet Clear;
 
@@ -64,27 +68,24 @@ public class ChameleonColour : MonoBehaviour
 
     public void Reset()
     {
-        SetColour(Clear);
+        StopAllCoroutines();
+        SetColour(Clear.Base, Clear.PrimaryDetails, Clear.SecondaryDetails);
     }
 
     public void OnPowerChanged()
     {
+        StopAllCoroutines();
         if (power.FullPowerup() && power.AllPowerupsAreDifferentTypes())
         {
-            SetColour(RainbowMode);
+            StartCoroutine(SetColourGradually(RainbowMode.Base, RainbowMode.PrimaryDetails, RainbowMode.PrimaryDetails));
         }
         else
         {
             Gradient baseColour = GetGradient(power.Powerups[0], 0);
             Gradient primaryDetailColour = GetGradient(power.Powerups[1], 1);
             Gradient secondaryDetailColour = GetGradient(power.Powerups[2], 2);
-            SetColour(baseColour, primaryDetailColour, secondaryDetailColour);
+            StartCoroutine(SetColourGradually(baseColour, primaryDetailColour, secondaryDetailColour));
         }
-    }
-
-    private void SetColour(ColourSet set)
-    {
-        SetColour(set.Base, set.PrimaryDetails, set.SecondaryDetails);
     }
 
     private void SetColour(Gradient baseColour, Gradient primaryDetailColour, Gradient secondaryDetailColour)
@@ -102,6 +103,40 @@ public class ChameleonColour : MonoBehaviour
         material.SetColor(secondaryHighlightsID, secondaryDetailColour.Highlights);
     }
     
+    private IEnumerator SetColourGradually(Gradient baseColour, Gradient primaryDetailColour, Gradient secondaryDetailColour)
+    {
+        float fadeStepDuration = FadeDuration / FadeSteps;
+        float fadeStep = 1f / FadeSteps;
+
+        Color baseShadowsOld = material.GetColor(mainShadowsID);
+        Color baseMidtonesOld = material.GetColor(mainMidtonesID);
+        Color baseHighlightsOld = material.GetColor(mainHighlightsID);
+
+        Color primaryDetailShadowsOld = material.GetColor(primaryShadowsID);
+        Color primaryDetailMidtonesOld = material.GetColor(primaryMidtonesID);
+        Color primaryDetailHighlightsOld = material.GetColor(primaryHighlightsID);
+
+        Color secondaryDetailShadowsOld = material.GetColor(secondaryShadowsID);
+        Color secondaryDetailMidtonesOld = material.GetColor(secondaryMidtonesID);
+        Color secondaryDetailHighlightsOld = material.GetColor(secondaryHighlightsID);
+
+        for (int i = 1; i <= FadeSteps; i++)
+        {
+            yield return new WaitForSeconds(fadeStepDuration);
+            material.SetColor(mainShadowsID, Color.Lerp(baseShadowsOld, baseColour.Shadows, fadeStep * i));
+            material.SetColor(mainMidtonesID, Color.Lerp(baseMidtonesOld, baseColour.Midtones, fadeStep * i));
+            material.SetColor(mainHighlightsID, Color.Lerp(baseHighlightsOld, baseColour.Highlights, fadeStep * i));
+
+            material.SetColor(primaryShadowsID, Color.Lerp(primaryDetailShadowsOld, primaryDetailColour.Shadows, fadeStep * i));
+            material.SetColor(primaryMidtonesID, Color.Lerp(primaryDetailMidtonesOld, primaryDetailColour.Midtones, fadeStep * i));
+            material.SetColor(primaryHighlightsID, Color.Lerp(primaryDetailHighlightsOld, primaryDetailColour.Highlights, fadeStep * i));
+
+            material.SetColor(secondaryShadowsID, Color.Lerp(secondaryDetailShadowsOld, secondaryDetailColour.Shadows, fadeStep * i));
+            material.SetColor(secondaryMidtonesID, Color.Lerp(secondaryDetailMidtonesOld, secondaryDetailColour.Midtones, fadeStep * i));
+            material.SetColor(secondaryHighlightsID, Color.Lerp(secondaryDetailHighlightsOld, secondaryDetailColour.Highlights, fadeStep * i));
+        }
+    }
+
     private Gradient GetGradient(PowerupType powerupType, int colourIndex)
     {
         switch(powerupType)

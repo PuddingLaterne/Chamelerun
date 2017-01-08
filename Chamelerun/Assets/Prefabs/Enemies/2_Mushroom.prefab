@@ -1420,6 +1420,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 1
   InvincibilityTime: 0
+  DeathAnimationSpeedScale: 2
   CauseDamageOnCollision: 0
   KnockbackForce: 0
   DamagedByPunching: 0
@@ -1535,7 +1536,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: 21300000, guid: 6e74a7436a77d554d9e5f19eda9e0ef8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 8bbb756475df90940a506e0a20d2dbbe, type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

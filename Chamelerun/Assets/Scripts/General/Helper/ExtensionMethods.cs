@@ -87,8 +87,8 @@ public static  class ExtensionMethods
 
     public static float GetAnimationClipLength(this Animator anim, string clipName)
     {
-        RuntimeAnimatorController animatorController = anim.runtimeAnimatorController;    
-        foreach(AnimationClip clip in animatorController.animationClips)
+        RuntimeAnimatorController animatorController = anim.runtimeAnimatorController;
+        foreach (AnimationClip clip in animatorController.animationClips)
         {
             if(clip.name == clipName)
             {
