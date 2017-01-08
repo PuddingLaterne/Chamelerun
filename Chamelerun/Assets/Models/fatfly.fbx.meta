@@ -1,0 +1,757 @@
+fileFormatVersion: 2
+guid: 0f137a74434a7a94cb1d3402fb8024b9
+timeCreated: 1483856736
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: body_base
+    100004: body_base_end
+    100006: body_lower_L
+    100008: body_lower_L_end
+    100010: body_lower_R
+    100012: body_lower_R_end
+    100014: body_upper_L
+    100016: body_upper_L_end
+    100018: body_upper_R
+    100020: body_upper_R_end
+    100022: eye_center_L
+    100024: eye_center_L_end
+    100026: eye_center_R
+    100028: eye_center_R_end
+    100030: eye_east_L
+    100032: eye_east_L_end
+    100034: eye_east_R
+    100036: eye_east_R_end
+    100038: eye_north_L
+    100040: eye_north_L_end
+    100042: eye_north_R
+    100044: eye_north_R_end
+    100046: eye_south_L
+    100048: eye_south_L_end
+    100050: eye_south_R
+    100052: eye_south_R_end
+    100054: eye_west_L
+    100056: eye_west_L_end
+    100058: eye_west_R
+    100060: eye_west_R_end
+    100062: FatFly
+    100064: //RootNode
+    100066: leg_1_lower
+    100068: leg_1_tip
+    100070: leg_1_tip_end
+    100072: leg_1_upper
+    100074: leg_2_lower
+    100076: leg_2_tip
+    100078: leg_2_tip_end
+    100080: leg_2_upper
+    100082: leg_3_lower
+    100084: leg_3_tip
+    100086: leg_3_tip_end
+    100088: leg_3_upper
+    100090: leg_4_lower
+    100092: leg_4_tip
+    100094: leg_4_tip_end
+    100096: leg_4_upper
+    100098: leg_main_lower_L
+    100100: leg_main_lower_R
+    100102: leg_main_tip_L
+    100104: leg_main_tip_L_end
+    100106: leg_main_tip_R
+    100108: leg_main_tip_R_end
+    100110: leg_main_upper_L
+    100112: leg_main_upper_R
+    100114: mouth_lower_L
+    100116: mouth_lower_L_end
+    100118: mouth_lower_R
+    100120: mouth_lower_R_end
+    100122: mouth_upper_L
+    100124: mouth_upper_L_end
+    100126: mouth_upper_R
+    100128: mouth_upper_R_end
+    100130: wing_lower_root
+    100132: wing_lower_tip
+    100134: wing_lower_tip_end
+    100136: wing_upper_root_L
+    100138: wing_upper_root_R
+    100140: wing_upper_tip_L
+    100142: wing_upper_tip_L_end
+    100144: wing_upper_tip_R
+    100146: wing_upper_tip_R_end
+    400000: Armature
+    400002: body_base
+    400004: body_base_end
+    400006: body_lower_L
+    400008: body_lower_L_end
+    400010: body_lower_R
+    400012: body_lower_R_end
+    400014: body_upper_L
+    400016: body_upper_L_end
+    400018: body_upper_R
+    400020: body_upper_R_end
+    400022: eye_center_L
+    400024: eye_center_L_end
+    400026: eye_center_R
+    400028: eye_center_R_end
+    400030: eye_east_L
+    400032: eye_east_L_end
+    400034: eye_east_R
+    400036: eye_east_R_end
+    400038: eye_north_L
+    400040: eye_north_L_end
+    400042: eye_north_R
+    400044: eye_north_R_end
+    400046: eye_south_L
+    400048: eye_south_L_end
+    400050: eye_south_R
+    400052: eye_south_R_end
+    400054: eye_west_L
+    400056: eye_west_L_end
+    400058: eye_west_R
+    400060: eye_west_R_end
+    400062: FatFly
+    400064: //RootNode
+    400066: leg_1_lower
+    400068: leg_1_tip
+    400070: leg_1_tip_end
+    400072: leg_1_upper
+    400074: leg_2_lower
+    400076: leg_2_tip
+    400078: leg_2_tip_end
+    400080: leg_2_upper
+    400082: leg_3_lower
+    400084: leg_3_tip
+    400086: leg_3_tip_end
+    400088: leg_3_upper
+    400090: leg_4_lower
+    400092: leg_4_tip
+    400094: leg_4_tip_end
+    400096: leg_4_upper
+    400098: leg_main_lower_L
+    400100: leg_main_lower_R
+    400102: leg_main_tip_L
+    400104: leg_main_tip_L_end
+    400106: leg_main_tip_R
+    400108: leg_main_tip_R_end
+    400110: leg_main_upper_L
+    400112: leg_main_upper_R
+    400114: mouth_lower_L
+    400116: mouth_lower_L_end
+    400118: mouth_lower_R
+    400120: mouth_lower_R_end
+    400122: mouth_upper_L
+    400124: mouth_upper_L_end
+    400126: mouth_upper_R
+    400128: mouth_upper_R_end
+    400130: wing_lower_root
+    400132: wing_lower_tip
+    400134: wing_lower_tip_end
+    400136: wing_upper_root_L
+    400138: wing_upper_root_R
+    400140: wing_upper_tip_L
+    400142: wing_upper_tip_L_end
+    400144: wing_upper_tip_R
+    400146: wing_upper_tip_R_end
+    4300000: FatFly
+    7400000: death
+    7400002: hurt
+    7400004: idle
+    9500000: //RootNode
+    13700000: FatFly
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: death
+      takeName: Armature|dead
+      firstFrame: 0
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/body_base
+        weight: 1
+      - path: Armature/body_base/body_base_end
+        weight: 1
+      - path: Armature/body_lower_L
+        weight: 1
+      - path: Armature/body_lower_L/body_lower_L_end
+        weight: 1
+      - path: Armature/body_lower_R
+        weight: 1
+      - path: Armature/body_lower_R/body_lower_R_end
+        weight: 1
+      - path: Armature/body_upper_L
+        weight: 1
+      - path: Armature/body_upper_L/body_upper_L_end
+        weight: 1
+      - path: Armature/body_upper_R
+        weight: 1
+      - path: Armature/body_upper_R/body_upper_R_end
+        weight: 1
+      - path: Armature/eye_center_L
+        weight: 1
+      - path: Armature/eye_center_L/eye_center_L_end
+        weight: 1
+      - path: Armature/eye_center_R
+        weight: 1
+      - path: Armature/eye_center_R/eye_center_R_end
+        weight: 1
+      - path: Armature/eye_east_L
+        weight: 1
+      - path: Armature/eye_east_L/eye_east_L_end
+        weight: 1
+      - path: Armature/eye_east_R
+        weight: 1
+      - path: Armature/eye_east_R/eye_east_R_end
+        weight: 1
+      - path: Armature/eye_north_L
+        weight: 1
+      - path: Armature/eye_north_L/eye_north_L_end
+        weight: 1
+      - path: Armature/eye_north_R
+        weight: 1
+      - path: Armature/eye_north_R/eye_north_R_end
+        weight: 1
+      - path: Armature/eye_south_L
+        weight: 1
+      - path: Armature/eye_south_L/eye_south_L_end
+        weight: 1
+      - path: Armature/eye_south_R
+        weight: 1
+      - path: Armature/eye_south_R/eye_south_R_end
+        weight: 1
+      - path: Armature/eye_west_L
+        weight: 1
+      - path: Armature/eye_west_L/eye_west_L_end
+        weight: 1
+      - path: Armature/eye_west_R
+        weight: 1
+      - path: Armature/eye_west_R/eye_west_R_end
+        weight: 1
+      - path: Armature/leg_1_upper
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip/leg_1_tip_end
+        weight: 1
+      - path: Armature/leg_2_upper
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip/leg_2_tip_end
+        weight: 1
+      - path: Armature/leg_3_upper
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip/leg_3_tip_end
+        weight: 1
+      - path: Armature/leg_4_upper
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip/leg_4_tip_end
+        weight: 1
+      - path: Armature/leg_main_upper_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L/leg_main_tip_L_end
+        weight: 1
+      - path: Armature/leg_main_upper_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R/leg_main_tip_R_end
+        weight: 1
+      - path: Armature/mouth_lower_L
+        weight: 1
+      - path: Armature/mouth_lower_L/mouth_lower_L_end
+        weight: 1
+      - path: Armature/mouth_lower_R
+        weight: 1
+      - path: Armature/mouth_lower_R/mouth_lower_R_end
+        weight: 1
+      - path: Armature/mouth_upper_L
+        weight: 1
+      - path: Armature/mouth_upper_L/mouth_upper_L_end
+        weight: 1
+      - path: Armature/mouth_upper_R
+        weight: 1
+      - path: Armature/mouth_upper_R/mouth_upper_R_end
+        weight: 1
+      - path: Armature/wing_lower_root
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip/wing_lower_tip_end
+        weight: 1
+      - path: Armature/wing_upper_root_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L/wing_upper_tip_L_end
+        weight: 1
+      - path: Armature/wing_upper_root_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R/wing_upper_tip_R_end
+        weight: 1
+      - path: FatFly
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: hurt
+      takeName: Armature|hurt
+      firstFrame: 0
+      lastFrame: 25
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/body_base
+        weight: 1
+      - path: Armature/body_base/body_base_end
+        weight: 1
+      - path: Armature/body_lower_L
+        weight: 1
+      - path: Armature/body_lower_L/body_lower_L_end
+        weight: 1
+      - path: Armature/body_lower_R
+        weight: 1
+      - path: Armature/body_lower_R/body_lower_R_end
+        weight: 1
+      - path: Armature/body_upper_L
+        weight: 1
+      - path: Armature/body_upper_L/body_upper_L_end
+        weight: 1
+      - path: Armature/body_upper_R
+        weight: 1
+      - path: Armature/body_upper_R/body_upper_R_end
+        weight: 1
+      - path: Armature/eye_center_L
+        weight: 1
+      - path: Armature/eye_center_L/eye_center_L_end
+        weight: 1
+      - path: Armature/eye_center_R
+        weight: 1
+      - path: Armature/eye_center_R/eye_center_R_end
+        weight: 1
+      - path: Armature/eye_east_L
+        weight: 1
+      - path: Armature/eye_east_L/eye_east_L_end
+        weight: 1
+      - path: Armature/eye_east_R
+        weight: 1
+      - path: Armature/eye_east_R/eye_east_R_end
+        weight: 1
+      - path: Armature/eye_north_L
+        weight: 1
+      - path: Armature/eye_north_L/eye_north_L_end
+        weight: 1
+      - path: Armature/eye_north_R
+        weight: 1
+      - path: Armature/eye_north_R/eye_north_R_end
+        weight: 1
+      - path: Armature/eye_south_L
+        weight: 1
+      - path: Armature/eye_south_L/eye_south_L_end
+        weight: 1
+      - path: Armature/eye_south_R
+        weight: 1
+      - path: Armature/eye_south_R/eye_south_R_end
+        weight: 1
+      - path: Armature/eye_west_L
+        weight: 1
+      - path: Armature/eye_west_L/eye_west_L_end
+        weight: 1
+      - path: Armature/eye_west_R
+        weight: 1
+      - path: Armature/eye_west_R/eye_west_R_end
+        weight: 1
+      - path: Armature/leg_1_upper
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip/leg_1_tip_end
+        weight: 1
+      - path: Armature/leg_2_upper
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip/leg_2_tip_end
+        weight: 1
+      - path: Armature/leg_3_upper
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip/leg_3_tip_end
+        weight: 1
+      - path: Armature/leg_4_upper
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip/leg_4_tip_end
+        weight: 1
+      - path: Armature/leg_main_upper_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L/leg_main_tip_L_end
+        weight: 1
+      - path: Armature/leg_main_upper_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R/leg_main_tip_R_end
+        weight: 1
+      - path: Armature/mouth_lower_L
+        weight: 1
+      - path: Armature/mouth_lower_L/mouth_lower_L_end
+        weight: 1
+      - path: Armature/mouth_lower_R
+        weight: 1
+      - path: Armature/mouth_lower_R/mouth_lower_R_end
+        weight: 1
+      - path: Armature/mouth_upper_L
+        weight: 1
+      - path: Armature/mouth_upper_L/mouth_upper_L_end
+        weight: 1
+      - path: Armature/mouth_upper_R
+        weight: 1
+      - path: Armature/mouth_upper_R/mouth_upper_R_end
+        weight: 1
+      - path: Armature/wing_lower_root
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip/wing_lower_tip_end
+        weight: 1
+      - path: Armature/wing_upper_root_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L/wing_upper_tip_L_end
+        weight: 1
+      - path: Armature/wing_upper_root_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R/wing_upper_tip_R_end
+        weight: 1
+      - path: FatFly
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle
+      takeName: Armature|idle
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/body_base
+        weight: 1
+      - path: Armature/body_base/body_base_end
+        weight: 1
+      - path: Armature/body_lower_L
+        weight: 1
+      - path: Armature/body_lower_L/body_lower_L_end
+        weight: 1
+      - path: Armature/body_lower_R
+        weight: 1
+      - path: Armature/body_lower_R/body_lower_R_end
+        weight: 1
+      - path: Armature/body_upper_L
+        weight: 1
+      - path: Armature/body_upper_L/body_upper_L_end
+        weight: 1
+      - path: Armature/body_upper_R
+        weight: 1
+      - path: Armature/body_upper_R/body_upper_R_end
+        weight: 1
+      - path: Armature/eye_center_L
+        weight: 1
+      - path: Armature/eye_center_L/eye_center_L_end
+        weight: 1
+      - path: Armature/eye_center_R
+        weight: 1
+      - path: Armature/eye_center_R/eye_center_R_end
+        weight: 1
+      - path: Armature/eye_east_L
+        weight: 1
+      - path: Armature/eye_east_L/eye_east_L_end
+        weight: 1
+      - path: Armature/eye_east_R
+        weight: 1
+      - path: Armature/eye_east_R/eye_east_R_end
+        weight: 1
+      - path: Armature/eye_north_L
+        weight: 1
+      - path: Armature/eye_north_L/eye_north_L_end
+        weight: 1
+      - path: Armature/eye_north_R
+        weight: 1
+      - path: Armature/eye_north_R/eye_north_R_end
+        weight: 1
+      - path: Armature/eye_south_L
+        weight: 1
+      - path: Armature/eye_south_L/eye_south_L_end
+        weight: 1
+      - path: Armature/eye_south_R
+        weight: 1
+      - path: Armature/eye_south_R/eye_south_R_end
+        weight: 1
+      - path: Armature/eye_west_L
+        weight: 1
+      - path: Armature/eye_west_L/eye_west_L_end
+        weight: 1
+      - path: Armature/eye_west_R
+        weight: 1
+      - path: Armature/eye_west_R/eye_west_R_end
+        weight: 1
+      - path: Armature/leg_1_upper
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip
+        weight: 1
+      - path: Armature/leg_1_upper/leg_1_lower/leg_1_tip/leg_1_tip_end
+        weight: 1
+      - path: Armature/leg_2_upper
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip
+        weight: 1
+      - path: Armature/leg_2_upper/leg_2_lower/leg_2_tip/leg_2_tip_end
+        weight: 1
+      - path: Armature/leg_3_upper
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip
+        weight: 1
+      - path: Armature/leg_3_upper/leg_3_lower/leg_3_tip/leg_3_tip_end
+        weight: 1
+      - path: Armature/leg_4_upper
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip
+        weight: 1
+      - path: Armature/leg_4_upper/leg_4_lower/leg_4_tip/leg_4_tip_end
+        weight: 1
+      - path: Armature/leg_main_upper_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L
+        weight: 1
+      - path: Armature/leg_main_upper_L/leg_main_lower_L/leg_main_tip_L/leg_main_tip_L_end
+        weight: 1
+      - path: Armature/leg_main_upper_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R
+        weight: 1
+      - path: Armature/leg_main_upper_R/leg_main_lower_R/leg_main_tip_R/leg_main_tip_R_end
+        weight: 1
+      - path: Armature/mouth_lower_L
+        weight: 1
+      - path: Armature/mouth_lower_L/mouth_lower_L_end
+        weight: 1
+      - path: Armature/mouth_lower_R
+        weight: 1
+      - path: Armature/mouth_lower_R/mouth_lower_R_end
+        weight: 1
+      - path: Armature/mouth_upper_L
+        weight: 1
+      - path: Armature/mouth_upper_L/mouth_upper_L_end
+        weight: 1
+      - path: Armature/mouth_upper_R
+        weight: 1
+      - path: Armature/mouth_upper_R/mouth_upper_R_end
+        weight: 1
+      - path: Armature/wing_lower_root
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip/wing_lower_tip_end
+        weight: 1
+      - path: Armature/wing_upper_root_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L/wing_upper_tip_L_end
+        weight: 1
+      - path: Armature/wing_upper_root_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R/wing_upper_tip_R_end
+        weight: 1
+      - path: FatFly
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

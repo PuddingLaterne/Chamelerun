@@ -1,32 +1,35 @@
 ﻿using UnityEngine;
+using System.Linq;
 
 namespace Chamelerun.Serialization
 {
     public class SerializableLevelSegment : MonoBehaviour
     {
         public int ID;
-        public float Width;
         public int ExitHeight;
 
         public bool IsDangerous = true;
-        public bool CouldImpactPowerLevel = false;
         [Range(-100, 100)]
         public int StressRating = 0;
+        public bool CouldImpactPowerLevel = false;
 
         [Header("Requirements")]
         public int EntryHeight;
-        public PowerLevel MinPowerLevel = new PowerLevel(0, 0, 0);
-        public PowerLevel MaxPowerLevel = new PowerLevel(3, 3, 3);
         public int MinDifficulty;
         public int MaxDifficulty;
         public int Cooldown = 0;
-
+        
         public LevelSegment GetSerializableObject()
         {
             SerializableLevelObject[] levelObjects = GetComponentsInChildren<SerializableLevelObject>();
-            LevelSegment levelSegment = new LevelSegment(ID, levelObjects);
-            levelSegment.SetInformation(Width, ExitHeight, CouldImpactPowerLevel, IsDangerous, StressRating);
-            levelSegment.SetRequirements(EntryHeight, MinPowerLevel, MaxPowerLevel, MinDifficulty, MaxDifficulty, Cooldown);
+            SerializableLevelSegmentConstraint[] constraints = GetComponentsInChildren<SerializableLevelSegmentConstraint>();
+            constraints.OrderBy(constraint => constraint.ID);
+
+            LevelSegment levelSegment = new LevelSegment(ID, levelObjects, constraints);
+            bool dependsOnPowerLevel = GetComponentsInChildren<SerializableLevelSegmentConstraint>().Length != 0;
+
+            levelSegment.SetInformation(ExitHeight, CouldImpactPowerLevel, IsDangerous, StressRating);
+            levelSegment.SetRequirements(EntryHeight, dependsOnPowerLevel, MinDifficulty, MaxDifficulty, Cooldown);
             return levelSegment;
         }
     }
@@ -34,14 +37,12 @@ namespace Chamelerun.Serialization
     public class LevelSegment
     {
         public int ID { get; private set; }
-        public float Width { get; private set; }
         public int ExitHeight { get; private set; }
 
         public LevelObject[] LevelObjects { get; private set; }
+        public LevelSegmentConstraint[] Constraints { get; private set; }
 
         public int EntryHeight { get; private set; }
-        public PowerLevel MinPowerLevel { get; private set; }
-        public PowerLevel MaxPowerLevel { get; private set; }
         public int MinDifficulty { get; private set; }
         public int MaxDifficulty { get; private set; }
 
@@ -56,13 +57,16 @@ namespace Chamelerun.Serialization
         }
         private int remainingCooldown;
 
+        public bool DependsOnPowerLevel { get; private set; }
         public bool CouldImpactPowerLevel { get; private set; }
         public bool IsDangerous { get; private set; }
         public int StressRating { get; private set; }
 
+        public bool IsPowerUpSegment { get { return CouldImpactPowerLevel && !IsDangerous; } }
+
         public LevelSegment() { }
 
-        public LevelSegment(int ID, SerializableLevelObject[] levelObjects)
+        public LevelSegment(int ID, SerializableLevelObject[] levelObjects, SerializableLevelSegmentConstraint[] constraints)
         {
             this.ID = ID;
             LevelObjects = new LevelObject[levelObjects.Length];
@@ -70,63 +74,66 @@ namespace Chamelerun.Serialization
             {
                 LevelObjects[i] = levelObjects[i].GetSerializableObject();
             }
+
+            Constraints = new LevelSegmentConstraint[constraints.Length];
+            for (int i = 0; i < constraints.Length; i++)
+            {
+                Constraints[i] = constraints[i].GetSerializableConstraint();
+            }
         }
 
-        public void SetInformation(float width, int exitHeight, bool couldImpactPowerLevel, bool isDangerous, int stressRating)
+        public void SetInformation(int exitHeight, bool couldImpactPowerLevel, bool isDangerous, int stressRating)
         {
-            Width = width;
             ExitHeight = exitHeight;
             IsDangerous = isDangerous;
             StressRating = stressRating;
             CouldImpactPowerLevel = couldImpactPowerLevel;
         }
 
-        public void SetRequirements(int entryHeight, PowerLevel minPowerLevel, PowerLevel maxPowerLevel, int minDifficulty, int maxDifficulty, int coolDown)
+        public void SetRequirements(int entryHeight, bool dependsOnPowerLevel, int minDifficulty, int maxDifficulty, int coolDown)
         {
             EntryHeight = entryHeight;
-            MinPowerLevel = minPowerLevel;
-            MaxPowerLevel = maxPowerLevel;
+            DependsOnPowerLevel = dependsOnPowerLevel;
             MinDifficulty = minDifficulty;
             MaxDifficulty = maxDifficulty;
             Cooldown = coolDown;
         }
 
-        public void Spawn(Vector2 positionOffset, int optionalObjectProbability)
+        public float Spawn(Vector2 positionOffset, int optionalObjectProbability, PowerLevel currentPowerLevel)
         {
+            foreach(var constraint in Constraints)
+            {
+                if(constraint.ParentConstraintID != -1)
+                {
+                    constraint.ApplyParentConstraint(Constraints[constraint.ParentConstraintID]);
+                }
+                constraint.ApplyConstraint(currentPowerLevel);
+            }
+            float width = 0;
             for (int i = 0; i < LevelObjects.Length; i++)
             {
                 LevelObject levelObject = LevelObjects[i];
-                if (!levelObject.IsOptional || ProbabilityHelper.RollDice(optionalObjectProbability))
+
+                bool objectIsOptional = false;
+                if(levelObject.GetType() == typeof(Enemy))
                 {
-                    levelObject.Spawn(positionOffset);
+                    objectIsOptional = ((Enemy)levelObject).IsOptional;
+                }
+                else if(levelObject.GetType() == typeof(Hazard))
+                {
+                    objectIsOptional = ((Hazard)levelObject).IsOptional;
+                }
+
+                if (!objectIsOptional || ProbabilityHelper.RollDice(optionalObjectProbability))
+                {
+                    float objectExtends = levelObject.Spawn(Constraints, positionOffset) - positionOffset.x;
+                    if(objectExtends > width)
+                    {
+                        width = objectExtends;
+                    }
                 }
             }
-        }
-
-        public bool MeetsRequirements(int entryHeight, PowerLevel powerLevel, int difficultyLevel, bool requireNonDangerous)
-        {
-            return RemainingCooldown == 0 &&
-                EntryHeight == entryHeight && 
-                powerLevel >= MinPowerLevel && powerLevel <= MaxPowerLevel &&
-                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
-                !IsDangerous == requireNonDangerous;
-        }
-
-        public bool MeetsRequirementsForAnyPowerlevel(int entryHeight, int difficultyLevel, bool requireNonDangerous)
-        {
-            return RemainingCooldown == 0 &&
-                EntryHeight == entryHeight &&
-                MinPowerLevel == new PowerLevel(0, 0, 0) && MaxPowerLevel == new PowerLevel(3, 3, 3) &&
-                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
-                !IsDangerous == requireNonDangerous;
-        }
-
-        public bool MeetsRequirementsForPowerupSegment(int entryHeight, int difficultyLevel)
-        {
-            return RemainingCooldown == 0 &&
-                EntryHeight == entryHeight &&
-                difficultyLevel <= MaxDifficulty && difficultyLevel >= MinDifficulty &&
-                CouldImpactPowerLevel && !IsDangerous;
+            return width;
         }
     }
 }

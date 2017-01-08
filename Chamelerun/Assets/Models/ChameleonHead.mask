@@ -1,0 +1,184 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1011 &101100000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: ChameleonHead
+  m_Mask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Armature
+    m_Weight: 1
+  - m_Path: Armature/root
+    m_Weight: 1
+  - m_Path: Armature/root/belly
+    m_Weight: 0
+  - m_Path: Armature/root/belly/belly_side_L
+    m_Weight: 0
+  - m_Path: Armature/root/belly/belly_side_L/belly_side_L_end
+    m_Weight: 0
+  - m_Path: Armature/root/belly/belly_side_R
+    m_Weight: 0
+  - m_Path: Armature/root/belly/belly_side_R/belly_side_R_end
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/neck
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/neck/head_main
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/cheek
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/cheek/cheek_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_left_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_left_L/eye_bottom_left_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_left_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_left_R/eye_bottom_left_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_right_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_right_L/eye_bottom_right_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_right_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_bottom_right_R/eye_bottom_right_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_center_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_center_L/eye_center_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_center_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_center_R/eye_center_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_left_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_left_L/eye_top_left_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_left_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_left_R/eye_top_left_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_right_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_right_L/eye_top_right_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_right_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/eye_top_right_R/eye_top_right_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/head_back
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/head_back/head_back_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/head_front
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/head_front/head_front_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/horn
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/head_main/horn/horn_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_center
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_center/mouth_center_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_conner_R
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_conner_R/mouth_conner_R_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_corner
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_corner/mouth_corner_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_side_L
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/neck/mouth/mouth_side_L/mouth_side_L_end
+    m_Weight: 1
+  - m_Path: Armature/root/belly/chest/shoulder_L
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_L/arm_upper_L
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_L/arm_upper_L/arm_lower_L
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_L/arm_upper_L/arm_lower_L/hand_L
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_L/arm_upper_L/arm_lower_L/hand_L/hand_L_end
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_R
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_R/arm_upper_R
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_R/arm_upper_R/arm_lower_R
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_R/arm_upper_R/arm_lower_R/hand_R
+    m_Weight: 0
+  - m_Path: Armature/root/belly/chest/shoulder_R/arm_upper_R/arm_lower_R/hand_R/hand_R_end
+    m_Weight: 0
+  - m_Path: Armature/root/hip_L
+    m_Weight: 0
+  - m_Path: Armature/root/hip_L/leg_upper_L
+    m_Weight: 0
+  - m_Path: Armature/root/hip_L/leg_upper_L/leg_lower_L
+    m_Weight: 0
+  - m_Path: Armature/root/hip_L/leg_upper_L/leg_lower_L/foot_L
+    m_Weight: 0
+  - m_Path: Armature/root/hip_L/leg_upper_L/leg_lower_L/foot_L/foot_L_end
+    m_Weight: 0
+  - m_Path: Armature/root/hip_R
+    m_Weight: 0
+  - m_Path: Armature/root/hip_R/leg_upper_R
+    m_Weight: 0
+  - m_Path: Armature/root/hip_R/leg_upper_R/leg_lower_R
+    m_Weight: 0
+  - m_Path: Armature/root/hip_R/leg_upper_R/leg_lower_R/foot_R
+    m_Weight: 0
+  - m_Path: Armature/root/hip_R/leg_upper_R/leg_lower_R/foot_R/foot_R_end
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_bottom
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_bottom/tail_bottom_end
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3/tail_segment_4
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3/tail_segment_4/tail_top_L
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3/tail_segment_4/tail_top_L/tail_top_L_end
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3/tail_segment_4/tail_top_R
+    m_Weight: 0
+  - m_Path: Armature/root/tail_segment_1/tail_segment_2/tail_segment_3/tail_segment_4/tail_top_R/tail_top_R_end
+    m_Weight: 0
+  - m_Path: Armature/tongue_root
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1/tongue_segment_2
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1/tongue_segment_2/tongue_segment_3
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1/tongue_segment_2/tongue_segment_3/tongue_end
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1/tongue_segment_2/tongue_segment_3/tongue_end/tongue_tip
+    m_Weight: 0
+  - m_Path: Armature/tongue_root/tongue_segment_1/tongue_segment_2/tongue_segment_3/tongue_end/tongue_tip/tongue_tip_end
+    m_Weight: 0
+  - m_Path: Camera
+    m_Weight: 0
+  - m_Path: Chameleon
+    m_Weight: 0

@@ -1,0 +1,412 @@
+fileFormatVersion: 2
+guid: 284d1a5a0bed2b84cb95fb144711e015
+timeCreated: 1483825487
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: Armature
+    100002: body_side_L
+    100004: body_side_L_end
+    100006: body_side_R
+    100008: body_side_R_end
+    100010: body_top
+    100012: body_top_end
+    100014: eye_center_L
+    100016: eye_center_L_end
+    100018: eye_center_R
+    100020: eye_center_R_end
+    100022: eye_corner_L_L
+    100024: eye_corner_L_L_end
+    100026: eye_corner_L_R
+    100028: eye_corner_L_R_end
+    100030: eye_corner_R_L
+    100032: eye_corner_R_L_end
+    100034: eye_corner_R_R
+    100036: eye_corner_R_R_end
+    100038: eye_top_L
+    100040: eye_top_L_end
+    100042: eye_top_R
+    100044: eye_top_R_end
+    100046: leg_1_root
+    100048: leg_1_tip
+    100050: leg_1_tip_end
+    100052: leg_2_root
+    100054: leg_2_tip
+    100056: leg_2_tip_end
+    100058: leg_3_root
+    100060: leg_3_tip
+    100062: leg_3_tip_end
+    100064: leg_4_root
+    100066: leg_4_tip
+    100068: leg_4_tip_end
+    100070: TinyFly
+    100072: //RootNode
+    100074: wing_lower_root
+    100076: wing_lower_tip
+    100078: wing_lower_tip_end
+    100080: wing_upper_root_L
+    100082: wing_upper_root_R
+    100084: wing_upper_tip_L
+    100086: wing_upper_tip_L_end
+    100088: wing_upper_tip_R
+    100090: wing_upper_tip_R_end
+    400000: Armature
+    400002: body_side_L
+    400004: body_side_L_end
+    400006: body_side_R
+    400008: body_side_R_end
+    400010: body_top
+    400012: body_top_end
+    400014: eye_center_L
+    400016: eye_center_L_end
+    400018: eye_center_R
+    400020: eye_center_R_end
+    400022: eye_corner_L_L
+    400024: eye_corner_L_L_end
+    400026: eye_corner_L_R
+    400028: eye_corner_L_R_end
+    400030: eye_corner_R_L
+    400032: eye_corner_R_L_end
+    400034: eye_corner_R_R
+    400036: eye_corner_R_R_end
+    400038: eye_top_L
+    400040: eye_top_L_end
+    400042: eye_top_R
+    400044: eye_top_R_end
+    400046: leg_1_root
+    400048: leg_1_tip
+    400050: leg_1_tip_end
+    400052: leg_2_root
+    400054: leg_2_tip
+    400056: leg_2_tip_end
+    400058: leg_3_root
+    400060: leg_3_tip
+    400062: leg_3_tip_end
+    400064: leg_4_root
+    400066: leg_4_tip
+    400068: leg_4_tip_end
+    400070: TinyFly
+    400072: //RootNode
+    400074: wing_lower_root
+    400076: wing_lower_tip
+    400078: wing_lower_tip_end
+    400080: wing_upper_root_L
+    400082: wing_upper_root_R
+    400084: wing_upper_tip_L
+    400086: wing_upper_tip_L_end
+    400088: wing_upper_tip_R
+    400090: wing_upper_tip_R_end
+    4300000: TinyFly
+    7400000: death
+    7400002: idle
+    9500000: //RootNode
+    13700000: TinyFly
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: death
+      takeName: Armature|hurt
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/body_side_L
+        weight: 1
+      - path: Armature/body_side_L/body_side_L_end
+        weight: 1
+      - path: Armature/body_side_R
+        weight: 1
+      - path: Armature/body_side_R/body_side_R_end
+        weight: 1
+      - path: Armature/body_top
+        weight: 1
+      - path: Armature/body_top/body_top_end
+        weight: 1
+      - path: Armature/eye_center_L
+        weight: 1
+      - path: Armature/eye_center_L/eye_center_L_end
+        weight: 1
+      - path: Armature/eye_center_R
+        weight: 1
+      - path: Armature/eye_center_R/eye_center_R_end
+        weight: 1
+      - path: Armature/eye_corner_L_L
+        weight: 1
+      - path: Armature/eye_corner_L_L/eye_corner_L_L_end
+        weight: 1
+      - path: Armature/eye_corner_L_R
+        weight: 1
+      - path: Armature/eye_corner_L_R/eye_corner_L_R_end
+        weight: 1
+      - path: Armature/eye_corner_R_L
+        weight: 1
+      - path: Armature/eye_corner_R_L/eye_corner_R_L_end
+        weight: 1
+      - path: Armature/eye_corner_R_R
+        weight: 1
+      - path: Armature/eye_corner_R_R/eye_corner_R_R_end
+        weight: 1
+      - path: Armature/eye_top_L
+        weight: 1
+      - path: Armature/eye_top_L/eye_top_L_end
+        weight: 1
+      - path: Armature/eye_top_R
+        weight: 1
+      - path: Armature/eye_top_R/eye_top_R_end
+        weight: 1
+      - path: Armature/leg_1_root
+        weight: 1
+      - path: Armature/leg_1_root/leg_1_tip
+        weight: 1
+      - path: Armature/leg_1_root/leg_1_tip/leg_1_tip_end
+        weight: 1
+      - path: Armature/leg_2_root
+        weight: 1
+      - path: Armature/leg_2_root/leg_2_tip
+        weight: 1
+      - path: Armature/leg_2_root/leg_2_tip/leg_2_tip_end
+        weight: 1
+      - path: Armature/leg_3_root
+        weight: 1
+      - path: Armature/leg_3_root/leg_3_tip
+        weight: 1
+      - path: Armature/leg_3_root/leg_3_tip/leg_3_tip_end
+        weight: 1
+      - path: Armature/leg_4_root
+        weight: 1
+      - path: Armature/leg_4_root/leg_4_tip
+        weight: 1
+      - path: Armature/leg_4_root/leg_4_tip/leg_4_tip_end
+        weight: 1
+      - path: Armature/wing_lower_root
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip/wing_lower_tip_end
+        weight: 1
+      - path: Armature/wing_upper_root_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L/wing_upper_tip_L_end
+        weight: 1
+      - path: Armature/wing_upper_root_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R/wing_upper_tip_R_end
+        weight: 1
+      - path: TinyFly
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: idle
+      takeName: Armature|idle
+      firstFrame: 0
+      lastFrame: 24
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: Armature
+        weight: 1
+      - path: Armature/body_side_L
+        weight: 1
+      - path: Armature/body_side_L/body_side_L_end
+        weight: 1
+      - path: Armature/body_side_R
+        weight: 1
+      - path: Armature/body_side_R/body_side_R_end
+        weight: 1
+      - path: Armature/body_top
+        weight: 1
+      - path: Armature/body_top/body_top_end
+        weight: 1
+      - path: Armature/eye_center_L
+        weight: 1
+      - path: Armature/eye_center_L/eye_center_L_end
+        weight: 1
+      - path: Armature/eye_center_R
+        weight: 1
+      - path: Armature/eye_center_R/eye_center_R_end
+        weight: 1
+      - path: Armature/eye_corner_L_L
+        weight: 1
+      - path: Armature/eye_corner_L_L/eye_corner_L_L_end
+        weight: 1
+      - path: Armature/eye_corner_L_R
+        weight: 1
+      - path: Armature/eye_corner_L_R/eye_corner_L_R_end
+        weight: 1
+      - path: Armature/eye_corner_R_L
+        weight: 1
+      - path: Armature/eye_corner_R_L/eye_corner_R_L_end
+        weight: 1
+      - path: Armature/eye_corner_R_R
+        weight: 1
+      - path: Armature/eye_corner_R_R/eye_corner_R_R_end
+        weight: 1
+      - path: Armature/eye_top_L
+        weight: 1
+      - path: Armature/eye_top_L/eye_top_L_end
+        weight: 1
+      - path: Armature/eye_top_R
+        weight: 1
+      - path: Armature/eye_top_R/eye_top_R_end
+        weight: 1
+      - path: Armature/leg_1_root
+        weight: 1
+      - path: Armature/leg_1_root/leg_1_tip
+        weight: 1
+      - path: Armature/leg_1_root/leg_1_tip/leg_1_tip_end
+        weight: 1
+      - path: Armature/leg_2_root
+        weight: 1
+      - path: Armature/leg_2_root/leg_2_tip
+        weight: 1
+      - path: Armature/leg_2_root/leg_2_tip/leg_2_tip_end
+        weight: 1
+      - path: Armature/leg_3_root
+        weight: 1
+      - path: Armature/leg_3_root/leg_3_tip
+        weight: 1
+      - path: Armature/leg_3_root/leg_3_tip/leg_3_tip_end
+        weight: 1
+      - path: Armature/leg_4_root
+        weight: 1
+      - path: Armature/leg_4_root/leg_4_tip
+        weight: 1
+      - path: Armature/leg_4_root/leg_4_tip/leg_4_tip_end
+        weight: 1
+      - path: Armature/wing_lower_root
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip
+        weight: 1
+      - path: Armature/wing_lower_root/wing_lower_tip/wing_lower_tip_end
+        weight: 1
+      - path: Armature/wing_upper_root_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L
+        weight: 1
+      - path: Armature/wing_upper_root_L/wing_upper_tip_L/wing_upper_tip_L_end
+        weight: 1
+      - path: Armature/wing_upper_root_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R
+        weight: 1
+      - path: Armature/wing_upper_root_R/wing_upper_tip_R/wing_upper_tip_R_end
+        weight: 1
+      - path: TinyFly
+        weight: 1
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

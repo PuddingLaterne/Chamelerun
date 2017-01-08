@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
 
 public class EnemySpawner : MonoBehaviour 
 {
-    public ObjectPool[] ObjectPools;
-
     private PowerupSpawner powerupSpawner;
     private ScoreManager scoreManager;
     private Chameleon chameleon;
@@ -12,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void Awake()
     {
-        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
+        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(GetComponentsInChildren<ObjectPool>());
     }
 
     public void Init(Chameleon chameleon, PowerupSpawner powerupSpawner, ScoreManager scoreManager)
@@ -43,7 +42,7 @@ public class EnemySpawner : MonoBehaviour
         Enemy enemy = enemyObject.GetComponentsInChildren<Enemy>(true)[0];
 
         enemy.OnDamaged = () => OnEnemyDamaged(enemy);
-        enemy.OnKilled = () => OnEnemyKilled(enemyObject, enemy);
+        enemy.OnKilled = (deathDuration) => OnEnemyKilled(deathDuration, enemyObject, enemy);
 
         CollisionEventSource eventSource = enemyObject.GetComponentInChildren<CollisionEventSource>();
         eventSource.OnCollisionEnter = (collision) => OnEnemyTouched(enemy, collision);
@@ -58,9 +57,15 @@ public class EnemySpawner : MonoBehaviour
         scoreManager.AddPoints(enemy.PointsForDamage);
     }
 
-    private void OnEnemyKilled(GameObject enemyObject, Enemy enemy)
+    private void OnEnemyKilled(float deathDuration, GameObject enemyObject, Enemy enemy)
     {
         scoreManager.AddPoints(enemy.PointsForKill);
+        StartCoroutine(DeactivateEnemy(deathDuration, enemyObject, enemy));
+    }
+
+    private IEnumerator DeactivateEnemy(float afterSeconds, GameObject enemyObject, Enemy enemy)
+    {
+        yield return new WaitForSeconds(afterSeconds);
         powerupSpawner.SpawnPowerup(true, enemy.transform.position);
         enemyObject.SetActive(false);
     }

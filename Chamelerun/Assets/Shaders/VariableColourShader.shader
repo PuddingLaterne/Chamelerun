@@ -18,14 +18,19 @@
 		[Space(50)]_DetailMapB("SecondaryDetails", 2D) = "white"{}
 		_DetailBShadows("Shadows", Color) = (0, 0, 0, 1)
 		_DetailBMidtones("Midtones", Color) = (0.5, 0.5, 0.5, 1)
-		_DetailBHilights("Highlights", Color) = (1, 1, 1, 1)
+		_DetailBHighlights("Highlights", Color) = (1, 1, 1, 1)
+
+		[Space(50)]_DetailMapC("TertiaryDetails", 2D) = "white"{}
+		_DetailCShadows("Shadows", Color) = (0, 0, 0, 1)
+		_DetailCMidtones("Midtones", Color) = (0.5, 0.5, 0.5, 1)
+		_DetailCHighlights("Highlights", Color) = (1, 1, 1, 1)
 	}
 		SubShader
 	{
 		Tags{ "Queue" = "Transparent" "IgnoreProjector" = "True" "RenderType" = "Transparent" "LightMode" = "ForwardBase" }
 		LOD 100
 
-		ZWrite Off
+		ZWrite On
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		Pass
@@ -52,7 +57,7 @@
 
 			struct v2f
 			{
-				float4 pos : SV_POSITION;
+				float4 pos : POSITION;
 				float2 uv : TEXCOORD0;
 				float3 vertexLighting : TEXCOORD1;
 			};
@@ -70,6 +75,9 @@
 			sampler2D _DetailMapB;
 			float4 _DetailMapB_ST;
 
+			sampler2D _DetailMapC;
+			float4 _DetailMapC_ST;
+
 			float4 _MainShadows;
 			float4 _MainMidtones;
 			float4 _MainHighlights;
@@ -80,7 +88,11 @@
 
 			float4 _DetailBShadows;
 			float4 _DetailBMidtones;
-			float4 _DetailBHilights;
+			float4 _DetailBHighlights;
+
+			float4 _DetailCShadows;
+			float4 _DetailCMidtones;
+			float4 _DetailCHighlights;
 			
 			v2f vertexShader(appdata input)
 			{
@@ -129,8 +141,19 @@
 					if (detailB.a != 0 && detailB.r != 1)
 					{
 						color = blend(color, 
-							fixed4(gradientMap(lightness, _DetailBShadows, _DetailBMidtones, _DetailBHilights),
+							fixed4(gradientMap(lightness, _DetailBShadows, _DetailBMidtones, _DetailBHighlights),
 							1 - luminance(detailB)));
+					}
+				}
+
+				if (_DetailCMidtones.a != 0)
+				{
+					fixed4 detailC = tex2D(_DetailMapC, input.uv);
+					if (detailC.a != 0 && detailC.r != 1)
+					{
+						color = blend(color,
+							fixed4(gradientMap(lightness, _DetailCShadows, _DetailCMidtones, _DetailCHighlights),
+								1 - luminance(detailC)));
 					}
 				}
 

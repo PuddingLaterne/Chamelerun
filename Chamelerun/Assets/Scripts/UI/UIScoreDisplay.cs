@@ -9,6 +9,7 @@ public class UIScoreDisplay : MonoBehaviour
     public void UpdateScore(int newScore)
     {
         ScoreText.text = newScore.ToString("D9");
+        UIAnimationHelper.ScaleEmphasisShort(ScoreText.rectTransform);
     }
 	
 }

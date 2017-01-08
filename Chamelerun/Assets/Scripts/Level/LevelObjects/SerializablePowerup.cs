@@ -11,7 +11,8 @@ namespace Chamelerun.Serialization
 
         public override LevelObject GetSerializableObject()
         {
-            return new Powerup(ID, IsOptional, transform.localPosition, IsClear);
+            SerializableLevelObjectConstraint[] constraints = GetComponents<SerializableLevelObjectConstraint>();
+            return new Powerup(ID, constraints, transform.localPosition, transform.eulerAngles.z, transform.localScale, IsClear);
         }
     }
 
@@ -20,17 +21,19 @@ namespace Chamelerun.Serialization
         public bool IsClear { get; private set; }
         public Powerup() { }
 
-        public Powerup(string ID, bool isOptional, Vector2 position, bool isClear)
+        public Powerup(string ID, SerializableLevelObjectConstraint[] constraints, Vector2 position, float rotation, Vector2 scale, bool isClear)
+            : base(ID, constraints, position, rotation, scale)
         {
-            this.ID = ID;
-            IsOptional = isOptional;
-            Position = position;
             IsClear = isClear;
         }
 
-        public override void Spawn(Vector2 positionOffset)
+        public override float Spawn(LevelSegmentConstraint[] constraints, Vector2 positionOffset)
         {
-            GameManager.Instance.PowerupSpawner.SpawnPowerup(IsClear, Position + positionOffset);
+            Vector2 position = Position;
+            Vector2 scale = Scale;
+            ApplyConstraints(constraints, ref position, ref scale);
+            GameManager.Instance.PowerupSpawner.SpawnPowerup(IsClear, position + positionOffset);
+            return 0;
         }
     }
 }

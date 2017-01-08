@@ -8,30 +8,29 @@ public class ChameleonAnimation : MonoBehaviour
     public float ScaleVariation = 1.1f; 
 
     public GameObject DirectionIndicator;
+    public GameObject Model;
 
-    [Header("Head")]
-    public GameObject Head;
-    public GameObject HeadLeft;
-    public GameObject HeadCenter;
-    public GameObject HeadRight;
     public float AngleThreshold;
 
-    [Header("Body")]
-    public GameObject BodyLeft;
-    public GameObject BodyRight;
-
     private ChameleonBody body;
+    private ChameleonTongue tongue;
+    private Animator anim;
+    private Vector3 baseSize;
 
-    public void Init(ChameleonBody body)
+    public void Init(ChameleonBody body, ChameleonTongue tongue)
     {
         this.body = body;
+        this.tongue = tongue;
+        anim = Model.GetComponent<Animator>();
+        baseSize = Model.transform.localScale;
     }
 
     public void Reset()
     {
         StopAllCoroutines();
-        transform.DOKill();
-        transform.localScale = Vector3.one;
+        Model.transform.DOKill();
+        Model.transform.localScale = baseSize;
+        anim.SetBool("dead", false);
     }
 
     public void ChameleonUpdate()
@@ -40,65 +39,79 @@ public class ChameleonAnimation : MonoBehaviour
 
         DirectionIndicator.transform.eulerAngles = new Vector3(0, 0, angle);
 
-        HeadLeft.SetActive(false);
-        HeadCenter.SetActive(false);
-        HeadRight.SetActive(false);
+        if(body.CurrentDirection == ChameleonBody.Direction.Left)
+        {
+            Model.transform.localScale = new Vector3(-Mathf.Abs(Model.transform.localScale.x), Model.transform.localScale.y, Model.transform.localScale.z);
+        }
+        else if(body.CurrentDirection == ChameleonBody.Direction.Right)
+        {
+            Model.transform.localScale = new Vector3(Mathf.Abs(Model.transform.localScale.x), Model.transform.localScale.y, Model.transform.localScale.z);
+        }
 
-        if(angle > AngleThreshold && angle < 180 - AngleThreshold)
-        {
-            angle = angle - 90;
-            HeadLeft.SetActive(true);
-        }
-        else if(angle < 360 - AngleThreshold && angle > 180 + AngleThreshold)
-        {
-            angle = angle + 90;
-            HeadRight.SetActive(true);
-        }
-        else
-        {
-            if(angle > 180 - AngleThreshold && angle < 180 + AngleThreshold)
-            {
-                angle = angle + 180;
-            }
-            HeadCenter.SetActive(true);
-        }
-        Head.transform.localEulerAngles = new Vector3(0, 0, angle);
+        anim.SetFloat("horizontalInput", Mathf.Abs(InputHelper.HorizontalInput));
+        anim.SetFloat("velocityY", body.VelocityY);
+        anim.SetFloat("velocityX", Mathf.Abs(body.VelocityX) > 0 ? Mathf.Abs(body.VelocityX) * 0.2f : 1);
+        anim.SetBool("tongueActive", tongue.StaticTongue.activeInHierarchy || tongue.DynamicTongue.activeInHierarchy);
+        anim.SetBool("grounded", body.IsGrounded);
+    }
 
-        if (body.CurrentDirection == ChameleonBody.Direction.Left)
-        {
-            BodyLeft.SetActive(true);
-            BodyRight.SetActive(false);
-        }
-        if (body.CurrentDirection == ChameleonBody.Direction.Right)
-        {
-            BodyLeft.SetActive(false);
-            BodyRight.SetActive(true);
-        }
+    public void OnPowerupCollected()
+    {
+        anim.SetTrigger("powerup");
+    }
+
+    public void OnJump()
+    {
+        anim.SetTrigger("jump");
+    }
+
+    public void OnTongueExpanded()
+    {
+        anim.SetTrigger("tongueExpand");
+    }
+
+    public void OnTongueAttached()
+    {
+        anim.SetBool("tongueAttached", true);
+    }
+
+    public void OnTongueReleased()
+    {
+        anim.SetBool("tongueAttached", false);
+    }
+
+    public void OnDead()
+    {
+        anim.SetBool("dead", true);
+        anim.SetTrigger("hurt");
+    }
+
+    public void OnHurt()
+    {
+        StopAllCoroutines();
+        anim.SetTrigger("hurt");
+        anim.SetBool("hurtActive", true);
+        StartCoroutine(SetHurtFlagInactive());
     }
 
     public void IndicateInvinbility(bool invincible)
     {
         if (invincible)
         {
-            StartCoroutine(VaryScale());
+            //StartCoroutine(VaryScale());
         }
         else
         {
             StopAllCoroutines();
-            transform.DOKill();
-            transform.localScale = Vector3.one;
+            Model.transform.DOKill();
+            Model.transform.localScale = baseSize;
         }
     }
 
-    private IEnumerator VaryScale()
+    private IEnumerator SetHurtFlagInactive()
     {
-        int iterations = 0;
-        while (true)
-        {
-            transform.DOScale(iterations % 2 == 0 ? ScaleVariation : 1f, ScaleVariationSpeed);
-            yield return new WaitForSeconds(ScaleVariationSpeed);
-            iterations++;
-        }
+        yield return new WaitForSeconds(1f);
+        anim.SetBool("hurtActive", false);
     }
 	
 }

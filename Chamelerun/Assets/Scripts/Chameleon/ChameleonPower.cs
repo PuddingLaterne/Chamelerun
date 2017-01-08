@@ -64,6 +64,7 @@ public class ChameleonPower : MonoBehaviour
     public int FullPowerupMultiplier = 2;
 
     public UnityAction OnPowerChanged = delegate { };
+    public UnityAction<PowerupType> OnPowerupAdded = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
     private const int maxNumPowerups = 3;
@@ -139,6 +140,7 @@ public class ChameleonPower : MonoBehaviour
         }
         powerups = tmpPowerups;
         RecalculatePower();
+        OnPowerupAdded(type);
         OnPowerChanged();
     }
 
@@ -157,7 +159,7 @@ public class ChameleonPower : MonoBehaviour
         OnAllPowerLost();
     }
 
-    private int GetPowerupCount()
+    public static int GetPowerupCount(PowerupType[] powerups)
     {
         int count = 0;
         foreach(PowerupType powerup in powerups)
@@ -170,12 +172,12 @@ public class ChameleonPower : MonoBehaviour
         return count;
     }
 
-    private bool FullPowerup()
+    public static bool FullPowerup(PowerupType[] powerups)
     {
-        return GetPowerupCount() == maxNumPowerups;
+        return GetPowerupCount(powerups) == maxNumPowerups;
     }
 
-    private bool AllPowerupsAreSameType()
+    public static bool AllPowerupsAreSameType(PowerupType[] powerups)
     {
         for (int i = 1; i < maxNumPowerups; i++)
         {
@@ -187,7 +189,7 @@ public class ChameleonPower : MonoBehaviour
         return true;
     }
 
-    private bool AllPowerupsAreDifferentTypes()
+    public static bool AllPowerupsAreDifferentTypes(PowerupType[] powerups)
     {
         List<PowerupType> occuringTypes = new List<PowerupType>();
         for (int i = 0; i < maxNumPowerups; i++)
@@ -201,7 +203,7 @@ public class ChameleonPower : MonoBehaviour
         return true;
     }
 
-    private int CountPowerupsOfType(PowerupType type)
+    public static int CountPowerupsOfType(PowerupType[] powerups, PowerupType type)
     {
         int count = 0;
         foreach(PowerupType powerup in powerups)
@@ -216,13 +218,13 @@ public class ChameleonPower : MonoBehaviour
 
     private void RecalculatePower()
     {
-        red = CountPowerupsOfType(PowerupType.Red);
-        yellow = CountPowerupsOfType(PowerupType.Yellow);
-        blue = CountPowerupsOfType(PowerupType.Blue);
+        red = CountPowerupsOfType(powerups, PowerupType.Red);
+        yellow = CountPowerupsOfType(powerups, PowerupType.Yellow);
+        blue = CountPowerupsOfType(powerups, PowerupType.Blue);
 
-        if(FullPowerup())
+        if(FullPowerup(powerups))
         {
-            if(AllPowerupsAreDifferentTypes())
+            if(AllPowerupsAreDifferentTypes(powerups))
             {
                 red *= FullPowerupMultiplier;
                 yellow *= FullPowerupMultiplier;

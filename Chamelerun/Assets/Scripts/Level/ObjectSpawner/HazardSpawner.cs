@@ -3,14 +3,12 @@ using System.Collections.Generic;
 
 public class HazardSpawner : MonoBehaviour 
 {
-    public ObjectPool[] ObjectPools;
-
     private Chameleon chameleon;
     private Dictionary<string, ObjectPool> objectPoolsByID;
 
     public void Awake()
     {
-        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(ObjectPools);
+        objectPoolsByID = InspectorDictionaryHelper.CreateDictionary(GetComponentsInChildren<ObjectPool>());
     }
 
     public void Init(Chameleon chameleon)

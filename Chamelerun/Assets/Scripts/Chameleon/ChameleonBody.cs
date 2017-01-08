@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class ChameleonBody : MonoBehaviour 
 {
@@ -38,9 +39,14 @@ public class ChameleonBody : MonoBehaviour
     public float KnockBackAngle = 20;
     public float KnockBackRecoveryTime = 0.3f;
 
+    public UnityAction OnJump = delegate{};
+    
     public Vector2 Position { get { return transform.position; } }
     public Direction CurrentDirection { get; private set; }
     public bool IsDangling { get; private set; }
+    public bool IsGrounded { get { return groundContact.HasGroundContact; } }
+    public float VelocityY { get { return rigidBody.velocity.y; } }
+    public float VelocityX { get { return rigidBody.velocity.x; } }
 
     private Rigidbody2D rigidBody;
     private GroundContact groundContact;
@@ -120,18 +126,36 @@ public class ChameleonBody : MonoBehaviour
             }
         }
 
-        Vector2 positionDifference = ((Vector2)transform.position - lastPosition);
-        if(positionDifference.x < 0)
+        if (IsDangling)
         {
-            CurrentDirection = Direction.Left;
-        }
-        else if(positionDifference.x > 0)
-        {
-            CurrentDirection = Direction.Right;
+            Vector2 positionDifference = ((Vector2)transform.position - lastPosition);
+            if (positionDifference.x < 0)
+            {
+                CurrentDirection = Direction.Left;
+            }
+            else if (positionDifference.x > 0)
+            {
+                CurrentDirection = Direction.Right;
+            }
+            else
+            {
+                CurrentDirection = Direction.None;
+            }
         }
         else
         {
-            CurrentDirection = Direction.None;
+            if (InputHelper.HorizontalInput < 0)
+            {
+                CurrentDirection = Direction.Left;
+            }
+            else if (InputHelper.HorizontalInput > 0)
+            {
+                CurrentDirection = Direction.Right;
+            }
+            else
+            {
+                CurrentDirection = Direction.None;
+            }
         }
         lastPosition = transform.position;
     }
@@ -217,6 +241,7 @@ public class ChameleonBody : MonoBehaviour
         rigidBody.AddForce(force, ForceMode2D.Impulse);
 
         isJumping = true;
+        OnJump();
         StartCoroutine(WaitForJumpCooldown());
         jumpType = JumpType.None;
     }

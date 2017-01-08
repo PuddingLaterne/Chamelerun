@@ -72,4 +72,29 @@ public static  class ExtensionMethods
         }
         return false;
     }
+
+    public static bool HasParameter(this Animator anim, string parameterName)
+    {
+        foreach(AnimatorControllerParameter parameter in anim.parameters)
+        {
+            if(parameter.name == parameterName)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static float GetAnimationClipLength(this Animator anim, string clipName)
+    {
+        RuntimeAnimatorController animatorController = anim.runtimeAnimatorController;    
+        foreach(AnimationClip clip in animatorController.animationClips)
+        {
+            if(clip.name == clipName)
+            {
+                return clip.length;
+            }
+        }
+        return 0f;
+    }
 }

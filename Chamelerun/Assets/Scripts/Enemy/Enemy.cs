@@ -22,9 +22,15 @@ public class Enemy : MonoBehaviour
     public int PointsForKill;
 
     public UnityAction OnDamaged = delegate { };
-    public UnityAction OnKilled = delegate { };
+    public UnityAction<float> OnKilled = delegate { };
 
     private EnemyMovement movement;
+    private Animator anim;
+
+    private bool hasBounceAnimation;
+    private bool hasHurtAnimation;
+    private bool hasDeathAnimation;
+    private float deathAnimationClipLength;
 
     private int currentHealth;
     private bool isInvincible;
@@ -32,6 +38,11 @@ public class Enemy : MonoBehaviour
     public void Awake()
     {
         movement = GetComponentInChildren<EnemyMovement>();
+        anim = GetComponentInChildren<Animator>();
+        hasBounceAnimation = anim.HasParameter("bounce");
+        hasHurtAnimation = anim.HasParameter("hurt");
+        hasDeathAnimation = anim.HasParameter("death");
+        deathAnimationClipLength = anim.GetAnimationClipLength("death");
     }
 
     public void OnEnable()
@@ -58,21 +69,24 @@ public class Enemy : MonoBehaviour
         {
             ApplyDamage();
         }
+        if (hasBounceAnimation) anim.SetTrigger("bounce");
         return Vector2.up * Bounciness;
     }
 
     private void ApplyDamage()
     {
-        if(isInvincible) return;
+        if(isInvincible || currentHealth < 0) return;
         if (currentHealth > 0)
         {
             currentHealth--;
             StartCoroutine(WaitForInvincibilityTime());
             OnDamaged();
+            if(hasHurtAnimation) anim.SetTrigger("hurt");
         }
         else
         {
-            OnKilled();
+            OnKilled(deathAnimationClipLength);
+            if (hasDeathAnimation) anim.SetTrigger("death");
         }
     }
 

@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityStandardAssets.ImageEffects;
 using UnityEngine.Events;
 
 public class UIManager : MonoBehaviour 
@@ -25,11 +24,10 @@ public class UIManager : MonoBehaviour
 
     private UIColours colours;
     private UIPowerupDisplay[] powerupDisplays;
+    private UIPowerupMessageDisplay powerupMessageDisplay;
     private UIScoreDisplay[] scoreDisplays;
     private UITravelledDistanceDisplay[] distanceDisplays;
     private UITimeDisplay[] timeDisplays;
-
-    private BlurOptimized blur;
     private ScoreManager scoreManager;
 
     public void Init(Chameleon chameleon, ScoreManager scoreManager)
@@ -45,11 +43,10 @@ public class UIManager : MonoBehaviour
         colours = FindObjectOfType<UIColours>();
 
         powerupDisplays = FindObjectsOfType<UIPowerupDisplay>();
+        powerupMessageDisplay = FindObjectOfType<UIPowerupMessageDisplay>();
         scoreDisplays = FindObjectsOfType<UIScoreDisplay>();
         distanceDisplays = FindObjectsOfType<UITravelledDistanceDisplay>();
         timeDisplays = FindObjectsOfType<UITimeDisplay>();
-
-        blur = FindObjectOfType<BlurOptimized>();
 
         foreach (var powerupDisplay in powerupDisplays)
         {
@@ -59,12 +56,18 @@ public class UIManager : MonoBehaviour
 
     private void InitEvents(Chameleon chameleon)
     {
+        chameleon.OnPowerupAdded += (type) =>
+        {
+            powerupMessageDisplay.OnPowerupAdded(type);
+        };
+
         chameleon.OnPowerChanged += () =>
         {
             foreach (var powerupDisplay in powerupDisplays)
             {
-                powerupDisplay.UpdatePowerDisplay(chameleon.CurrentPowerups);
+                powerupDisplay.UpdatePowerDisplay(chameleon.CurrentPowerups);               
             }
+            powerupMessageDisplay.OnPowerChanged(chameleon.CurrentPowerups);
         };
 
         scoreManager.OnScoreChanged += (newScore) =>
@@ -105,7 +108,5 @@ public class UIManager : MonoBehaviour
         Start.SetActive(state == GameManager.State.Start);
         Pause.SetActive(state == GameManager.State.Pause);
         End.SetActive(state == GameManager.State.End);
-
-        blur.enabled = (state != GameManager.State.Game);
     }
 }

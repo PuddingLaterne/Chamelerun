@@ -58,7 +58,7 @@ public class LevelSegmentManager
             int currentDifficultyLevel = ProgressBasedValues.GetDifficultyLevel(currentTravelledDistance);
             int optionalObjectProbability = ProgressBasedValues.GetOptionalObjectProbability(currentTravelledDistance);
             LevelSegment nextLevelSegment = levelSegmentPicker.PickNextLevelSegment(currentPowerLevel, currentDifficultyLevel);
-            CreateSegment(nextLevelSegment, optionalObjectProbability);
+            CreateSegment(nextLevelSegment, optionalObjectProbability, currentPowerLevel);
         }
         maxBacktrackingDistance = bounds.size.x * maxBacktrackingScreenFraction;
         float maxBacktrackingPositionX = Camera.main.transform.position.x - bounds.extents.x - maxBacktrackingDistance;
@@ -68,9 +68,9 @@ public class LevelSegmentManager
         }
     }
 
-    private void CreateSegment(LevelSegment levelSegment, int optionalObjectProbability)
+    private void CreateSegment(LevelSegment levelSegment, int optionalObjectProbability, PowerLevel currentPowerLevel)
     {
-        levelSegment.Spawn(new Vector2(currentOuterBound, 0), optionalObjectProbability);
-        currentOuterBound += levelSegment.Width;
+        float width = levelSegment.Spawn(new Vector2(currentOuterBound, 0), optionalObjectProbability, currentPowerLevel);
+        currentOuterBound += width;
     } 
 }

@@ -34,16 +34,18 @@ public class ChameleonTongue : MonoBehaviour
     public float ManualLengthVariantSpeed = 5;
     public float RetractionSpeedMultiplier = 4;
     public float ExpansionSpeedMultiplier = 8;
-    
+
     [Header("References")]
     public GameObject DynamicTongue;
     public GameObject StaticTongue;
+    public GameObject StaticTongueTip;
     public GameObject Beginning;
     public HingeJoint2D End;
     public GameObject SegmentPrefab;
 
     public UnityAction OnAttached = delegate { };
     public UnityAction OnReleased = delegate { };
+    public UnityAction OnExpanded = delegate { };
     public UnityAction OnHurt = delegate { };
 
     private LayerMask tongueInteractionLayers;
@@ -136,6 +138,7 @@ public class ChameleonTongue : MonoBehaviour
 
         DynamicTongue.SetActive(false);
         StaticTongue.SetActive(false);
+        StaticTongueTip.SetActive(false);
 
         attachedObject = null;
     }
@@ -183,6 +186,8 @@ public class ChameleonTongue : MonoBehaviour
 
         DynamicTongue.SetActive(false);
         StaticTongue.SetActive(true);
+        StaticTongueTip.SetActive(true);
+        OnExpanded();
 
         float lengthDifference, newLength, maxLength;      
         AttachmentState attachmentState = AttachmentState.None;
@@ -246,6 +251,7 @@ public class ChameleonTongue : MonoBehaviour
         }
 
         StaticTongue.SetActive(false);
+        StaticTongueTip.SetActive(false);
         attachedObject = null;
     }
 
@@ -268,6 +274,7 @@ public class ChameleonTongue : MonoBehaviour
         isRetracting = false;
         DynamicTongue.SetActive(false);
         StaticTongue.SetActive(false);
+        StaticTongueTip.SetActive(false);
     }
 
     private AttachmentState TryAttaching(float tongueWidth)
@@ -385,6 +392,7 @@ public class ChameleonTongue : MonoBehaviour
         }
 
         StaticTongue.transform.localScale = new Vector3(tongueWidth, currentTongueLength, 1);
+        StaticTongueTip.transform.position = currentOrigin + Vector2.up.Rotate(currentAngle) * currentTongueLength;
     }
 
     private void Punch(RaycastHit2D hit, Vector2 direction)

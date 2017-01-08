@@ -6,11 +6,12 @@ namespace Chamelerun.Serialization
     public class SerializableLevelObject : MonoBehaviour
     {
         public string ID;
-        public bool IsOptional;
 
         public virtual LevelObject GetSerializableObject()
         {
-            return new LevelObject(ID, IsOptional, transform.localPosition, transform.eulerAngles.z, transform.localScale);
+            SerializableLevelObjectConstraint[] constraints = GetComponents<SerializableLevelObjectConstraint>();
+            LevelObject levelObject = new LevelObject(ID, constraints, transform.localPosition, transform.eulerAngles.z, transform.localScale);
+            return levelObject;
         }
     }
 
@@ -20,22 +21,37 @@ namespace Chamelerun.Serialization
         public float Rotation { get; protected set; }
         public Vector2 Scale { get; protected set; }
         public string ID { get; protected set; }
-        public bool IsOptional { get; protected set; }
+        public LevelObjectConstraint[] Constraints { get; protected set; }
 
         public LevelObject() { }
 
-        public LevelObject(string ID, bool isOptional, Vector2 position, float rotation, Vector2 scale)
+        public LevelObject(string ID, SerializableLevelObjectConstraint[] constraints, Vector2 position, float rotation, Vector2 scale)
         {
             this.ID = ID;
-            IsOptional = isOptional;
+            Constraints = new LevelObjectConstraint[constraints.Length];
+            for (int i = 0; i < constraints.Length; i++)
+            {
+                Constraints[i] = constraints[i].GetSerializableConstraint();
+            }
             Position = position;
             Rotation = rotation;
             Scale = scale;
         }
 
-        public virtual void Spawn(Vector2 positionOffset)
+        protected void ApplyConstraints(LevelSegmentConstraint[] constraints, ref Vector2 position, ref Vector2 scale)
         {
-            GameManager.Instance.LevelObjectSpawner.SpawnLevelObject(ID, Position + positionOffset, Rotation, Scale);
+            foreach (var constraint in Constraints)
+            {
+                constraint.ApplyConstraint(constraints[constraint.ConstraintID], ref position, ref scale);
+            }
+        }
+
+        public virtual float Spawn(LevelSegmentConstraint[] constraints, Vector2 positionOffset)
+        {
+            Vector2 position = Position;
+            Vector2 scale = Scale;
+            ApplyConstraints(constraints, ref position, ref scale);
+            return GameManager.Instance.LevelObjectSpawner.SpawnLevelObject(ID, position + positionOffset, Rotation, scale);
         }
     }
 }

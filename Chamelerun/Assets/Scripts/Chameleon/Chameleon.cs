@@ -8,6 +8,7 @@ public class Chameleon : MonoBehaviour
     public float InvincibilityTime  = 0.5f;
 
     public UnityAction OnPowerChanged = delegate { };
+    public UnityAction<PowerupType> OnPowerupAdded = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
     public Transform Transform { get { return body.transform; } }
@@ -34,13 +35,32 @@ public class Chameleon : MonoBehaviour
 
         body.Init(tongue, power);
         tongue.Init(body, power);
-        anim.Init(body);
+        anim.Init(body, tongue);
 
-        tongue.OnAttached += () => body.OnTongueAttached();
-        tongue.OnReleased += () => body.OnTongueReleased();
+        tongue.OnAttached += () =>
+        {
+            body.OnTongueAttached();
+            anim.OnTongueAttached();
+        };
+        tongue.OnReleased += () =>
+        {
+            body.OnTongueReleased();
+            anim.OnTongueReleased();
+        };
+        tongue.OnExpanded += () => anim.OnTongueExpanded();
         tongue.OnHurt += () => ApplyDamage();
+        body.OnJump += () => anim.OnJump();
 
-        power.OnAllPowerLost += () => OnAllPowerLost();
+        power.OnAllPowerLost += () =>
+        {
+            anim.OnDead();
+            OnAllPowerLost();
+        };
+        power.OnPowerupAdded += (type) =>
+        {
+            OnPowerupAdded(type);
+            anim.OnPowerupCollected();
+        };
         power.OnPowerChanged += () => OnPowerChanged();
     }
 
@@ -61,7 +81,7 @@ public class Chameleon : MonoBehaviour
         body.enabled = enabled;
         tongue.enabled = enabled;
         power.enabled = enabled;
-        anim.enabled = enabled;
+        //anim.enabled = enabled;
     }
 
     public void ChameleonUpdate()
@@ -88,7 +108,7 @@ public class Chameleon : MonoBehaviour
                 direction = source.transform.position.x < Position.x ? ChameleonBody.Direction.Left : ChameleonBody.Direction.Right;
             }
             body.KnockBack(direction);
-
+            anim.OnHurt();
             power.RemovePowerup();
         }
     }
@@ -96,6 +116,7 @@ public class Chameleon : MonoBehaviour
     public void Bounce(Vector2 force)
     {
         body.AddImpulse(force);
+        anim.OnJump();
     }
 
     private IEnumerator WaitForInvincibilityTime()

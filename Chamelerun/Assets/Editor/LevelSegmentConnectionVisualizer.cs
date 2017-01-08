@@ -13,11 +13,7 @@ public class LevelSegmentConnectionVisualizer : Editor
         var levelSegments = FindObjectsOfType<SerializableLevelSegment>();
         foreach(var levelSegment in levelSegments)
         {
-            Vector3 segmentCenter = levelSegment.transform.position + new Vector3(levelSegment.Width / 2f, 0, 0);
-
             if (levelSegment.EntryHeight == settings.CurrentEntryHeight &&
-               ((!settings.PowerLevelIsUncertain && (settings.CurrentPowerLevel >= levelSegment.MinPowerLevel && settings.CurrentPowerLevel <= levelSegment.MaxPowerLevel)) ||
-               (settings.PowerLevelIsUncertain && (levelSegment.MinPowerLevel == new PowerLevel(0, 0, 0) && levelSegment.MaxPowerLevel == new PowerLevel(3, 3, 3)))) &&
                settings.CurrentDifficulty >= levelSegment.MinDifficulty && settings.CurrentDifficulty <= levelSegment.MaxDifficulty &&
                !levelSegment.IsDangerous == settings.RequireNonDangerous)
             {
@@ -27,7 +23,7 @@ public class LevelSegmentConnectionVisualizer : Editor
             {
                 Handles.color = Color.red;
             }
-            Handles.DrawLine(levelSegment.transform.position, levelSegment.transform.position + new Vector3(levelSegment.Width, 0, 0));
+            Handles.DrawLine(levelSegment.transform.position, levelSegment.transform.position + new Vector3(5, 0, 0));
         }
     }
 
