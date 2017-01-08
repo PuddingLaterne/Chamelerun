@@ -7,7 +7,7 @@ public class Chameleon : MonoBehaviour
 {
     public float InvincibilityTime  = 0.5f;
 
-    public UnityAction OnPowerChanged = delegate { };
+    public UnityAction<PowerupType[], bool, bool, bool> OnPowerChanged = delegate { };
     public UnityAction<PowerupType> OnPowerupAdded = delegate { };
     public UnityAction OnAllPowerLost = delegate { };
 
@@ -23,6 +23,7 @@ public class Chameleon : MonoBehaviour
     private ChameleonTongue tongue;
     private ChameleonAnimation anim;
     private ChameleonPower power;
+    private ChameleonColour colour;
 
     private bool isInvincible;
 
@@ -32,10 +33,12 @@ public class Chameleon : MonoBehaviour
         tongue = GetComponentInChildren<ChameleonTongue>();
         anim = GetComponentInChildren<ChameleonAnimation>();
         power = GetComponentInChildren<ChameleonPower>();
+        colour = GetComponentInChildren<ChameleonColour>();
 
         body.Init(tongue, power);
         tongue.Init(body, power);
         anim.Init(body, tongue);
+        colour.Init(power);
 
         tongue.OnAttached += () =>
         {
@@ -61,7 +64,11 @@ public class Chameleon : MonoBehaviour
             OnPowerupAdded(type);
             anim.OnPowerupCollected();
         };
-        power.OnPowerChanged += () => OnPowerChanged();
+        power.OnPowerChanged += () =>
+        {
+            OnPowerChanged(power.Powerups, power.FullPowerup(), power.AllPowerupsAreDifferentTypes(), power.AllPowerupsAreSameType());
+            colour.OnPowerChanged();
+        };
     }
 
     public void Reset()
@@ -72,6 +79,7 @@ public class Chameleon : MonoBehaviour
         tongue.Reset();
         power.Reset();
         anim.Reset();
+        colour.Reset();
 
         isInvincible = false;
     }
@@ -81,7 +89,8 @@ public class Chameleon : MonoBehaviour
         body.enabled = enabled;
         tongue.enabled = enabled;
         power.enabled = enabled;
-        //anim.enabled = enabled;
+        anim.enabled = enabled;
+        colour.enabled = enabled;
     }
 
     public void ChameleonUpdate()

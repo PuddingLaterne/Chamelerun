@@ -740,6 +740,7 @@ GameObject:
   m_Component:
   - component: {fileID: 278317552}
   - component: {fileID: 278317553}
+  - component: {fileID: 278317554}
   m_Layer: 0
   m_Name: Chameleon
   m_TagString: Untagged
@@ -860,6 +861,82 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.023752267, y: 0.033701733, z: 0.00020488066}
     m_Extent: {x: 0.062557556, y: 0.04954624, z: 0.00097424694}
   m_DirtyAABB: 0
+--- !u!114 &278317554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 278317551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243eac5cef2f4b646a64b2c6a10f53c4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Clear:
+    Base:
+      Shadows: {r: 0, g: 0, b: 0, a: 1}
+      Midtones: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
+      Highlights: {r: 1, g: 1, b: 1, a: 1}
+    PrimaryDetails:
+      Shadows: {r: 0, g: 0, b: 0, a: 0}
+      Midtones: {r: 0, g: 0, b: 0, a: 0}
+      Highlights: {r: 0, g: 0, b: 0, a: 0}
+    SecondaryDetails:
+      Shadows: {r: 0, g: 0, b: 0, a: 0}
+      Midtones: {r: 0, g: 0, b: 0, a: 0}
+      Highlights: {r: 0, g: 0, b: 0, a: 0}
+  Red:
+    Base:
+      Shadows: {r: 0.1254902, g: 0, b: 0.03137255, a: 1}
+      Midtones: {r: 0.8156863, g: 0.1254902, b: 0.1254902, a: 1}
+      Highlights: {r: 1, g: 0.5019608, b: 0.2509804, a: 1}
+    PrimaryDetails:
+      Shadows: {r: 0.1254902, g: 0, b: 0.03137255, a: 1}
+      Midtones: {r: 0.5019608, g: 0, b: 0.1254902, a: 1}
+      Highlights: {r: 1, g: 0.09411765, b: 0.09411765, a: 1}
+    SecondaryDetails:
+      Shadows: {r: 0.1254902, g: 0, b: 0.03137255, a: 0}
+      Midtones: {r: 1, g: 0, b: 0, a: 1}
+      Highlights: {r: 1, g: 0.627451, b: 0.5019608, a: 1}
+  Yellow:
+    Base:
+      Shadows: {r: 0.1254902, g: 0.0627451, b: 0, a: 1}
+      Midtones: {r: 0.7529412, g: 0.627451, b: 0.1254902, a: 1}
+      Highlights: {r: 1, g: 0.9882353, b: 0.5019608, a: 1}
+    PrimaryDetails:
+      Shadows: {r: 0.1254902, g: 0.0627451, b: 0, a: 1}
+      Midtones: {r: 0.7529412, g: 0.5019608, b: 0.03137255, a: 1}
+      Highlights: {r: 1, g: 0.7529412, b: 0.2509804, a: 1}
+    SecondaryDetails:
+      Shadows: {r: 0.1254902, g: 0.0627451, b: 0, a: 1}
+      Midtones: {r: 1, g: 1, b: 0.1254902, a: 1}
+      Highlights: {r: 1, g: 1, b: 0.7529412, a: 1}
+  Blue:
+    Base:
+      Shadows: {r: 0, g: 0.0627451, b: 0.1254902, a: 1}
+      Midtones: {r: 0, g: 0.2509804, b: 0.5019608, a: 1}
+      Highlights: {r: 0.2509804, g: 1, b: 1, a: 1}
+    PrimaryDetails:
+      Shadows: {r: 0, g: 0.0627451, b: 0.1254902, a: 1}
+      Midtones: {r: 0, g: 0.0627451, b: 0.5019608, a: 1}
+      Highlights: {r: 0.2509804, g: 0.7529412, b: 1, a: 1}
+    SecondaryDetails:
+      Shadows: {r: 0, g: 0.0627451, b: 0.1254902, a: 1}
+      Midtones: {r: 0.5019608, g: 0.7529412, b: 1, a: 1}
+      Highlights: {r: 0.76862746, g: 1, b: 1, a: 1}
+  RainbowMode:
+    Base:
+      Shadows: {r: 0.0627451, g: 0, b: 0.1254902, a: 1}
+      Midtones: {r: 0.627451, g: 0.15686275, b: 0.15686275, a: 1}
+      Highlights: {r: 1, g: 0.8784314, b: 0.15686275, a: 1}
+    PrimaryDetails:
+      Shadows: {r: 0.03137255, g: 0.015686275, b: 0.1254902, a: 1}
+      Midtones: {r: 0.0627451, g: 0.5019608, b: 0.2509804, a: 1}
+      Highlights: {r: 0.5019608, g: 1, b: 0.1254902, a: 1}
+    SecondaryDetails:
+      Shadows: {r: 0.1254902, g: 0, b: 0.1254902, a: 1}
+      Midtones: {r: 1, g: 0.0627451, b: 0.0627451, a: 1}
+      Highlights: {r: 1, g: 0.8784314, b: 0, a: 1}
 --- !u!1 &297074015
 GameObject:
   m_ObjectHideFlags: 0
@@ -5648,7 +5725,7 @@ Transform:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1768236961}
-  m_LocalRotation: {x: 0.14401685, y: 0.6922855, z: 0.6922853, w: 0.14401802}
+  m_LocalRotation: {x: 0.14401683, y: 0.6922854, z: 0.69228524, w: 0.14401801}
   m_LocalPosition: {x: 0.0035392349, y: 0.017151704, z: -0.0010003139}
   m_LocalScale: {x: 0.99999994, y: 1, z: 1}
   m_Children:

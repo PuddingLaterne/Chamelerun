@@ -61,13 +61,13 @@ public class UIManager : MonoBehaviour
             powerupMessageDisplay.OnPowerupAdded(type);
         };
 
-        chameleon.OnPowerChanged += () =>
+        chameleon.OnPowerChanged += (powerups, fullPower, allDifferent, allSame) =>
         {
             foreach (var powerupDisplay in powerupDisplays)
             {
                 powerupDisplay.UpdatePowerDisplay(chameleon.CurrentPowerups);               
             }
-            powerupMessageDisplay.OnPowerChanged(chameleon.CurrentPowerups);
+            powerupMessageDisplay.OnPowerChanged(powerups, fullPower, allDifferent, allSame);
         };
 
         scoreManager.OnScoreChanged += (newScore) =>

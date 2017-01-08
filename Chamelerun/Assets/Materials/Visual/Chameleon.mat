@@ -157,25 +157,25 @@ Material:
       second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _DetailAHighlights
-      second: {r: 0.9558824, g: 0.7968918, b: 0.37954155, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailAMidtones
-      second: {r: 0.7647059, g: 0.29079765, b: 0.19679932, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailAShadows
-      second: {r: 0.13235295, g: 0.027249139, b: 0.046820186, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailBHighlights
-      second: {r: 1, g: 1, b: 1, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailBHilights
       second: {r: 0.5661765, g: 0.44490218, b: 0.29141438, a: 1}
     - first:
         name: _DetailBMidtones
-      second: {r: 0.5044833, g: 0.24070069, b: 0.7794118, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailBShadows
-      second: {r: 0.18382359, g: 0, b: 0.21323532, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 0}
     - first:
         name: _DetailCHighlights
       second: {r: 1, g: 0.61764705, b: 0.83123744, a: 1}
@@ -190,10 +190,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 0.64698726, g: 0.9411765, b: 0.62283736, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.1453287, g: 0.35294116, b: 0.301396, a: 1}
+      second: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0.00865052, g: 0.04221452, b: 0.058823526, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 1}

@@ -29,16 +29,16 @@ public class UIPowerupMessageDisplay : MonoBehaviour
         UIAnimationHelper.ScaleEmphasisLong(PowerupMessage.rectTransform, () => PowerupMessage.gameObject.SetActive(false));
     }
 
-    public void OnPowerChanged(PowerupType[] power)
+    public void OnPowerChanged(PowerupType[] power, bool fullPowerup, bool allDifferent, bool allSame)
     {
         string text = "";
-        if(ChameleonPower.FullPowerup(power))
+        if(fullPowerup)
         {
-            if(ChameleonPower.AllPowerupsAreDifferentTypes(power))
+            if(allDifferent)
             {
                 text = "Rainbow Mode!";
             }
-            else if(ChameleonPower.AllPowerupsAreSameType(power))
+            else if(allSame)
             {
                 switch(power[0])
                 {

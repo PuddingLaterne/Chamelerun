@@ -159,7 +159,7 @@ public class ChameleonPower : MonoBehaviour
         OnAllPowerLost();
     }
 
-    public static int GetPowerupCount(PowerupType[] powerups)
+    public int GetPowerupCount()
     {
         int count = 0;
         foreach(PowerupType powerup in powerups)
@@ -172,12 +172,12 @@ public class ChameleonPower : MonoBehaviour
         return count;
     }
 
-    public static bool FullPowerup(PowerupType[] powerups)
+    public bool FullPowerup()
     {
-        return GetPowerupCount(powerups) == maxNumPowerups;
+        return GetPowerupCount() == maxNumPowerups;
     }
 
-    public static bool AllPowerupsAreSameType(PowerupType[] powerups)
+    public bool AllPowerupsAreSameType()
     {
         for (int i = 1; i < maxNumPowerups; i++)
         {
@@ -189,7 +189,7 @@ public class ChameleonPower : MonoBehaviour
         return true;
     }
 
-    public static bool AllPowerupsAreDifferentTypes(PowerupType[] powerups)
+    public bool AllPowerupsAreDifferentTypes()
     {
         List<PowerupType> occuringTypes = new List<PowerupType>();
         for (int i = 0; i < maxNumPowerups; i++)
@@ -203,7 +203,7 @@ public class ChameleonPower : MonoBehaviour
         return true;
     }
 
-    public static int CountPowerupsOfType(PowerupType[] powerups, PowerupType type)
+    public int CountPowerupsOfType(PowerupType type)
     {
         int count = 0;
         foreach(PowerupType powerup in powerups)
@@ -218,18 +218,15 @@ public class ChameleonPower : MonoBehaviour
 
     private void RecalculatePower()
     {
-        red = CountPowerupsOfType(powerups, PowerupType.Red);
-        yellow = CountPowerupsOfType(powerups, PowerupType.Yellow);
-        blue = CountPowerupsOfType(powerups, PowerupType.Blue);
+        red = CountPowerupsOfType(PowerupType.Red);
+        yellow = CountPowerupsOfType(PowerupType.Yellow);
+        blue = CountPowerupsOfType(PowerupType.Blue);
 
-        if(FullPowerup(powerups))
+        if(FullPowerup() && AllPowerupsAreDifferentTypes())
         {
-            if(AllPowerupsAreDifferentTypes(powerups))
-            {
-                red *= FullPowerupMultiplier;
-                yellow *= FullPowerupMultiplier;
-                blue *= FullPowerupMultiplier;
-            }
+            red *= FullPowerupMultiplier;
+            yellow *= FullPowerupMultiplier;
+            blue *= FullPowerupMultiplier;
         }
     }
 }
