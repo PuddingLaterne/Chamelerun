@@ -71,7 +71,8 @@ public class LevelSegmentPicker
             LevelSegment levelSegment = segment.Value;
             bool segmentIsValid = levelSegment.EntryHeight == entryHeight &&
                 levelSegment.MaxDifficulty >= difficultyLevel &&
-                levelSegment.MinDifficulty <= difficultyLevel;
+                levelSegment.MinDifficulty <= difficultyLevel &&
+                levelSegment.RemainingCooldown == 0; 
             if (currentID == 0)
             {
                 //spawn powerup right after tutorial

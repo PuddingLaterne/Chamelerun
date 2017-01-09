@@ -1131,7 +1131,7 @@ Prefab:
     - target: {fileID: 224987464896094206, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224987464896094206, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
@@ -1141,7 +1141,7 @@ Prefab:
     - target: {fileID: 224987464896094206, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224401512626303866, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
@@ -1161,7 +1161,7 @@ Prefab:
     - target: {fileID: 224401512626303866, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224401512626303866, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
@@ -1171,7 +1171,7 @@ Prefab:
     - target: {fileID: 224401512626303866, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224555362149432930, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
@@ -1191,7 +1191,7 @@ Prefab:
     - target: {fileID: 224555362149432930, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -32
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 224555362149432930, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
@@ -1201,7 +1201,7 @@ Prefab:
     - target: {fileID: 224555362149432930, guid: c391492abf79b4344b2bc0cad9ec6ad2,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 40
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c391492abf79b4344b2bc0cad9ec6ad2, type: 2}

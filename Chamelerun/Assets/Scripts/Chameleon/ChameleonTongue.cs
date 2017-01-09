@@ -180,6 +180,13 @@ public class ChameleonTongue : MonoBehaviour
         }
     }
 
+    public void LateUpdate()
+    {
+        currentOrigin = body.Position + OffsetOnBody;
+        StaticTongue.transform.position = currentOrigin;
+        StaticTongueTip.transform.position = currentOrigin + Vector2.up.Rotate(StaticTongue.transform.eulerAngles.z) * currentTongueLength;
+    }
+
     private IEnumerator Expand()
     {
         isExpanding = true;
@@ -371,6 +378,15 @@ public class ChameleonTongue : MonoBehaviour
         End.connectedBody = null;
         
         IsAttached = false;
+
+        DynamicTongue.SetActive(false);
+
+        StaticTongue.transform.eulerAngles = new Vector3(0, 0, ((Vector2)End.transform.position - currentOrigin).GetAngle());
+        StaticTongue.transform.position = currentOrigin;
+        StaticTongueTip.transform.position = End.transform.position;
+        StaticTongue.SetActive(true);
+        StaticTongueTip.SetActive(true);
+
         OnReleased();
     }
 
@@ -397,7 +413,6 @@ public class ChameleonTongue : MonoBehaviour
         }
 
         StaticTongue.transform.localScale = new Vector3(tongueWidth, currentTongueLength, 1);
-        StaticTongueTip.transform.position = currentOrigin + Vector2.up.Rotate(currentAngle) * currentTongueLength;
     }
 
     private void Punch(RaycastHit2D hit, Vector2 direction)

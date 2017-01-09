@@ -190,10 +190,10 @@ Material:
       second: {r: 0, g: 0, b: 0, a: 1}
     - first:
         name: _MainHighlights
-      second: {r: 1, g: 0.9882353, b: 0.5019608, a: 1}
+      second: {r: 1, g: 1, b: 1, a: 1}
     - first:
         name: _MainMidtones
-      second: {r: 0.7529412, g: 0.627451, b: 0.1254902, a: 1}
+      second: {r: 0.5019608, g: 0.5019608, b: 0.5019608, a: 1}
     - first:
         name: _MainShadows
-      second: {r: 0.1254902, g: 0.0627451, b: 0, a: 1}
+      second: {r: 0, g: 0, b: 0, a: 1}

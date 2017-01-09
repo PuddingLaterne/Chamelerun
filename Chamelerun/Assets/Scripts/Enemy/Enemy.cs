@@ -48,6 +48,7 @@ public class Enemy : MonoBehaviour
 
     public void OnEnable()
     {
+        gameObject.SetLayersRecursively(LayerMask.NameToLayer("Enemy"));
         currentHealth = MaxHealth;
         isInvincible = false;
     }
@@ -87,6 +88,7 @@ public class Enemy : MonoBehaviour
         else
         {
             OnKilled(deathAnimationClipLength);
+            gameObject.SetLayersRecursively(LayerMask.NameToLayer("Default"));
             if (hasDeathAnimation) anim.SetTrigger("death");
         }
     }

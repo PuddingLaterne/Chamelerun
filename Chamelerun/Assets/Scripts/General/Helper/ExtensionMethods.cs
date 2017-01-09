@@ -97,4 +97,13 @@ public static  class ExtensionMethods
         }
         return 0f;
     }
+
+    public static void SetLayersRecursively(this GameObject gameObject, int layer)
+    {
+        gameObject.layer = layer;
+        foreach(Transform child in gameObject.transform)
+        {
+            child.gameObject.layer = layer;
+        }
+    }
 }

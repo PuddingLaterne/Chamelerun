@@ -1365,7 +1365,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0.6}
   serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 0.9
 --- !u!95 &95231957148313828
 Animator:
   serializedVersion: 3
@@ -1424,7 +1424,7 @@ MonoBehaviour:
   CauseDamageOnCollision: 0
   KnockbackForce: 0
   DamagedByPunching: 0
-  UpperSideAngle: 90
+  UpperSideAngle: 180
   Bounciness: 50
   DamagedByBouncing: 0
   PointsForDamage: 5

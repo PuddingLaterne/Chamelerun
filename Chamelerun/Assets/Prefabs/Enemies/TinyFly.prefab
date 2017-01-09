@@ -1615,7 +1615,7 @@ MonoBehaviour:
   KnockbackForce: 10
   DamagedByPunching: 1
   UpperSideAngle: 45
-  Bounciness: 20
+  Bounciness: 25
   DamagedByBouncing: 1
   PointsForDamage: 5
   PointsForKill: 10
